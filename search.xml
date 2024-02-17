@@ -1,115 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>安裝 Neovim 與 Nerd Fonts</title>
-    <url>/2024/02/17/%E5%AE%89%E8%A3%9D-Neovim-%E8%88%87-Nerd-Fonts/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本章將分成三個部分：</p>
-<ol>
-<li><p>在 Windows 10 環境下使用 WSL2 安裝 Ubuntu 22.04。</p>
-</li>
-<li><p>安裝 Neovim。</p>
-</li>
-<li><p>安裝 NerdFont。</p>
-</li>
-</ol>
-<p>如果你一開始就在 Ubuntu 環境下的話，也可以直接跳到安裝 Neovim 的部分，兩者的安裝方法相同。</p>
-<hr>
-<h1 id="在Windows-10-中啟用-WSL2-並安裝-Ubuntu-22-04"><a href="#在Windows-10-中啟用-WSL2-並安裝-Ubuntu-22-04" class="headerlink" title="在Windows 10 中啟用 WSL2 並安裝 Ubuntu 22.04"></a>在Windows 10 中啟用 WSL2 並安裝 Ubuntu 22.04</h1><h2 id="什麼是-WSL？"><a href="#什麼是-WSL？" class="headerlink" title="什麼是 WSL？"></a>什麼是 WSL？</h2><p>Windows Subsystem for Linux（簡稱 WSL）是 Windows 的一項功能，它可以讓你在不需要額外建置雙系統或使用虛擬機的情況下，在 Windows 電腦上執行 Linux 環境，從而使用最小的成本來逃離 Windows 愚蠢至極的開發環境，你可以在 WSL 中執行大部分常見的 Linux 發行板，包含 Ubuntu、Debian、Fedora、甚至 Arch Linux 等等。</p>
-<p>WSL 另一個相當吸引我的好處是，它能夠實現跨系統的檔案操作，這意味著我可以直接從 WSL 中操作 Windows 的檔案，反之亦然，這對於我這種想一邊使用 Windows 打遊戲，同時又極度依賴於 Linux 環境來進行開發的人來說，簡直是福音。</p>
-<p>另外，WSL 又分成 WSL1 和 WSL2 兩個版本，兩者如果單純只是用來運行 Neovim 的話，在使用上的區別並不大。選擇的分歧將在於你的專案環境實際是在哪裏運行，如果你的專案環境是在 Windows 中，那麼 WSL1 就足夠了，而如果你的專案依賴於 Linux Kernel，那麼 WSL2 就是你的選擇。</p>
-<p>而本章記錄的則是 WSL2 的安裝與使用。</p>
-<h2 id="啟用-WSL2"><a href="#啟用-WSL2" class="headerlink" title="啟用 WSL2"></a>啟用 WSL2</h2><ol>
-<li>到「控制臺 &gt; 程式集 &gt; 程式與功能」中點擊「開啟或關閉 Windows 功能」。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_1.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_2.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_3.png"></p>
-<ol start="2">
-<li>勾選「Windows 子系統 Linux 版」和「虛擬機器平台」，點擊確定，並重新啟動電腦。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_4.png"></p>
-<ol start="3">
-<li>使用 Microsoft Store 安裝 Linux 發行版。</li>
-</ol>
-<p>重啟成功後，你就可以到 Microsoft Store 中安裝你喜歡的 Linux 發行版了。我這裡選擇的是 Ubuntu 22.04。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_5.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_6.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_7.png"></p>
-<p>安裝完成後，開起 Ubuntu 22.04，它會花一點時間進行安裝，並要求你設定使用者的名稱和密碼，都完成後，你就可以使用它了，使用起來的感覺就和一般的終端機差不多，但裡頭已經是個徹底的 Linux 系統（歡迎回家）。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_8.png"></p>
-<hr>
-<h1 id="在-Ubuntu-22-04-中安裝-Neovim"><a href="#在-Ubuntu-22-04-中安裝-Neovim" class="headerlink" title="在 Ubuntu 22.04 中安裝 Neovim"></a>在 Ubuntu 22.04 中安裝 Neovim</h1><p>接下來，我們就可以開始安裝 Neovim 了。在 Ubuntu 22.04 中， 我們可以直接透過 <code>snap</code> 來下載最新釋出的穩定版本。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo snap install nvim --classic</span><br></pre></td></tr></table></figure>
-
-<p>安裝完成後，即可輸入<code>nvim</code>來起動 Neovim，另外，也可以輸入以下指令來確認版本。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvim -v</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_9.png"></p>
-<hr>
-<h1 id="安裝-Nerd-Fonts"><a href="#安裝-Nerd-Fonts" class="headerlink" title="安裝 Nerd Fonts"></a>安裝 Nerd Fonts</h1><p>Nerd Fonts 簡單來說，就是集成了大部份常見符號的字體庫，由於在之後的設定中會使用到不少符號，所以這裡建議先下載起來，否則到時很可能會出現某些特殊符號無法顯示的問題。</p>
-<p>首先，到 Nerd Fonts 官網上找一套喜歡的字體吧！你可以在<a href="https://www.programmingfonts.org/">這裡</a>直接瀏覽各個字體的樣子。</p>
-<p>比較熱門的幾個應該是 Hack、FiraCode、SourceCode Pro、和 Mosle 等等，而我個人常用的則是 Hack 與 FiraCode。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_10.png"></p>
-<h2 id="於-Windows-10-中安裝字體"><a href="#於-Windows-10-中安裝字體" class="headerlink" title="於 Windows 10 中安裝字體"></a>於 Windows 10 中安裝字體</h2><ol>
-<li>下載並安裝字體。</li>
-</ol>
-<p>看好字體後，到<a href="https://www.nerdfonts.com/font-downloads">這裡</a>找到你看上的那個字體，下載並解壓縮。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_11.png"></p>
-<p>進入解壓縮後的資料夾，找到副檔名為<code>.ttf</code>的字體檔，右鍵安裝。我的建議是使用帶 Mono 標註的等寬字體會比較好看。另外，你也可以一次把所有要安裝的字體選取起來，然後右鍵一次安裝。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_12.png"></p>
-<ol start="2">
-<li>設定終端機字體。</li>
-</ol>
-<p>在進行設定前，我們可以先到 Nerd Fonts 的 <a href="https://www.nerdfonts.com/cheat-sheet">Cheat Sheet</a> 中隨便找一個 icon 複製貼上到終端機中，此時由於終端機的字體還是預設字體，所以它應該會無法顯示或顯示成亂碼。</p>
-<p>為了讓 icon 正確顯示，我們需要去設定字體：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_13.png"></p>
-<p>設定完成後，icon 應該就可以正常顯示了。另外，我建議可以順便翻一下這個設定頁面，調整一下字體大小和其他額外的設定。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_14.jpg"></p>
-<h2 id="於-Ubuntu-中安裝字體"><a href="#於-Ubuntu-中安裝字體" class="headerlink" title="於 Ubuntu 中安裝字體"></a>於 Ubuntu 中安裝字體</h2><p>在 Ubuntu 中，我們可以使用 getNF 這個第三方的下載器來在終端機中安裝想要的 Nerd Fonts 字體。</p>
-<ol>
-<li>下載依賴套件。</li>
-</ol>
-<p>在使用 getNF 前，我們需要先下載一些依賴套件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git fzf curl</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>下載 getNF。</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ronniedroid/getnf.git</span><br><span class="line"><span class="built_in">cd</span> getnf</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>下載字體。</li>
-</ol>
-<p>看好字體後，執行 getNF，並選擇下載你要的字體。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/getnf</span><br><span class="line">./getnf</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_17.png"></p>
-<ol start="4">
-<li>設定終端機字體 - gnome-terminal。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_18.jpg"></p>
-<hr>
-<h1 id="WSL-的其他設置"><a href="#WSL-的其他設置" class="headerlink" title="WSL 的其他設置"></a>WSL 的其他設置</h1><h2 id="關閉-Windows-提示音"><a href="#關閉-Windows-提示音" class="headerlink" title="關閉 Windows 提示音"></a>關閉 Windows 提示音</h2><ol>
-<li>「控制臺 &gt; 硬體和音效 &gt; 聲音（變更系統音效）」。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_15.png"></p>
-<ol start="2">
-<li>將「預設嗶聲」設置為（無）。</li>
-</ol>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_16.png"></p>
-<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
-<li><a href="https://medium.com/hungys-blog/windows-subsystem-for-linux-configuration-caf2f47d0dfb">Windows Subsystem for Linux 環境配置 (最新 1709 版)</a></li>
-<li><a href="https://learn.microsoft.com/zh-tw/windows/wsl/install-manual">舊版 WSL 的首度安裝步驟</a></li>
-<li><a href="https://www.nerdfonts.com/">Nerd Fonts</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Neovim</category>
-      </categories>
-      <tags>
-        <tag>Neovim</tag>
-        <tag>Linux</tag>
-        <tag>WSL</tag>
-        <tag>Ubuntu</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>榨乾蘋果的剩餘價值，MacBuuk Air的誕生</title>
     <url>/2023/01/03/%E6%A6%A8%E4%B9%BE%E8%98%8B%E6%9E%9C%E7%9A%84%E5%89%A9%E9%A4%98%E5%83%B9%E5%80%BC%EF%BC%8CMacBuuk-Air%E7%9A%84%E8%AA%95%E7%94%9F/</url>
     <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><ul>
@@ -605,6 +496,115 @@
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
         <tag>Mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>安裝 Neovim 與 Nerd Fonts</title>
+    <url>/2024/02/17/%E5%AE%89%E8%A3%9D-Neovim-%E8%88%87-Nerd-Fonts/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本章將分成三個部分：</p>
+<ol>
+<li><p>在 Windows 10 環境下使用 WSL2 安裝 Ubuntu 22.04。</p>
+</li>
+<li><p>安裝 Neovim。</p>
+</li>
+<li><p>安裝 NerdFont。</p>
+</li>
+</ol>
+<p>如果你一開始就在 Ubuntu 環境下的話，也可以直接跳到安裝 Neovim 的部分，兩者的安裝方法相同。</p>
+<hr>
+<h1 id="在Windows-10-中啟用-WSL2-並安裝-Ubuntu-22-04"><a href="#在Windows-10-中啟用-WSL2-並安裝-Ubuntu-22-04" class="headerlink" title="在Windows 10 中啟用 WSL2 並安裝 Ubuntu 22.04"></a>在Windows 10 中啟用 WSL2 並安裝 Ubuntu 22.04</h1><h2 id="什麼是-WSL？"><a href="#什麼是-WSL？" class="headerlink" title="什麼是 WSL？"></a>什麼是 WSL？</h2><p>Windows Subsystem for Linux（簡稱 WSL）是 Windows 的一項功能，它可以讓你在不需要額外建置雙系統或使用虛擬機的情況下，在 Windows 電腦上執行 Linux 環境，從而使用最小的成本來逃離 Windows 愚蠢至極的開發環境，你可以在 WSL 中執行大部分常見的 Linux 發行板，包含 Ubuntu、Debian、Fedora、甚至 Arch Linux 等等。</p>
+<p>WSL 另一個相當吸引我的好處是，它能夠實現跨系統的檔案操作，這意味著我可以直接從 WSL 中操作 Windows 的檔案，反之亦然，這對於我這種想一邊使用 Windows 打遊戲，同時又極度依賴於 Linux 環境來進行開發的人來說，簡直是福音。</p>
+<p>另外，WSL 又分成 WSL1 和 WSL2 兩個版本，兩者如果單純只是用來運行 Neovim 的話，在使用上的區別並不大。選擇的分歧將在於你的專案環境實際是在哪裏運行，如果你的專案環境是在 Windows 中，那麼 WSL1 就足夠了，而如果你的專案依賴於 Linux Kernel，那麼 WSL2 就是你的選擇。</p>
+<p>而本章記錄的則是 WSL2 的安裝與使用。</p>
+<h2 id="啟用-WSL2"><a href="#啟用-WSL2" class="headerlink" title="啟用 WSL2"></a>啟用 WSL2</h2><ol>
+<li>到「控制臺 &gt; 程式集 &gt; 程式與功能」中點擊「開啟或關閉 Windows 功能」。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_1.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_2.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_3.png"></p>
+<ol start="2">
+<li>勾選「Windows 子系統 Linux 版」和「虛擬機器平台」，點擊確定，並重新啟動電腦。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_4.png"></p>
+<ol start="3">
+<li>使用 Microsoft Store 安裝 Linux 發行版。</li>
+</ol>
+<p>重啟成功後，你就可以到 Microsoft Store 中安裝你喜歡的 Linux 發行版了。我這裡選擇的是 Ubuntu 22.04。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_5.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_6.png"><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_7.png"></p>
+<p>安裝完成後，開起 Ubuntu 22.04，它會花一點時間進行安裝，並要求你設定使用者的名稱和密碼，都完成後，你就可以使用它了，使用起來的感覺就和一般的終端機差不多，但裡頭已經是個徹底的 Linux 系統（歡迎回家）。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_8.png"></p>
+<hr>
+<h1 id="在-Ubuntu-22-04-中安裝-Neovim"><a href="#在-Ubuntu-22-04-中安裝-Neovim" class="headerlink" title="在 Ubuntu 22.04 中安裝 Neovim"></a>在 Ubuntu 22.04 中安裝 Neovim</h1><p>接下來，我們就可以開始安裝 Neovim 了。在 Ubuntu 22.04 中， 我們可以直接透過 <code>snap</code> 來下載最新釋出的穩定版本。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo snap install nvim --classic</span><br></pre></td></tr></table></figure>
+
+<p>安裝完成後，即可輸入<code>nvim</code>來起動 Neovim，另外，也可以輸入以下指令來確認版本。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvim -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_9.png"></p>
+<hr>
+<h1 id="安裝-Nerd-Fonts"><a href="#安裝-Nerd-Fonts" class="headerlink" title="安裝 Nerd Fonts"></a>安裝 Nerd Fonts</h1><p>Nerd Fonts 簡單來說，就是集成了大部份常見符號的字體庫，由於在之後的設定中會使用到不少符號，所以這裡建議先下載起來，否則到時很可能會出現某些特殊符號無法顯示的問題。</p>
+<p>首先，到 Nerd Fonts 官網上找一套喜歡的字體吧！你可以在<a href="https://www.programmingfonts.org/">這裡</a>直接瀏覽各個字體的樣子。</p>
+<p>比較熱門的幾個應該是 Hack、FiraCode、SourceCode Pro、和 Mosle 等等，而我個人常用的則是 Hack 與 FiraCode。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_10.png"></p>
+<h2 id="於-Windows-10-中安裝字體"><a href="#於-Windows-10-中安裝字體" class="headerlink" title="於 Windows 10 中安裝字體"></a>於 Windows 10 中安裝字體</h2><ol>
+<li>下載並安裝字體。</li>
+</ol>
+<p>看好字體後，到<a href="https://www.nerdfonts.com/font-downloads">這裡</a>找到你看上的那個字體，下載並解壓縮。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_11.png"></p>
+<p>進入解壓縮後的資料夾，找到副檔名為<code>.ttf</code>的字體檔，右鍵安裝。我的建議是使用帶 Mono 標註的等寬字體會比較好看。另外，你也可以一次把所有要安裝的字體選取起來，然後右鍵一次安裝。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_12.png"></p>
+<ol start="2">
+<li>設定終端機字體。</li>
+</ol>
+<p>在進行設定前，我們可以先到 Nerd Fonts 的 <a href="https://www.nerdfonts.com/cheat-sheet">Cheat Sheet</a> 中隨便找一個 icon 複製貼上到終端機中，此時由於終端機的字體還是預設字體，所以它應該會無法顯示或顯示成亂碼。</p>
+<p>為了讓 icon 正確顯示，我們需要去設定字體：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_13.png"></p>
+<p>設定完成後，icon 應該就可以正常顯示了。另外，我建議可以順便翻一下這個設定頁面，調整一下字體大小和其他額外的設定。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_14.jpg"></p>
+<h2 id="於-Ubuntu-中安裝字體"><a href="#於-Ubuntu-中安裝字體" class="headerlink" title="於 Ubuntu 中安裝字體"></a>於 Ubuntu 中安裝字體</h2><p>在 Ubuntu 中，我們可以使用 getNF 這個第三方的下載器來在終端機中安裝想要的 Nerd Fonts 字體。</p>
+<ol>
+<li>下載依賴套件。</li>
+</ol>
+<p>在使用 getNF 前，我們需要先下載一些依賴套件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install git fzf curl</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>下載 getNF。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/ronniedroid/getnf.git</span><br><span class="line"><span class="built_in">cd</span> getnf</span><br><span class="line">./install.sh</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>下載字體。</li>
+</ol>
+<p>看好字體後，執行 getNF，並選擇下載你要的字體。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/getnf</span><br><span class="line">./getnf</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_17.png"></p>
+<ol start="4">
+<li>設定終端機字體 - gnome-terminal。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_18.jpg"></p>
+<hr>
+<h1 id="WSL-的其他設置"><a href="#WSL-的其他設置" class="headerlink" title="WSL 的其他設置"></a>WSL 的其他設置</h1><h2 id="關閉-Windows-提示音"><a href="#關閉-Windows-提示音" class="headerlink" title="關閉 Windows 提示音"></a>關閉 Windows 提示音</h2><ol>
+<li>「控制臺 &gt; 硬體和音效 &gt; 聲音（變更系統音效）」。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_15.png"></p>
+<ol start="2">
+<li>將「預設嗶聲」設置為（無）。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_install_16.png"></p>
+<h1 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h1><ul>
+<li><a href="https://medium.com/hungys-blog/windows-subsystem-for-linux-configuration-caf2f47d0dfb">Windows Subsystem for Linux 環境配置 (最新 1709 版)</a></li>
+<li><a href="https://learn.microsoft.com/zh-tw/windows/wsl/install-manual">舊版 WSL 的首度安裝步驟</a></li>
+<li><a href="https://www.nerdfonts.com/">Nerd Fonts</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Ubuntu</tag>
+        <tag>Neovim</tag>
+        <tag>WSL</tag>
       </tags>
   </entry>
 </search>
