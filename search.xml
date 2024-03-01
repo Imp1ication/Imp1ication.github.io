@@ -1,6 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>救救我啊我救我 —— help 與 checkhealth</title>
+    <url>/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim 的坑不少，例如每個工程師都必然會遇到的千古難題：如何退出 Vim？</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181547237.jpg"></p>
+<p>然而實際上，不論是 Neovim 還是 Vim，在你第一次打開它的時候，它就曾試圖告訴你不少有用的資訊了（包含如何退出），只是你可能沒有注意到。</p>
+<p>為了讓將來在使用 Neovim 時能有基本的自救能力，當遇到問題時也不用急著上 Google，而是能直接透過 Neovim 內部的文件來快速診斷和處理問題，本章將介紹如何使用 Neovim 的內建指令 <code>help</code> 與 <code>checkhealth</code>。另外，這些內容將不僅限於 Neovim 本體，同時也適用於插件的 help page。</p>
+<hr>
+<h2 id="help-txt"><a href="#help-txt" class="headerlink" title="help.txt"></a>help.txt</h2><h3 id="第一次求救"><a href="#第一次求救" class="headerlink" title="第一次求救"></a>第一次求救</h3><p>第一次使用<code>nvim</code>指令開啓 Neovim 時，你會看到類似於這樣的畫面：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181514879.png"></p>
+<p>你會發現，其實它已經告訴你可以如何向它尋求幫助 —— 輸入<code>:help</code>或<code>:h</code>，然後按下<code>&lt;Enter&gt;</code>，就可以打開 Neovim 的 main help page，而這裡便記錄了你可以怎麽使用這些幫助文件。</p>
+<p>另外，這裡也說明了你可以如何退出 help page 和 Neovim —— 輸入<code>:q&lt;Enter&gt;</code>關閉 help page，以及輸入<code>:qa!&lt;Enter&gt;</code>來 <big><strong>不</strong></big> 儲存直接退出 Neovim。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201758541.png"></p>
+<h3 id="Links-and-Tags"><a href="#Links-and-Tags" class="headerlink" title="Links and Tags"></a>Links and Tags</h3><p>在 help page 中，你會看見一些粗體標亮的關鍵字，或是往下翻找，你可以看見 Neovim 幫助文件的完整目錄，這代表這些關鍵字有它們相對應的說明文件，同時，它們也是文件的連結入口，你可以將你的遊標移動到這些單字上，然後使用以下快捷鍵來進行文件的跳轉：</p>
+<table>
+<thead>
+<tr>
+<th>Mappings</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + ]</code></td>
+<td>移動至連結</td>
+</tr>
+<tr>
+<td><code>Ctrl + T</code></td>
+<td>返回上一個文件</td>
+</tr>
+</tbody></table>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211419512.png"></p>
+<p>這就延伸出了 help page 的第一個用法，開啓 help page 後，我們可以使用和在 Normal Mode 下一樣的操作方式，使用<code>/</code>來進行關鍵字搜尋，例如我們可以輸入<code>/quick</code>搜尋目錄<code>quickref</code>，將遊標移動到關鍵字上後，再使用快捷鍵<code>Ctrl + ]</code> 進行跳轉。</p>
+<p>令外，還有兩個我在瀏覽大型文件時很常使用的快捷鍵，也在這裡分享給各位：</p>
+<table>
+<thead>
+<tr>
+<th>Mappings</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + o</code></td>
+<td>返回至上一個遊標位置</td>
+</tr>
+<tr>
+<td><code>Ctrl + i</code></td>
+<td>返回至下一個遊標位置</td>
+</tr>
+</tbody></table>
+<h3 id="搜尋模式"><a href="#搜尋模式" class="headerlink" title="搜尋模式"></a>搜尋模式</h3><p>如果每次都要先開啓 main help page 再進行搜尋，那還真的是不如直接 Google 比較快，更何況 <code>:help</code> 頁面中只有目錄，而沒有更完整的內容可以進行關鍵字搜尋。</p>
+<p>所幸，我們可以直接在 command line 中輸入指令時就開始進行搜尋了，例如，如果我想搜尋關鍵字<code>word</code>，我只要輸入<code>:h word</code>就可以開始搜尋。同時，我們也可以使用以下的三個快捷鍵，來進行關鍵字的搜尋和補齊：</p>
+<table>
+<thead>
+<tr>
+<th>Mappings</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + d</code></td>
+<td>顯示所有包含關鍵字的主題</td>
+</tr>
+<tr>
+<td><code>&lt;Tab&gt;</code></td>
+<td>選取下一個包含關鍵字的主題</td>
+</tr>
+<tr>
+<td><code>&lt;Shift&gt; + &lt;Tab&gt;</code></td>
+<td>選取上一個包含關鍵字的主題</td>
+</tr>
+</tbody></table>
+<p><code>Ctrl + d</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201925855.png"></p>
+<p><code>&lt;Tab&gt;</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201926090.png"></p>
+<p>另外，Neovim 也給了部分固定主題提供了固定的關鍵字格式，這些格式也有被列在<code>:h</code>中，如果忘記了，也可以隨時查看：</p>
+<table>
+<thead>
+<tr>
+<th>主題</th>
+<th>關鍵字前綴</th>
+<th>範例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Normal mode command</td>
+<td></td>
+<td><code>:help x         </code></td>
+</tr>
+<tr>
+<td>Visual mode command</td>
+<td><code>v\_</code></td>
+<td><code>:help v_u       </code></td>
+</tr>
+<tr>
+<td>Insert mode command</td>
+<td><code>i\_</code></td>
+<td><code>:help i\_&lt;Esc&gt;  </code></td>
+</tr>
+<tr>
+<td>Command-line command</td>
+<td><code>:</code></td>
+<td><code>:help :quit     </code></td>
+</tr>
+<tr>
+<td>Command-line editing</td>
+<td><code>c\_</code></td>
+<td><code>:help c\_&lt;Del&gt;  </code></td>
+</tr>
+<tr>
+<td>Vim command argument</td>
+<td><code>-</code></td>
+<td><code>:help -r        </code></td>
+</tr>
+<tr>
+<td>Option</td>
+<td><code>&#39;</code></td>
+<td><code>:help &#39;wildmenu&#39;</code></td>
+</tr>
+<tr>
+<td>Regular expression</td>
+<td><code>/</code></td>
+<td><code>:help /[]       </code></td>
+</tr>
+</tbody></table>
+<p>例如，如果我想知道退出 Neovim 的指令<code>:q</code>的所有用法，我只要輸入<code>:h :q</code>就可以開始搜尋了、或是，如果我想知道快捷鍵<code>Ctrl-r</code>的功能是什麼，我只要輸入<code>:h CTRL-r</code>就可以開始搜尋，或更進階一點，你可輸入<code>:h ctrl-r</code>然後按下<code>Ctrl-d</code>或是<code>&lt;Tab&gt;</code>，來查找與這個快捷鍵有關的主題選項。</p>
+<p>以上，就是關於 help page 的一些基本用法了，這也是我常用來處理 Neovim 問題的第一步，如果還想了解一些更進階的技巧，可以查閱<code>:h :help</code>，或是參考 <a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a>。</p>
+<hr>
+<h2 id="checkhealth"><a href="#checkhealth" class="headerlink" title="checkhealth"></a>checkhealth</h2><p>Neovim 的套件包含 Neovim 本身的功能有時會依賴於額外的程式環境、或是其他的某些套件，例如系統剪貼簿的取用、以及使用 Python3 等其他語言所撰寫的功能等等。如果你安裝了某些套件，卻發現它不起作用的時候，通常可能就是因爲沒有下載這些額外的東西。</p>
+<p>除了從這些套件的 help page、git 或官網上查找依賴之外，Neovim 的<code>:checkhealth</code>指令可以讓我們很方便的去查看應該、以及甚至要怎麽處理這些問題。</p>
+<p>開啟 Neovim 後，輸入<code>:checkhealth</code>，你會看到類似於這樣的畫面：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211337068.png"></p>
+<p>另外，checkhealth 也可以接受參數來只對指定內容進行檢查，例如<code>:checkhealth provider</code>，這樣就可以只查看 provider 的健康狀況了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211342476.png"></p>
+<p>加上在上一段裡提到的<code>:h</code>，於是乎，我們的 Neovim 快篩自救程序就這樣完成了：每當 Neovim 和其套件出現問題時，我們可以先使用<code>:checkhealth</code>做一遍基本檢查，來看系統中是否缺漏了什麼，然後再使用<code>:h</code>來查找可能的解決方案，而這一切幾乎都可以在 Neovim 中不使用網路來完成，且相當快速有效。</p>
+<hr>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，我們已經學會了如何使用 help page 和<code>:checkhealth</code>來進行診斷與解決問題，而在下一章裡，我們將正式進入 Neovim 的基礎設置環節。</p>
+<p>首先，我會介紹 Neovim 的設置文件結構，接著，我會提供我的配置文件，並重點介紹一些常見，且我覺得很是有用的配置選項，例如設置剪貼簿、行號、以及縮排等功能。</p>
+<p><big>上一篇： <a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a></big></p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>榨乾蘋果的剩餘價值，MacBuuk Air的誕生</title>
     <url>/2023/01/03/%E6%A6%A8%E4%B9%BE%E8%98%8B%E6%9E%9C%E7%9A%84%E5%89%A9%E9%A4%98%E5%83%B9%E5%80%BC%EF%BC%8CMacBuuk-Air%E7%9A%84%E8%AA%95%E7%94%9F/</url>
     <content><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><ul>
@@ -606,157 +753,10 @@
         <category>Neovim</category>
       </categories>
       <tags>
+        <tag>Neovim</tag>
         <tag>Linux</tag>
         <tag>Ubuntu</tag>
-        <tag>Neovim</tag>
         <tag>WSL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>救救我啊我救我 —— help 與 checkhealth</title>
-    <url>/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim 的坑不少，例如每個工程師都必然會遇到的千古難題：如何退出 Vim？</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181547237.jpg"></p>
-<p>然而實際上，不論是 Neovim 還是 Vim，在你第一次打開它的時候，它就曾試圖告訴你不少有用的資訊了（包含如何退出），只是你可能沒有注意到。</p>
-<p>為了讓將來在使用 Neovim 時能有基本的自救能力，當遇到問題時也不用急著上 Google，而是能直接透過 Neovim 內部的文件來快速診斷和處理問題，本章將介紹如何使用 Neovim 的內建指令 <code>help</code> 與 <code>checkhealth</code>。另外，這些內容將不僅限於 Neovim 本體，同時也適用於插件的 help page。</p>
-<hr>
-<h2 id="help-txt"><a href="#help-txt" class="headerlink" title="help.txt"></a>help.txt</h2><h3 id="第一次求救"><a href="#第一次求救" class="headerlink" title="第一次求救"></a>第一次求救</h3><p>第一次使用<code>nvim</code>指令開啓 Neovim 時，你會看到類似於這樣的畫面：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181514879.png"></p>
-<p>你會發現，其實它已經告訴你可以如何向它尋求幫助 —— 輸入<code>:help</code>或<code>:h</code>，然後按下<code>&lt;Enter&gt;</code>，就可以打開 Neovim 的 main help page，而這裡便記錄了你可以怎麽使用這些幫助文件。</p>
-<p>另外，這裡也說明了你可以如何退出 help page 和 Neovim —— 輸入<code>:q&lt;Enter&gt;</code>關閉 help page，以及輸入<code>:qa!&lt;Enter&gt;</code>來 <big><strong>不</strong></big> 儲存直接退出 Neovim。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201758541.png"></p>
-<h3 id="Links-and-Tags"><a href="#Links-and-Tags" class="headerlink" title="Links and Tags"></a>Links and Tags</h3><p>在 help page 中，你會看見一些粗體標亮的關鍵字，或是往下翻找，你可以看見 Neovim 幫助文件的完整目錄，這代表這些關鍵字有它們相對應的說明文件，同時，它們也是文件的連結入口，你可以將你的遊標移動到這些單字上，然後使用以下快捷鍵來進行文件的跳轉：</p>
-<table>
-<thead>
-<tr>
-<th>Mappings</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ctrl + ]</code></td>
-<td>移動至連結</td>
-</tr>
-<tr>
-<td><code>Ctrl + T</code></td>
-<td>返回上一個文件</td>
-</tr>
-</tbody></table>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211419512.png"></p>
-<p>這就延伸出了 help page 的第一個用法，開啓 help page 後，我們可以使用和在 Normal Mode 下一樣的操作方式，使用<code>/</code>來進行關鍵字搜尋，例如我們可以輸入<code>/quick</code>搜尋目錄<code>quickref</code>，將遊標移動到關鍵字上後，再使用快捷鍵<code>Ctrl + ]</code> 進行跳轉。</p>
-<p>令外，還有兩個我在瀏覽大型文件時很常使用的快捷鍵，也在這裡分享給各位：</p>
-<table>
-<thead>
-<tr>
-<th>Mappings</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ctrl + o</code></td>
-<td>返回至上一個遊標位置</td>
-</tr>
-<tr>
-<td><code>Ctrl + i</code></td>
-<td>返回至下一個遊標位置</td>
-</tr>
-</tbody></table>
-<h3 id="搜尋模式"><a href="#搜尋模式" class="headerlink" title="搜尋模式"></a>搜尋模式</h3><p>如果每次都要先開啓 main help page 再進行搜尋，那還真的是不如直接 Google 比較快，更何況 <code>:help</code> 頁面中只有目錄，而沒有更完整的內容可以進行關鍵字搜尋。</p>
-<p>所幸，我們可以直接在 command line 中輸入指令時就開始進行搜尋了，例如，如果我想搜尋關鍵字<code>word</code>，我只要輸入<code>:h word</code>就可以開始搜尋。同時，我們也可以使用以下的三個快捷鍵，來進行關鍵字的搜尋和補齊：</p>
-<table>
-<thead>
-<tr>
-<th>Mappings</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ctrl + d</code></td>
-<td>顯示所有包含關鍵字的主題</td>
-</tr>
-<tr>
-<td><code>&lt;Tab&gt;</code></td>
-<td>選取下一個包含關鍵字的主題</td>
-</tr>
-<tr>
-<td><code>&lt;Shift&gt; + &lt;Tab&gt;</code></td>
-<td>選取上一個包含關鍵字的主題</td>
-</tr>
-</tbody></table>
-<p><code>Ctrl + d</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201925855.png"></p>
-<p><code>&lt;Tab&gt;</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201926090.png"></p>
-<p>另外，Neovim 也給了部分固定主題提供了固定的關鍵字格式，這些格式也有被列在<code>:h</code>中，如果忘記了，也可以隨時查看：</p>
-<table>
-<thead>
-<tr>
-<th>主題</th>
-<th>關鍵字前綴</th>
-<th>範例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Normal mode command</td>
-<td></td>
-<td><code>:help x         </code></td>
-</tr>
-<tr>
-<td>Visual mode command</td>
-<td><code>v\_</code></td>
-<td><code>:help v_u       </code></td>
-</tr>
-<tr>
-<td>Insert mode command</td>
-<td><code>i\_</code></td>
-<td><code>:help i\_&lt;Esc&gt;  </code></td>
-</tr>
-<tr>
-<td>Command-line command</td>
-<td><code>:</code></td>
-<td><code>:help :quit     </code></td>
-</tr>
-<tr>
-<td>Command-line editing</td>
-<td><code>c\_</code></td>
-<td><code>:help c\_&lt;Del&gt;  </code></td>
-</tr>
-<tr>
-<td>Vim command argument</td>
-<td><code>-</code></td>
-<td><code>:help -r        </code></td>
-</tr>
-<tr>
-<td>Option</td>
-<td><code>&#39;</code></td>
-<td><code>:help &#39;wildmenu&#39;</code></td>
-</tr>
-<tr>
-<td>Regular expression</td>
-<td><code>/</code></td>
-<td><code>:help /[]       </code></td>
-</tr>
-</tbody></table>
-<p>例如，如果我想知道退出 Neovim 的指令<code>:q</code>的所有用法，我只要輸入<code>:h :q</code>就可以開始搜尋了、或是，如果我想知道快捷鍵<code>Ctrl-r</code>的功能是什麼，我只要輸入<code>:h CTRL-r</code>就可以開始搜尋，或更進階一點，你可輸入<code>:h ctrl-r</code>然後按下<code>Ctrl-d</code>或是<code>&lt;Tab&gt;</code>，來查找與這個快捷鍵有關的主題選項。</p>
-<p>以上，就是關於 help page 的一些基本用法了，這也是我常用來處理 Neovim 問題的第一步，如果還想了解一些更進階的技巧，可以查閱<code>:h :help</code>，或是參考 <a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a>。</p>
-<hr>
-<h2 id="checkhealth"><a href="#checkhealth" class="headerlink" title="checkhealth"></a>checkhealth</h2><p>Neovim 的套件包含 Neovim 本身的功能有時會依賴於額外的程式環境、或是其他的某些套件，例如系統剪貼簿的取用、以及使用 Python3 等其他語言所撰寫的功能等等。如果你安裝了某些套件，卻發現它不起作用的時候，通常可能就是因爲沒有下載這些額外的東西。</p>
-<p>除了從這些套件的 help page、git 或官網上查找依賴之外，Neovim 的<code>:checkhealth</code>指令可以讓我們很方便的去查看應該、以及甚至要怎麽處理這些問題。</p>
-<p>開啟 Neovim 後，輸入<code>:checkhealth</code>，你會看到類似於這樣的畫面：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211337068.png"></p>
-<p>另外，checkhealth 也可以接受參數來只對指定內容進行檢查，例如<code>:checkhealth provider</code>，這樣就可以只查看 provider 的健康狀況了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211342476.png"></p>
-<p>加上在上一段裡提到的<code>:h</code>，於是乎，我們的 Neovim 快篩自救程序就這樣完成了：每當 Neovim 和其套件出現問題時，我們可以先使用<code>:checkhealth</code>做一遍基本檢查，來看系統中是否缺漏了什麼，然後再使用<code>:h</code>來查找可能的解決方案，而這一切幾乎都可以在 Neovim 中不使用網路來完成，且相當快速有效。</p>
-<hr>
-<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，我們已經學會了如何使用 help page 和<code>:checkhealth</code>來進行診斷與解決問題，而在下一章裡，我們將正式進入 Neovim 的基礎設置環節。</p>
-<p>首先，我會介紹 Neovim 的設置文件結構，接著，我會提供我的配置文件，並重點介紹一些常見，且我覺得很是有用的配置選項，例如設置剪貼簿、行號、以及縮排等功能。</p>
-<p><big>上一篇： <a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a></big></p>
-<hr>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Neovim</category>
-      </categories>
-      <tags>
-        <tag>Neovim</tag>
       </tags>
   </entry>
 </search>
