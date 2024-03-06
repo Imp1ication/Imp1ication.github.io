@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>設定文件結構與基礎功能設定 | Imp1ication.com</title><meta name="author" content="Imp1ication"><meta name="copyright" content="Imp1ication"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="介紹 Neovim 的設定文件結構，分享與說明我的基礎功能設定，與部分依賴環境安裝。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="設定文件結構與基礎功能設定">
+<meta property="og:url" content="https://imp1ication.github.io/2024/03/06/neovim-setup-20240306-nvim-basic-config/">
+<meta property="og:site_name" content="Imp1ication.com">
+<meta property="og:description" content="介紹 Neovim 的設定文件結構，分享與說明我的基礎功能設定，與部分依賴環境安裝。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061933610.png">
+<meta property="article:published_time" content="2024-03-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-05T16:00:00.000Z">
+<meta property="article:author" content="Imp1ication">
+<meta property="article:tag" content="Neovim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061933610.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://imp1ication.github.io/2024/03/06/neovim-setup-20240306-nvim-basic-config/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":5,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":700,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '設定文件結構與基礎功能設定',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-06 00:00:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><meta name="generator" content="Hexo 7.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-cubes"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Imp1ication.com"><span class="site-name">Imp1ication.com</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-cubes"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">設定文件結構與基礎功能設定</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-03-05T16:00:00.000Z" title="Updated 2024-03-06 00:00:00">2024-03-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Neovim/">Neovim</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 同時支援使用 VimScript 和 Lua 語言來撰寫設定文件，前者源自於它的老祖 Vim，而後者則是一種極爲輕量的 Scripting language，同時亦是 Neovim 有別於 Vim 最大的特點之一：它更加易學、具有更好的工具支持與易擴展性、以及更高的執行效能，這都是你應該選擇使用 Lua 而非 VimScript 原因，唯一導致你必須使用 VimScript 的理由大概只有，當你想與 Vim 共用你的這份設定文件的時候。</p>
+<p>有鑑於我已經不太使用 Vim 了，且我也更加喜歡 Lua 的設定模式，故本系列文都將使用 Lua 來撰寫設定文件，如果你是從 Vim 轉過來的 VimScript 使用者，放心，Lua 比 VimScript 簡單多了，順着設定文件讀下去，想必就能學會個七、八成了吧。</p>
+<p>在本章裡，我將介紹 Neovim 的設定文件結構，分享與說明我的基礎功能設定，以及安裝部分依賴程式以啟用特定功能，如果想直接看我的設定和設定項說明，也可以直接跳到 <big><strong>基礎設定說明</strong></big> 一段閱讀。</p>
+<p>而如果想直接複製我的設定文件，可以到<a target="_blank" rel="noopener" href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/options.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
+<hr>
+<h2 id="建立設定文件與引用"><a href="#建立設定文件與引用" class="headerlink" title="建立設定文件與引用"></a>建立設定文件與引用</h2><h3 id="設定文件在哪裡？"><a href="#設定文件在哪裡？" class="headerlink" title="設定文件在哪裡？"></a>設定文件在哪裡？</h3><p>遇事不決，先問 help page，讓我們輸入<code>:h config</code>，來看看有沒有什麼有用的資訊：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051613256.png"></p>
+<p>有了，在 Unix 環境下，Config file 的位置應該在 <code>~/.config/nvim/init.lua</code>，而這也就是 Neovim 每次在起動時，讀取設定文件的入口處。</p>
+<blockquote>
+<p>註：如果你在電腦中找不到文件，甚至相關的資料夾，請直接創建一個就可以了。</p>
+</blockquote>
+<p>接著，讓我們來試寫第一段 Lua 程式，看看 Neovim 會不會正常運行它吧，編輯 <code>init.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;World!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重新啓動 Neovim，你應該就可以看到文字訊息被打印出來了。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051652215.png"></p>
+<p>另外，如果你因爲輸入了什麼而錯過任何系統訊息，想重看完整內容的話，可以在開啟 Neovim 後，輸入<code>:message</code>來查看所有的歷史訊息，或是輸入<code>:&#123;count&#125; mes</code> 來查看最近的 {count} 筆訊息，例如<code>:1 mes</code>。</p>
+<h3 id="建立文件結構"><a href="#建立文件結構" class="headerlink" title="建立文件結構"></a>建立文件結構</h3><p>以下將是我們接下來會採用的文件結構：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051751496.png"></p>
+<ul>
+<li><p><code>init.lua</code>：作為設定文件的入口，負責引用其他的設定文件。</p>
+</li>
+<li><p><code>lua/</code>：當我們在 Lua 中引用其他文件時，Lua 會優先引用<code>./lua/?.lua</code>中的文件，如果不存在，才會去使用<code>./?.lua</code>中的文件。</p>
+<blockquote>
+<p>例如：當我們在<code>init.lua</code>中引用 <code>test.lua</code>時，Lua 會優先使用 <code>./lua/test.lua</code>，如果不存在，才會去使用<code>./test.lua</code>。</p>
+</blockquote>
+<blockquote>
+<p>我的建議是，為了避免將來管理混亂，還是乖乖地把所有設定檔放在<code>lua/</code>裡頭會比較好。</p>
+</blockquote>
+</li>
+<li><p><code>imp/</code>：這層資料夾將作為命名空間，用意是避免當 Lua 在引用其他套件的設定時，出現意外的文件名稱衝突，你可以將這個資料夾以任何你喜歡的方式命名，例如：<code>user/</code>、<code>launch/</code>、或是和我一樣以 id 的前三碼命名。</p>
+</li>
+<li><p><code>options.lua</code>：這將會是我們的第一個設定文件，用來對 Neovim 的基礎功能進行設定，詳細內容將在後續介紹。</p>
+</li>
+</ul>
+<h3 id="引用設定文件"><a href="#引用設定文件" class="headerlink" title="引用設定文件"></a>引用設定文件</h3><p>最後，讓我們來引用我們的第一個設定文件吧，編輯<code>init.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp/options&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>require(&quot;&#123;filename&#125;&quot;)</code>：此函式將會引用<code>./lua/&#123;filename&#125;.lua</code>。</li>
+</ul>
+<p>接著做為測試，讓我們編輯<code>options.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hi, I&#x27;m options&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重啓 Neovim，此時我們就可以看到<code>option.lua</code>的內容被成功引用了：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051829196.png"></p>
+<hr>
+<h2 id="基礎設定說明"><a href="#基礎設定說明" class="headerlink" title="基礎設定說明"></a>基礎設定說明</h2><h3 id="Lua-API"><a href="#Lua-API" class="headerlink" title="Lua API"></a>Lua API</h3><p>Neovim 提供了一套完整的 Lua library，其所提供的 API 讓我們的設定文件可以輕鬆使用 Lua 語言來與 Neovim 進行交互。這些 API 大多都以<code>vim.</code>做爲前綴，例如：</p>
+<table>
+<thead>
+<tr>
+<th align="left">API</th>
+<th align="left">用途</th>
+<th align="left">例子</th>
+<th align="left">對應的 VimScript</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>vim.opt</code></td>
+<td align="left">用於設置和訪問全局選項</td>
+<td align="left"><code>vim.opt.number = true</code></td>
+<td align="left"><code>set number</code></td>
+</tr>
+<tr>
+<td align="left"><code>vim.g</code></td>
+<td align="left">用於設置和訪問全局變量</td>
+<td align="left"><code>vim.g.my_var = &#39;hello&#39;</code></td>
+<td align="left"><code>let g:my_var = &#39;hello&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>vim.cmd</code></td>
+<td align="left">用於執行 Vim 命令（Ex 命令）</td>
+<td align="left"><code>vim.cmd(&quot;new&quot;)</code></td>
+<td align="left"><code>:new</code></td>
+</tr>
+</tbody></table>
+<p>所以，我們可以如此編輯 <code>options.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.opt.number = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>儲存後重新起動 Neovim，你就會發現左側的行號被開啓了。Neovim就是透過這樣的方式，在每次啟動時引用設定文件，並根據其中的設定來變更編輯器的行為。</p>
+<h3 id="設定選項的魔法-——-options"><a href="#設定選項的魔法-——-options" class="headerlink" title="設定選項的魔法 —— :options"></a>設定選項的魔法 —— <code>:options</code></h3><p>如果每次測試設定選項都必須要一項一項的查找，並反覆開關 Neovim 來測試效果的話，那也太麻煩了，所幸，Neovim 提供了即時改變選項的魔法<code>:options</code>：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403060122072.png"></p>
+<p>這裡提供了所有設定的分類目錄，以及各選項的簡述與選項內容，我們同樣可以使用<code>/</code>進行關鍵字搜尋，或將遊標移動到有興趣的目錄上，並按下<code>&lt;Enter&gt;</code>來查看目錄內容。</p>
+<p>接著，我們可以將遊標移動到設定的選項上，然後按下<code>&lt;Enter&gt;</code>，或甚至直接修改字串內容，就可以發現選項被套用了。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403060130243.png"></p>
+<p>這個設定不會被記錄，所以你可以隨意嘗試各種不同的設定，再將你喜歡的一條條記錄到設定檔中，我相當推薦各位有空的時候可以來這裡摸索一下，有時或許會發現一些神奇又實用的功能。</p>
+<h3 id="options-lua-完整說明"><a href="#options-lua-完整說明" class="headerlink" title="options.lua 完整說明"></a><code>options.lua</code> 完整說明</h3><p>以下我將對我的設定項目進行分類介紹，完整的設定檔可以到<a target="_blank" rel="noopener" href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/options.lua">這裡（我的 github）</a>查看，你可以直接複製再根據需求進行微調；而由於項目有點多，且有部分我已經標上註解了，所以我這裡只會對一些我認為比較重要的，以及比較容易有疑慮的選項進行說明。</p>
+<h4 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">0</span><br><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- basic --</span></span><br><span class="line">vim.opt.fileencoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">vim.opt.termguicolors = <span class="literal">true</span></span><br><span class="line">vim.opt.clipboard = <span class="string">&quot;unnamedplus&quot;</span> <span class="comment">-- allows nvim to access the OS clipboard</span></span><br><span class="line">vim.opt.mouse = <span class="string">&quot;a&quot;</span> <span class="comment">-- enabled mouse, &quot;a&quot; for all modes, and &quot;niv&quot; for normal, insert, visual mode</span></span><br><span class="line">vim.opt.timeoutlen = <span class="number">500</span> <span class="comment">-- Time in milliseconds to wait for a mapped sequence to complete</span></span><br><span class="line">vim.opt.virtualedit = <span class="string">&quot;block&quot;</span></span><br><span class="line">vim.opt.iskeyword:append(<span class="string">&quot;-&quot;</span>) <span class="comment">-- consider string-string as whole word</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>clipboard</code>：<br>剪貼簿應該是每個剛入坑 Neovim 的人都會遇到的問題之一，你會發現你在 Neovim 外複製的東西無法直接使用指令<code>p</code>來貼上，同樣地，我們在 Neovim 中使用<code>y</code>複製的東西，也無法貼到 Neovim 外的其他地方，這是因爲 Neovim 預設的剪貼簿和系統是不同的，所以我們需要對其進行設定。<br>另外，我們還需要在系統中額外安裝剪貼簿工具，才能讓它正常作用，我這裡使用的是 Xclip：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install xclip</span><br></pre></td></tr></table></figure>
+安裝完成後，複製貼上的功能應該就可以正常使用了。</li>
+<li><code>virtualedit</code>：<br>在預設情況，當我們使用 V-Block 模式時，我們是無法將遊標移動到行尾之後的部分的，即便圈選的其他行在這之後仍有內容：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403052341736.png"><br>而當我們將其設為<code>block</code>之後，Neovim 就可以將這樣的行尾視為空白一起圈選起來了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403052341135.png"><br>另外，它還提供了其他模式，不過我沒有使用過，所以這裡就不做贅述了。</li>
+<li><code>iskeyword:append(&quot;-&quot;)</code>：<br>當我們使用<code>w</code>等指令進行單字間的跳躍時，Neovim 會把一些被特殊符號（例如：’-‘）所隔開的字視為兩個獨立的單字，我們可以透過這條設定，來將被這些符號分割的文字視為一個完整的單字。</li>
+</ul>
+<h4 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- backup --</span></span><br><span class="line">vim.opt.swapfile = <span class="literal">false</span></span><br><span class="line">vim.opt.undofile = <span class="literal">true</span> <span class="comment">-- enable persistent undo</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>swapfile</code>：<br>當不正常關閉 Neovim 時，它會爲當下正在開啓的檔案建立備份，並在下一次開啓時詢問要不要復原備份，由於我有動不動就存檔的習慣，以及它有時不知道爲什麼會到處出現，讓我覺得很煩，所以我習慣將它關閉。</li>
+<li><code>undofile</code>：<br>如果你希望可以在關閉文件後，在下一次開啓時還可以保留上次的操作記錄，來讓你使用指令<code>u</code>和<code>C-r</code>來還原上&#x2F;下一步，那麼你可以選擇將這個選項開啓。</li>
+</ul>
+<h4 id="line-number-and-line-column"><a href="#line-number-and-line-column" class="headerlink" title="line number and line column"></a>line number and line column</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- line number and line column --</span></span><br><span class="line">vim.opt.number = <span class="literal">true</span></span><br><span class="line">vim.opt.relativenumber = <span class="literal">true</span></span><br><span class="line">vim.opt.numberwidth = <span class="number">2</span></span><br><span class="line">vim.opt.signcolumn = <span class="string">&quot;auto&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>relativenumber</code>：<br>相對行號在進行跳轉和多行操作時很有用，我相當推薦將它開啓。而下圖則是官方提供的<code>number(nu)</code>和<code>relativenumber(rnu)</code>開關時的顯示對照圖：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061821655.png"></li>
+</ul>
+<h4 id="tab-and-indentation"><a href="#tab-and-indentation" class="headerlink" title="tab and indentation"></a>tab and indentation</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- tab and indentation --</span></span><br><span class="line">vim.opt.tabstop = <span class="number">8</span></span><br><span class="line">vim.opt.softtabstop = <span class="number">4</span></span><br><span class="line">vim.opt.shiftwidth = <span class="number">4</span></span><br><span class="line">vim.opt.smarttab = <span class="literal">false</span></span><br><span class="line">vim.opt.expandtab = <span class="literal">true</span> <span class="comment">-- expand tab to spaces</span></span><br><span class="line">vim.opt.autoindent = <span class="literal">true</span> <span class="comment">-- copy indent from current line when starting a new line</span></span><br><span class="line">vim.opt.smartindent = <span class="literal">true</span> <span class="comment">-- make above smarter</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>tabstop</code>：指的是當文件中有 tab 字符時，會將其顯示成幾個空格的寬度，以及當在 insert mode 按下<code>&lt;Tab&gt;</code>時，會將連續多少的空格轉換成 tab 字符。</li>
+<li><code>softtabstop</code>：當在 insert mode 按下<code>&lt;Tab&gt;</code>時，會插入多少個空格。</li>
+<li><code>shiftwidth</code>：當使用<code>&gt;&gt;</code>或<code>&lt;&lt;</code>進行縮排，以及新增一行時自動縮排所移動的空格數。<blockquote>
+<p>註：這可能有點複雜，舉個例子，當設定為<code>tabstop=8</code>，<code>softtabstop=4</code>，<code>shiftwidth=2</code>時，在 insert mode 中按第一次<code>&lt;Tab&gt;</code>會插入4個空格，再按一次則會將8個空格轉為1個 tab 字符，按第三次則會變成1個 tab 字符加上4個空格，以此類推。<br>而當我使用<code>&gt;&gt;</code>或<code>&lt;&lt;</code>，或是新增一行符合自動縮排的條件時，則整行會移動2個空格。</p>
+</blockquote>
+</li>
+<li><code>smarttab</code>：當開啓時，當在行首進入 insert mode 插入<code>&lt;Tab&gt;</code>時，會根據<code>shiftwidth</code>的設定來插入空格，否則會插入根據<code>softtabstop</code>來插入，我覺得這相當混淆人，所以我選擇把它關閉。</li>
+<li><code>expandtab</code>：將所有 tab 字符都擴展成空格，如果設為<code>true</code>，則上述的轉換規則就不適用了，所有的 tab 都會變成相應數量的空格。</li>
+</ul>
+<h4 id="wrap-and-scrolloff"><a href="#wrap-and-scrolloff" class="headerlink" title="wrap and scrolloff"></a>wrap and scrolloff</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- wrap and scrolloff --</span></span><br><span class="line">vim.opt.<span class="built_in">wrap</span> = <span class="literal">false</span> <span class="comment">-- line wrapping</span></span><br><span class="line">vim.opt.scrolloff = <span class="number">5</span> <span class="comment">-- minimal number of screen lines to keep above and below the cursor</span></span><br><span class="line">vim.opt.sidescrolloff = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>wrap</code>：當你的文字長度超出視窗邊框時，是否換行顯示。</li>
+<li><code>scrolloff</code>：當視窗 上&#x2F;下 捲動時，顯示在遊標 上&#x2F;下 的行數，如果你希望畫面捲動時，遊標始終在正中央的位置，可以選擇把它設成 999 之類的極大數字。</li>
+<li><code>sidescrolloff</code>：和 scrolloff 相同，不過是左右方向的。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061709486.png"></li>
+</ul>
+<h4 id="search"><a href="#search" class="headerlink" title="search"></a>search</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- search --</span></span><br><span class="line">vim.opt.hlsearch = <span class="literal">false</span></span><br><span class="line">vim.opt.incsearch = <span class="literal">true</span> <span class="comment">-- search while typing a search command</span></span><br><span class="line">vim.opt.smartcase = <span class="literal">true</span> <span class="comment">-- if you type a capital letter, it will be case sensitive</span></span><br><span class="line"><span class="comment">-- vim.opt.ignorecase = true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>smartcase</code>：當搜尋的 pattern 中有大寫時，搜尋會變成 case sensitive，否則 ignore case，另外如果將它設為 true，它會覆蓋掉 ignorecase 選項的設定。</li>
+</ul>
+<h4 id="splitting-windows"><a href="#splitting-windows" class="headerlink" title="splitting windows"></a>splitting windows</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- splitting windows --</span></span><br><span class="line">vim.opt.splitright = <span class="literal">true</span> <span class="comment">-- split vertical widow to the right</span></span><br><span class="line">vim.opt.splitbelow = <span class="literal">true</span> <span class="comment">-- split horizontal widow to the below</span></span><br><span class="line">vim.opt.equalalways = <span class="literal">false</span> <span class="comment">-- don&#x27;t resize windows when splitting</span></span><br></pre></td></tr></table></figure>
+
+<p>當分割視窗時，Neovim 預設分割新視窗是開在左上的，這太反人類了，所以你可以透過第一二條設定來把它改成開在右下。</p>
+<p>而 <code>equalalways</code> 的作用則是當分割出新視窗時，要不要自動調整平分所有視窗的長寬，如果設為 false，則它只會將最右或最下側的視窗平分而已</p>
+<ul>
+<li><p><code>equalalways = true</code><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061737397.gif"></p>
+</li>
+<li><p><code>equalalways = false</code><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061739861.gif"></p>
+</li>
+</ul>
+<h4 id="appearance"><a href="#appearance" class="headerlink" title="appearance"></a>appearance</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- appearance --</span></span><br><span class="line">vim.opt.showtabline = <span class="number">2</span> <span class="comment">-- always show tabline</span></span><br><span class="line">vim.opt.cursorline = <span class="literal">true</span></span><br><span class="line">vim.opt.cmdheight = <span class="number">1</span></span><br><span class="line">vim.opt.pumheight = <span class="number">10</span> <span class="comment">-- pop up menu height</span></span><br><span class="line">vim.opt.showmode = <span class="literal">false</span> <span class="comment">-- with lualine, we don&#x27;t need to show things like -- insert -- anymore</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>showtabline</code>：設為 0 時永不顯示，1 時只有當存在兩個 tab 以上時才會顯示，2 則永遠顯示。</li>
+<li><code>cursorline</code>：開啓會將遊標所在行的行數加上醒目提示，如果想將所在列也標亮，可以調整<code>cursorcolumn</code>選項。</li>
+<li><code>pumheight</code>：顯示彈出式菜單的最大行數。（之後使用 cmp 功能時才會有比較明顯的體現。）</li>
+</ul>
+<h4 id="auto-commenting"><a href="#auto-commenting" class="headerlink" title="auto-commenting"></a>auto-commenting</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">vim.cmd(<span class="string">&quot;autocmd bufenter * set formatoptions-=cro&quot;</span>) <span class="comment">-- disable auto-commenting new lines</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你希望在註解行上用例如<code>o</code>或<code>O</code>等指令新增空白行時，會自動加上註解標籤的話，可以把這行刪掉，而我不喜歡它，所以我這裡把它關掉了。</p>
+<hr>
+<h2 id="依賴環境安裝與設定"><a href="#依賴環境安裝與設定" class="headerlink" title="依賴環境安裝與設定"></a>依賴環境安裝與設定</h2><p>還記得我們之前提過的<code>:checkhealth</code>嗎，如果你現在打開它，應該會發現在 provider 一區裡，經過我們剛才對剪貼簿的處理，Clipboard 已經顯示為 OK 了：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061834582.png"></p>
+<p>接下來，由於我經常使用到 Python3 的開發環境，加上之後安裝的許多套件也可能依賴於 Python3 provider，所以我這裡會將它安裝和設定起來。</p>
+<h3 id="安裝-python3"><a href="#安裝-python3" class="headerlink" title="安裝 python3"></a>安裝 python3</h3><p>Ubuntu 22.04 中應該已經自帶 python3.10，如果沒有的話，可以透過以下的指令下載。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install software-properties-common -y</span><br><span class="line">sudo add-apt-repository ppa:deadsnakes/ppa</span><br><span class="line">sudo apt-get install python3.10 -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝-pip"><a href="#安裝-pip" class="headerlink" title="安裝 pip"></a>安裝 pip</h3><p>pip 是 Python 的軟體包管理工具，是使用 Python 必須安裝的工具之一。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python3-pip -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝-pynvim"><a href="#安裝-pynvim" class="headerlink" title="安裝 pynvim"></a>安裝 pynvim</h3><p>pynvim 就是 Neovim 之所以依賴於 Python3 的原因了，他是 Neovim 在 python 中的套件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m pip install --user --upgrade pynvim</span><br></pre></td></tr></table></figure>
+
+<p>通常到這裏就結束了，不過如果你的系統中存在多個版本的 Python 的話，建議到 <code>options.lua</code> 中加入類似下面這條設定，來指定 Neovim 取用的 Python 路徑：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">vim.g.python3_host_prog = <span class="string">&quot;/bin/pythin3&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，再看<code>:checkhealth provider</code>的話，應該就可以看到 Python3 一區也都變 OK 了，而至於其他 provider，由於目前還沒用到，加上我其實也對它們不是很了解，所以我沒有多做處理了。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，Neovim 終於至少看起來像個人，但離稱手還是有相當大的差距，而在下一章裡，我將會介紹如何設定快捷鍵（Keymaps）。</p>
+<p>與這章的後半段類似，我會分享並說明我的 keymaps 設定，裡頭有許多我覺得實用甚至堪稱魔法的神奇設定，將在下一章誠心推薦給各位。</p>
+<p><big>上一篇： <a href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a></big></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/87AXw9Quy9U?si=smiJPQVs8mFlnQJK">Understanding Neovim #1 - Installation</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/Cp0iap9u29c?si=vPM9KSbds-b93zwS">Understanding Neovim #6 - Taming the vim.opt Madness</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/hY5-Q6NxQgY?si=5e_ffJc2o4d4h5t3">Neovim - Setting options with Lua</a></li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Neovim/">Neovim</a></div><div class="post_share"></div></div><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-17</div><div class="title">安裝 Neovim 與 Nerd Fonts</div></div></a></div><div><a href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181514879.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-18</div><div class="title">救救我啊我救我 —— help 與 checkhealth</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Imp1ication</div><div class="author-info__description">弦外之音</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Imp1ication" target="_blank" title="Github"><i class="fab fa-github" style="color: #65bcff;"></i></a><a class="social-icon" href="mailto:1mplicationxwzi@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">部落格終於上線啦！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E8%A8%AD%E5%AE%9A%E6%96%87%E4%BB%B6%E8%88%87%E5%BC%95%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">建立設定文件與引用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E6%96%87%E4%BB%B6%E5%9C%A8%E5%93%AA%E8%A3%A1%EF%BC%9F"><span class="toc-number">2.1.</span> <span class="toc-text">設定文件在哪裡？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E6%96%87%E4%BB%B6%E7%B5%90%E6%A7%8B"><span class="toc-number">2.2.</span> <span class="toc-text">建立文件結構</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E8%A8%AD%E5%AE%9A%E6%96%87%E4%BB%B6"><span class="toc-number">2.3.</span> <span class="toc-text">引用設定文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A4%8E%E8%A8%AD%E5%AE%9A%E8%AA%AA%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">基礎設定說明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Lua-API"><span class="toc-number">3.1.</span> <span class="toc-text">Lua API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A8%AD%E5%AE%9A%E9%81%B8%E9%A0%85%E7%9A%84%E9%AD%94%E6%B3%95-%E2%80%94%E2%80%94-options"><span class="toc-number">3.2.</span> <span class="toc-text">設定選項的魔法 —— :options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#options-lua-%E5%AE%8C%E6%95%B4%E8%AA%AA%E6%98%8E"><span class="toc-number">3.3.</span> <span class="toc-text">options.lua 完整說明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#basic"><span class="toc-number">3.3.1.</span> <span class="toc-text">basic</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#backup"><span class="toc-number">3.3.2.</span> <span class="toc-text">backup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#line-number-and-line-column"><span class="toc-number">3.3.3.</span> <span class="toc-text">line number and line column</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tab-and-indentation"><span class="toc-number">3.3.4.</span> <span class="toc-text">tab and indentation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#wrap-and-scrolloff"><span class="toc-number">3.3.5.</span> <span class="toc-text">wrap and scrolloff</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#search"><span class="toc-number">3.3.6.</span> <span class="toc-text">search</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#splitting-windows"><span class="toc-number">3.3.7.</span> <span class="toc-text">splitting windows</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#appearance"><span class="toc-number">3.3.8.</span> <span class="toc-text">appearance</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#auto-commenting"><span class="toc-number">3.3.9.</span> <span class="toc-text">auto-commenting</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B3%B4%E7%92%B0%E5%A2%83%E5%AE%89%E8%A3%9D%E8%88%87%E8%A8%AD%E5%AE%9A"><span class="toc-number">4.</span> <span class="toc-text">依賴環境安裝與設定</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-python3"><span class="toc-number">4.1.</span> <span class="toc-text">安裝 python3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-pip"><span class="toc-number">4.2.</span> <span class="toc-text">安裝 pip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%9D-pynvim"><span class="toc-number">4.3.</span> <span class="toc-text">安裝 pynvim</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%8C%E8%A8%98"><span class="toc-number">5.</span> <span class="toc-text">後記</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">6.</span> <span class="toc-text">參考資料</span></a></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-layer-group"></i><span>Neovim 設定全紀錄</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a><time datetime="2024-02-16T16:00:00.000Z" title="Created 2024-02-17 00:00:00">2024-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a><time datetime="2024-02-17T16:00:00.000Z" title="Created 2024-02-18 00:00:00">2024-02-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a><time datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a><time datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a><time datetime="2024-02-17T16:00:00.000Z" title="Created 2024-02-18 00:00:00">2024-02-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a><time datetime="2024-02-16T16:00:00.000Z" title="Created 2024-02-17 00:00:00">2024-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/03/%E6%A6%A8%E4%B9%BE%E8%98%8B%E6%9E%9C%E7%9A%84%E5%89%A9%E9%A4%98%E5%83%B9%E5%80%BC%EF%BC%8CMacBuuk-Air%E7%9A%84%E8%AA%95%E7%94%9F/" title="榨乾蘋果的剩餘價值，MacBuuk Air的誕生">榨乾蘋果的剩餘價值，MacBuuk Air的誕生</a><time datetime="2023-01-02T16:00:00.000Z" title="Created 2023-01-03 00:00:00">2023-01-03</time></div></div></div></div></div></div></main><footer id="footer" style="background: #1e2030"><div id="footer-wrap"><div class="copyright">&copy;2024 By Imp1ication</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>
