@@ -1,16 +1,16 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>About Me | Imp1ication.com</title><meta name="author" content="Imp1ication"><meta name="copyright" content="Imp1ication"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="找安找安（´◔​∀◔&#96;) ~ 我是弦外之音 ~  興趣使然的碼農，一個喜歡寫字的小小肥宅，夢想是有朝一日能把微波爐戴在頭上。  👾 個人資料&emsp;&emsp; Name：弦外之音（Imp1ication） &emsp;&emsp; Email：&#49;&#x6d;&#x70;&#108;&#x69;&#99;&#97;&#x74;&#x69;&#111;&#x6e;&#x78;&amp;#119">
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Neovim 設定全紀錄 | Imp1ication.com</title><meta name="author" content="Imp1ication"><meta name="copyright" content="Imp1ication"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="讓文字編輯器成為你的形狀  👾 前言踩進 Neovim 的坑，跌跌撞撞至今也過了快三年，在即將從大學畢業的這年，同時又適逢套件管理器從 Packer 向 Lazy 的遷移、以及 null-ls 的封存，種種原因下，我打算重建我的 Neovim 設定，並將其過程記錄成冊，以供未來查閱，以及分享給各位對 Neovim 有興趣的朋友。     🕹️ 目錄&emsp; 基本設定 安裝 Neovim 與">
 <meta property="og:type" content="website">
-<meta property="og:title" content="About Me">
-<meta property="og:url" content="https://imp1ication.github.io/about/">
+<meta property="og:title" content="Neovim 設定全紀錄">
+<meta property="og:url" content="https://imp1ication.github.io/series/neovim_toc">
 <meta property="og:site_name" content="Imp1ication.com">
-<meta property="og:description" content="找安找安（´◔​∀◔&#96;) ~ 我是弦外之音 ~  興趣使然的碼農，一個喜歡寫字的小小肥宅，夢想是有朝一日能把微波爐戴在頭上。  👾 個人資料&emsp;&emsp; Name：弦外之音（Imp1ication） &emsp;&emsp; Email：&#49;&#x6d;&#x70;&#108;&#x69;&#99;&#97;&#x74;&#x69;&#111;&#x6e;&#x78;&amp;#119">
+<meta property="og:description" content="讓文字編輯器成為你的形狀  👾 前言踩進 Neovim 的坑，跌跌撞撞至今也過了快三年，在即將從大學畢業的這年，同時又適逢套件管理器從 Packer 向 Lazy 的遷移、以及 null-ls 的封存，種種原因下，我打算重建我的 Neovim 設定，並將其過程記錄成冊，以供未來查閱，以及分享給各位對 Neovim 有興趣的朋友。     🕹️ 目錄&emsp; 基本設定 安裝 Neovim 與">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://imp1ication.github.io/img/cover.jpg">
-<meta property="article:published_time" content="2024-02-27T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-27T16:00:00.000Z">
+<meta property="article:published_time" content="2024-02-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-03-07T14:16:24.981Z">
 <meta property="article:author" content="Imp1ication">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://imp1ication.github.io/img/cover.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://imp1ication.github.io/about/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://imp1ication.github.io/img/cover.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://imp1ication.github.io/series/neovim_toc"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":5,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
@@ -50,12 +50,12 @@
   },
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: 'About Me',
+  title: 'Neovim 設定全紀錄',
   isPost: false,
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-02-28 00:00:00'
+  postUpdate: '2024-03-07 22:16:24'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -173,92 +173,32 @@
     document.addEventListener('pjax:send', () => { preloader.initLoading() })
     document.addEventListener('pjax:complete', () => { preloader.endLoading() })
   }
-})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/articles/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/articles/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page fixed" id="page-header" style="background-image: url('/img/banner.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Imp1ication.com"><span class="site-name">Imp1ication.com</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/articles/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/articles/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">About Me</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><h2 align="center">找安找安（´◔​∀◔`) ~ 我是弦外之音 ~</h2>
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/articles/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/articles/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page fixed" id="page-header" style="background-image: url('/img/banner.png')"><nav id="nav"><span id="blog-info"><a href="/" title="Imp1ication.com"><span class="site-name">Imp1ication.com</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/articles/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/articles/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">Neovim 設定全紀錄</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><h2 align="center">讓文字編輯器成為你的形狀</h2>
 
-<p align="center">興趣使然的碼農，一個喜歡寫字的小小肥宅，夢想是有朝一日能把微波爐戴在頭上。</p>
+<h2 id="👾-前言"><a href="#👾-前言" class="headerlink" title="👾 前言"></a>👾 前言</h2><p>踩進 Neovim 的坑，跌跌撞撞至今也過了快三年，在即將從大學畢業的這年，同時又適逢套件管理器從 Packer 向 Lazy 的遷移、以及 null-ls 的封存，種種原因下，我打算重建我的 Neovim 設定，並將其過程記錄成冊，以供未來查閱，以及分享給各位對 Neovim 有興趣的朋友。</p>
+<!-- ## 適用對象 -->
 
-<h2 id="👾-個人資料"><a href="#👾-個人資料" class="headerlink" title="👾 個人資料"></a>👾 個人資料</h2><p>&emsp;&emsp;<strong><i class="fa-sharp fa-solid fa-dragon"></i> Name</strong>：弦外之音（Imp1ication）</p>
-<p>&emsp;&emsp;<strong><i class="fa-solid fa-envelope"></i> Email</strong>：<a href="mailto:&#49;&#x6d;&#x70;&#108;&#x69;&#99;&#97;&#x74;&#x69;&#111;&#x6e;&#x78;&#119;&#x7a;&#105;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#49;&#x6d;&#x70;&#108;&#x69;&#99;&#97;&#x74;&#x69;&#111;&#x6e;&#x78;&#119;&#x7a;&#105;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a></p>
-<p>&emsp;&emsp;<strong><i class="fa-brands fa-github"></i> GitHub</strong>：<a target="_blank" rel="noopener" href="https://github.com/Imp1ication">https://github.com/Imp1ication</a></p>
-<hr>
-<h2 id="🥦-技能樹"><a href="#🥦-技能樹" class="headerlink" title="🥦 技能樹"></a>🥦 技能樹</h2><h3 id="emsp-emsp-程式語言"><a href="#emsp-emsp-程式語言" class="headerlink" title="&emsp;&emsp;程式語言"></a>&emsp;<i class="fa-solid fa-laptop-code"></i>&emsp;程式語言</h3><ul>
-<li><p><strong>常用語言</strong>：近期主要使用的語言。</p>
-<blockquote>
-<p>C&#x2F;C++、Python3</p>
-</blockquote>
-</li>
-<li><p><strong>曾經使用</strong>：曾作為主要語言完成專案，但已有一段時間未使用。</p>
-<blockquote>
-<p>Java、C#、Go</p>
-</blockquote>
-</li>
-<li><p><strong>偶爾使用</strong>：僅於特定專案做為輔助語言使用。</p>
-<blockquote>
-<ul>
-<li>Lua：Neovim 配置文件撰寫。</li>
-<li>Shell Script：<code>.dotfiles</code> 管理與系統配置維護。</li>
-<li>HTML、CSS：個人部落格維護。</li>
+<!-- ## 結果預覽 -->
+
+<h2 id="🕹️-目錄"><a href="#🕹️-目錄" class="headerlink" title="🕹️ 目錄"></a>🕹️ 目錄</h2><h3 id="emsp-基本設定"><a href="#emsp-基本設定" class="headerlink" title="&emsp; 基本設定"></a>&emsp;<i class="fa-solid fa-screwdriver-wrench"></i> 基本設定</h3><ul>
+<li><a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a></li>
+<li><a href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a></li>
+<li><a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a></li>
 </ul>
-</blockquote>
-</li>
+<h3 id="emsp-程式編輯"><a href="#emsp-程式編輯" class="headerlink" title="&emsp; 程式編輯"></a>&emsp;<i class="fa-solid fa-laptop-code"></i> 程式編輯</h3><pre><code>等待更新中 ...
+</code></pre>
+<h3 id="emsp-常用套件"><a href="#emsp-常用套件" class="headerlink" title="&emsp; 常用套件"></a>&emsp;<i class="fa-solid fa-toolbox"></i> 常用套件</h3><pre><code>等待更新中 ...
+</code></pre>
+<!-- ## 更新記錄 -->
+
+<h2 id="📚-參考資料"><a href="#📚-參考資料" class="headerlink" title="📚 參考資料"></a>📚 參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://neovim.io/">Neovim 官網</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtube.com/playlist?list=PLx2ksyallYzW4WNYHD9xOFrPRYGlntAft&si=oHVFntVuy9liQap6">Understanding Neovim</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtube.com/playlist?list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ&si=2tXFYyRIUEvhPzJf">Neovim from Scratch</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/live/KGJV0n70Mxs?si=OOS4xqrqTcUXKOca">Ultimate Neovim Config | 2024 | Launch.nvim</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/6mxWayq-s9I?si=aH-s_AFF1-i92dRA">How To Use lazy.nvim For A Simple And Amazing Neovim Config</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/571617696">学习 Neovim 全 lua 配置</a></li>
 </ul>
-<h3 id="emsp-emsp-工具應用"><a href="#emsp-emsp-工具應用" class="headerlink" title="&emsp;&emsp;工具應用"></a>&emsp;<i class="fa-solid fa-screwdriver-wrench"></i>&emsp;工具應用</h3><ul>
-<li><p><strong>開發工具</strong>：Neovim、Visual Studio Code</p>
-</li>
-<li><p><strong>系統環境</strong>：Linux、WSL、VMware</p>
-</li>
-<li><p><strong>版本控制</strong>：Git</p>
-</li>
-<li><p><strong>筆記文檔</strong>：Markdown、HackMD</p>
-</li>
-<li><p><strong>輔助工具</strong>：Copilot、ChatGPT</p>
-</li>
-</ul>
-<h3 id="emsp-emsp-語言能力"><a href="#emsp-emsp-語言能力" class="headerlink" title="&emsp;&emsp;語言能力"></a>&emsp;<i class="fa-solid fa-language"></i>&emsp;語言能力</h3><ul>
-<li><p><strong>中文</strong>：母語。</p>
-</li>
-<li><p><strong>英文</strong>：中等。</p>
-<blockquote>
-<ul>
-<li><strong>聽力</strong>：良好－能理解大部分英文對話，以及相關領域的學術內容。</li>
-<li><strong>口語</strong>：良好－能進行基本流暢的對談，但用字略顯簡單。</li>
-<li><strong>閱讀</strong>：中等－能進行基本閱讀，與部分相關領域的英文文獻和內容。</li>
-<li><strong>寫作</strong>：中等－需要較長的時間思考，較仰賴輔助工具的使用。</li>
-</ul>
-</blockquote>
-</li>
-</ul>
-<hr>
-<h2 id="🏰-學習經歷"><a href="#🏰-學習經歷" class="headerlink" title="🏰 學習經歷"></a>🏰 學習經歷</h2><h3 id="2020-2024-emsp-國立臺灣師範大學-資訊工程學系"><a href="#2020-2024-emsp-國立臺灣師範大學-資訊工程學系" class="headerlink" title=" 2020-2024&emsp;國立臺灣師範大學 - 資訊工程學系"></a><i class="fa-solid fa-calendar-days"></i> 2020-2024&emsp;國立臺灣師範大學 - 資訊工程學系</h3><h4 id="特殊經歷"><a href="#特殊經歷" class="headerlink" title="特殊經歷"></a>特殊經歷</h4><ul>
-<li><p>2024 臺師大教育數據啓航創意競賽－實踐創作組 <strong>（晉級決賽 -&gt; 佳作）</strong></p>
-<blockquote>
-<ul>
-<li><strong>主題</strong>：《大學排名與熱門領域討論站》</li>
-<li><strong>摘要</strong>：使用爬蟲技術自 <a target="_blank" rel="noopener" href="https://www.topuniversities.com/">Top Universities</a> 與 <a target="_blank" rel="noopener" href="https://arxiv.org/">Arxiv</a> 網站中爬取大學排名與各領域論文刊登數資料，經清洗與正規化後存入資料庫，並將其視覺化呈現於網站中。</li>
-<li><strong>負責內容</strong>：資料爬蟲、清洗、與正規化腳本撰寫。</li>
-<li><strong>技術</strong>：Python3、BeautifulSoup、Selenium、Scrapy</li>
-</ul>
-</blockquote>
-</li>
-<li><p>2023 臺師大資工專題競賽<strong>（晉級決賽 -&gt; 佳專題佳作獎）</strong></p>
-<blockquote>
-<ul>
-<li><strong>主題</strong>：《Spider Attack 遊戲人工智慧研究》</li>
-<li><strong>摘要</strong>：設計與分析 <strong>進化演算法（Evolutionary algorithm）</strong> ，包含基因演算法（Genetic Algorithm）、差分進化演算法（Differential Evolution Algorithm）、與基因表達規劃法（Gene Expression Programming）對於複雜遊戲 AI 最佳化之成效。</li>
-<li><strong>負責內容</strong>：算法引擎與遊戲環境建置、演算法設計與實做、實驗設計與成效分析。</li>
-<li><strong>技術</strong>：C++、Java</li>
-</ul>
-</blockquote>
-</li>
-<li><p>2022 臺灣文學數位遊戲腳本徵選 <strong>（佳作）</strong></p>
-</li>
-<li><p>2020 109 學年度第一學期 <strong>書卷獎</strong></p>
-</li>
-</ul>
-<h3 id="2014-2017-emsp-臺北市立建國高級中學"><a href="#2014-2017-emsp-臺北市立建國高級中學" class="headerlink" title=" 2014-2017&emsp;臺北市立建國高級中學"></a><i class="fa-solid fa-calendar-days"></i> 2014-2017&emsp;臺北市立建國高級中學</h3><hr>
-<h2 id="📚-專案經歷"><a href="#📚-專案經歷" class="headerlink" title="📚 專案經歷"></a>📚 專案經歷</h2><h3 id="emsp-School-Project"><a href="#emsp-School-Project" class="headerlink" title="&emsp;School Project"></a><i class="fa-solid fa-graduation-cap"></i>&emsp;School Project</h3><p>正在等待更新…</p>
-<h3 id="emsp-Hexo-Blog-連結"><a href="#emsp-Hexo-Blog-連結" class="headerlink" title="&emsp;Hexo Blog 連結"></a><i class="fa-solid fa-blog"></i>&emsp;Hexo Blog <small><a href="https://imp1ication.github.io/">連結</a></small></h3><p>正在等待更新…</p>
-<h3 id="emsp-Dotfiles-連結"><a href="#emsp-Dotfiles-連結" class="headerlink" title="&emsp;Dotfiles 連結"></a><i class="fa-solid fa-book-skull"></i>&emsp;Dotfiles <small><a target="_blank" rel="noopener" href="https://github.com/Imp1ication/.dotfiles">連結</a></small></h3><p>正在等待更新…</p>
 </div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Imp1ication</div><div class="author-info__description">弦外之音</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Imp1ication" target="_blank" title="Github"><i class="fab fa-github" style="color: #65bcff;"></i></a><a class="social-icon" href="mailto:1mplicationxwzi@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">《Neovim 設定全紀錄》系列目標兩週一更！</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a><time datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a><time datetime="2024-02-17T16:00:00.000Z" title="Created 2024-02-18 00:00:00">2024-02-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a><time datetime="2024-02-16T16:00:00.000Z" title="Created 2024-02-17 00:00:00">2024-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/01/03/%E6%A6%A8%E4%B9%BE%E8%98%8B%E6%9E%9C%E7%9A%84%E5%89%A9%E9%A4%98%E5%83%B9%E5%80%BC%EF%BC%8CMacBuuk-Air%E7%9A%84%E8%AA%95%E7%94%9F/" title="榨乾蘋果的剩餘價值，MacBuuk Air的誕生">榨乾蘋果的剩餘價值，MacBuuk Air的誕生</a><time datetime="2023-01-02T16:00:00.000Z" title="Created 2023-01-03 00:00:00">2023-01-03</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>Categories</span>
