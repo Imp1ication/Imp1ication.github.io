@@ -946,4 +946,102 @@
         <tag>Neovim</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Data Mining Projects</title>
+    <url>/2024/03/14/projects-20240314-Data-Mining-Projects/</url>
+    <content><![CDATA[<h2 align="center"><i class="fa-solid fa-magnifying-glass-chart"></i> Mini Project</h2>
+
+<h3 id="主題：Pima-Indians-Diabetes-Database-Classification"><a href="#主題：Pima-Indians-Diabetes-Database-Classification" class="headerlink" title="主題：Pima Indians Diabetes Database Classification"></a>主題：Pima Indians Diabetes Database Classification</h3><p>專案連結：<a href="https://github.com/Imp1ication/Data-Mining-mini-project">Data Mining mini project</a></p>
+<h4 id="內容說明："><a href="#內容說明：" class="headerlink" title="內容說明："></a>內容說明：</h4><p>完成 <a href="https://www.kaggle.com/competitions/diabetes-classification/overview">Kaggle Competition: Diabetes Classification</a> 並撰寫一份詳細報告，對資料集特徵進行說明與分析，以及解釋實做方式與結果。</p>
+<h4 id="實做摘要："><a href="#實做摘要：" class="headerlink" title="實做摘要："></a>實做摘要：</h4><p>首先，我在報告中對資料集 Pima Indians Diabetes 進行了完整的特徵說明與分類，並做了初步的缺失值檢查。</p>
+<p>接著，我對特徵進行了異常值分析處理、計算了各特徵的 Person Correlation Coefficient 以進行關聯性分析、並使用了 StandardScaler 來將特徵的數值標準化。</p>
+<p>最後，我使用 Scikit-learn 中的 Logistic Regression 進行分類實做，並觀察 Confusion Matrix 與計算 Precision、Recall、F1 Score、以及各特徵的回歸係數，以進行結果分析。</p>
+<p>另外，報告中使用了數張 Matplotlib 圖表進行了資料的視覺化分析。</p>
+<h4 id="技術："><a href="#技術：" class="headerlink" title="技術："></a>技術：</h4><ul>
+<li>Python3：主要使用語言。</li>
+<li>Scikit-learn：資料分析與機器學習套件。</li>
+<li>Matplotlib：圖表繪製。</li>
+<li>Classification：使用了 Logistic Regression 作為分類方法。</li>
+</ul>
+<hr>
+<h2 align="center"><i class="fa-solid fa-magnifying-glass-chart"></i> Final Project</h2>
+
+<h3 id="主題：K-Means-Clustering-and-hit-song-science"><a href="#主題：K-Means-Clustering-and-hit-song-science" class="headerlink" title="主題：K-Means Clustering and hit song science"></a>主題：K-Means Clustering and hit song science</h3><p>專案連結：<a href="https://github.com/Imp1ication/data_mining_final_project">Data Mining Final Project</a></p>
+<h4 id="內容說明：-1"><a href="#內容說明：-1" class="headerlink" title="內容說明："></a>內容說明：</h4><ol>
+<li><p>實做 K-Means Clustering 類別，包含不同的算法策略，並對其進行效能分析。接著，</p>
+</li>
+<li><p>對資料集 <a href="https://www.kaggle.com/datasets/multispiros/34740-hit-and-nonhit-songs-spotify-features/data">Hit song science</a> 進行分群分析，並撰寫一份完整的分析報告。</p>
+</li>
+</ol>
+<h4 id="實做摘要：-1"><a href="#實做摘要：-1" class="headerlink" title="實做摘要："></a>實做摘要：</h4><p>我參照 Scikit-learn 的 K-Means 類別界面實做了一個完整的 K-Means 類別，以及一個用以回傳結果的資料類別，其包含了數種可調參數、兩種初始化中心算法 <code>random</code> 與 <code>kmeans++</code>、兩種迭代算法 <code>lloyd</code> 與 <code>elkan</code>、以及，我還額外實做了平行處理的方法。</p>
+<p>然後，我對 K-Means 進行了不同算法組合的性能分析，並使用此類別對資料集 Hit song science 進行了完整的分群分析。</p>
+<h4 id="技術：-1"><a href="#技術：-1" class="headerlink" title="技術："></a>技術：</h4><ul>
+<li>Python3：主要使用語言。</li>
+<li>Scikit-learn：資料分析與機器學習套件。</li>
+<li>Matplotlib：圖表繪製。</li>
+<li>Clustering：K-Means 分群分析。</li>
+<li>multiprocessing：在算法中額外進行了平行處理。</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>Projects</category>
+      </categories>
+      <tags>
+        <tag>NTNU</tag>
+        <tag>Project</tag>
+        <tag>Python3</tag>
+        <tag>Data Mining</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《大學排名與熱門領域討論站》</title>
+    <url>/2024/03/15/projects-20240314-LATIA112-1-Final/</url>
+    <content><![CDATA[<h2 id="主題：《大學排名與熱門領域討論站》"><a href="#主題：《大學排名與熱門領域討論站》" class="headerlink" title="主題：《大學排名與熱門領域討論站》"></a>主題：《大學排名與熱門領域討論站》</h2><p>專題程式連結：<a href="https://github.com/LATIA112-1-Finial-Project">LATIA112-1-Finial-Project</a></p>
+<p>網頁Demo影片：</p>
+<div align="center">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/vji-Jr7m3Fs?si=URe0rJxizokf6IyJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+<p>專題講解影片：</p>
+<div align="center">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/7zxP9zIWnw0?si=e0Xkc7MMVcL1fWp1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+<h4 id="內容說明："><a href="#內容說明：" class="headerlink" title="內容說明："></a>內容說明：</h4><p>本專題為臺師大「學習分析工具實務應用」課程期末小組專題之成果，並於後續投稿了「臺師大教育數據啓航創意競賽－實踐創作組」，最終晉級決賽並獲得佳作。</p>
+<p>本網站目的為解決網路上大學排名與領域趨勢雜亂、資料不易比對之問題，以利學生客製化並省時選擇未來目標。特色功能有：使用者創建帳號後，可透過互動圖表自定義交叉比較，並收藏最愛，更設有討論串促進資訊交流。</p>
+<h4 id="實做摘要："><a href="#實做摘要：" class="headerlink" title="實做摘要："></a>實做摘要：</h4><ol>
+<li><p>使用爬蟲技術（Selenium、Scrapy）將大學排名網站的資料與論文刊登數爬下來。</p>
+</li>
+<li><p>將有缺失與干擾判讀的資料清洗並正規化。</p>
+</li>
+<li><p>將正規化後的資料存放進資料庫，以便後續使用語法與 API 取出對應資料。</p>
+</li>
+<li><p>將取出的資料透過視覺化工具呈現。</p>
+</li>
+<li><p>視覺化的呈現需要有互動增減欲觀察資料、加入最愛等功能，以利客製化與可重複使用性。</p>
+</li>
+</ol>
+<h4 id="負責內容："><a href="#負責內容：" class="headerlink" title="負責內容："></a>負責內容：</h4><ol>
+<li><p>使用 Python3 爬蟲技術爬取 <a href="https://www.topuniversities.com/">Top University</a> 與 <a href="https://arxiv.org/">Arxiv</a> 資訊。</p>
+</li>
+<li><p>將爬取後的資料進行清洗與正規化。</p>
+</li>
+</ol>
+<h4 id="技術："><a href="#技術：" class="headerlink" title="技術："></a>技術：</h4><ul>
+<li>Python3：主要使用語言。</li>
+<li>Web Crawler：使用了 Selenium 與 Scrapy 進行爬蟲。</li>
+<li>Data Cleaning：使用 pandas 進行資料清洗。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Projects</category>
+      </categories>
+      <tags>
+        <tag>NTNU</tag>
+        <tag>Project</tag>
+        <tag>Python3</tag>
+        <tag>Web Crawler</tag>
+      </tags>
+  </entry>
 </search>
