@@ -613,240 +613,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Data Mining Projects</title>
-    <url>/2024/03/14/projects-20240314-Data-Mining-Projects/</url>
-    <content><![CDATA[<h2 align="center"><i class="fa-solid fa-magnifying-glass-chart"></i> Mini Project</h2>
-
-<h3 id="主題：Pima-Indians-Diabetes-Database-Classification"><a href="#主題：Pima-Indians-Diabetes-Database-Classification" class="headerlink" title="主題：Pima Indians Diabetes Database Classification"></a>主題：Pima Indians Diabetes Database Classification</h3><p>專題連結：<a href="https://github.com/Imp1ication/Data-Mining-mini-project">Data Mining mini project</a></p>
-<h4 id="內容說明："><a href="#內容說明：" class="headerlink" title="內容說明："></a>內容說明：</h4><p>完成 <a href="https://www.kaggle.com/competitions/diabetes-classification/overview">Kaggle Competition: Diabetes Classification</a> 並撰寫一份詳細報告，對資料集特徵進行說明與分析，以及解釋實做方式與結果。</p>
-<h4 id="實做摘要："><a href="#實做摘要：" class="headerlink" title="實做摘要："></a>實做摘要：</h4><p>首先，我在報告中對資料集 Pima Indians Diabetes 進行了完整的特徵說明與分類，並做了初步的缺失值檢查。</p>
-<p>接著，我對特徵進行了異常值分析處理、計算了各特徵的 Person Correlation Coefficient 以進行關聯性分析、並使用了 StandardScaler 來將特徵的數值標準化。</p>
-<p>最後，我使用 Scikit-learn 中的 Logistic Regression 進行分類實做，並觀察 Confusion Matrix 與計算 Precision、Recall、F1 Score、以及各特徵的回歸係數，以進行結果分析。</p>
-<p>另外，報告中使用了數張 Matplotlib 圖表進行了資料的視覺化分析。</p>
-<h4 id="技術："><a href="#技術：" class="headerlink" title="技術："></a>技術：</h4><ul>
-<li>Python3：主要使用語言。</li>
-<li>Scikit-learn：資料分析與機器學習套件。</li>
-<li>Matplotlib：圖表繪製。</li>
-<li>Classification：使用了 Logistic Regression 作為分類方法。</li>
-</ul>
-<hr>
-<h2 align="center"><i class="fa-solid fa-magnifying-glass-chart"></i> Final Project</h2>
-
-<h3 id="主題：K-Means-Clustering-and-hit-song-science"><a href="#主題：K-Means-Clustering-and-hit-song-science" class="headerlink" title="主題：K-Means Clustering and hit song science"></a>主題：K-Means Clustering and hit song science</h3><p>專題連結：<a href="https://github.com/Imp1ication/data_mining_final_project">Data Mining Final Project</a></p>
-<h4 id="內容說明：-1"><a href="#內容說明：-1" class="headerlink" title="內容說明："></a>內容說明：</h4><ol>
-<li><p>實做 K-Means Clustering 類別，包含不同的算法策略，並對其進行效能分析。接著，</p>
-</li>
-<li><p>對資料集 <a href="https://www.kaggle.com/datasets/multispiros/34740-hit-and-nonhit-songs-spotify-features/data">Hit song science</a> 進行分群分析，並撰寫一份完整的分析報告。</p>
-</li>
-</ol>
-<h4 id="實做摘要：-1"><a href="#實做摘要：-1" class="headerlink" title="實做摘要："></a>實做摘要：</h4><p>我參照 Scikit-learn 的 K-Means 類別界面實做了一個完整的 K-Means 類別，以及一個用以回傳結果的資料類別，其包含了數種可調參數、兩種初始化中心算法 <code>random</code> 與 <code>kmeans++</code>、兩種迭代算法 <code>lloyd</code> 與 <code>elkan</code>、以及，我還額外實做了平行處理的方法。</p>
-<p>然後，我對 K-Means 進行了不同算法組合的性能分析，並使用此類別對資料集 Hit song science 進行了完整的分群分析。</p>
-<h4 id="技術：-1"><a href="#技術：-1" class="headerlink" title="技術："></a>技術：</h4><ul>
-<li>Python3：主要使用語言。</li>
-<li>Scikit-learn：資料分析與機器學習套件。</li>
-<li>Matplotlib：圖表繪製。</li>
-<li>Clustering：K-Means 分群分析。</li>
-<li>multiprocessing：在算法中額外進行了平行處理。</li>
-</ul>
-<hr>
-]]></content>
-      <categories>
-        <category>Projects</category>
-      </categories>
-      <tags>
-        <tag>NTNU</tag>
-        <tag>Project</tag>
-        <tag>Python3</tag>
-        <tag>Data Mining</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>設定文件結構與基礎功能設定</title>
-    <url>/2024/03/06/neovim-setup-20240306-nvim-basic-config/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 同時支援使用 VimScript 和 Lua 語言來撰寫設定文件，前者源自於它的老祖 Vim，而後者則是一種極爲輕量的 Scripting language，同時亦是 Neovim 有別於 Vim 最大的特點之一：它更加易學、具有更好的工具支持與易擴展性、以及更高的執行效能，這都是你應該選擇使用 Lua 而非 VimScript 原因，唯一導致你必須使用 VimScript 的理由大概只有，當你想與 Vim 共用你的這份設定文件的時候。</p>
-<p>有鑑於我已經不太使用 Vim 了，且我也更加喜歡 Lua 的設定模式，故本系列文都將使用 Lua 來撰寫設定文件，如果你是從 Vim 轉過來的 VimScript 使用者，放心，Lua 比 VimScript 簡單多了，順着設定文件讀下去，想必就能學會個七、八成了吧。</p>
-<p>在本章裡，我將介紹 Neovim 的設定文件結構，分享與說明我的基礎功能設定，以及安裝部分依賴程式以啟用特定功能，如果想直接看我的設定和設定項說明，也可以直接跳到 <big><strong>基礎設定說明</strong></big> 一段閱讀。</p>
-<p>而如果想直接複製我的設定文件，可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/options.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
-<hr>
-<h2 id="建立設定文件與引用"><a href="#建立設定文件與引用" class="headerlink" title="建立設定文件與引用"></a>建立設定文件與引用</h2><h3 id="設定文件在哪裡？"><a href="#設定文件在哪裡？" class="headerlink" title="設定文件在哪裡？"></a>設定文件在哪裡？</h3><p>遇事不決，先問 help page，讓我們輸入<code>:h config</code>，來看看有沒有什麼有用的資訊：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051613256.png"></p>
-<p>有了，在 Unix 環境下，Config file 的位置應該在 <code>~/.config/nvim/init.lua</code>，而這也就是 Neovim 每次在起動時，讀取設定文件的入口處。</p>
-<blockquote>
-<p>註：如果你在電腦中找不到文件，甚至相關的資料夾，請直接創建一個就可以了。</p>
-</blockquote>
-<p>接著，讓我們來試寫第一段 Lua 程式，看看 Neovim 會不會正常運行它吧，編輯 <code>init.lua</code>：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;World!&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>重新啓動 Neovim，你應該就可以看到文字訊息被打印出來了。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051652215.png"></p>
-<p>另外，如果你因爲輸入了什麼而錯過任何系統訊息，想重看完整內容的話，可以在開啟 Neovim 後，輸入<code>:message</code>來查看所有的歷史訊息，或是輸入<code>:&#123;count&#125; mes</code> 來查看最近的 {count} 筆訊息，例如<code>:1 mes</code>。</p>
-<h3 id="建立文件結構"><a href="#建立文件結構" class="headerlink" title="建立文件結構"></a>建立文件結構</h3><p>以下將是我們接下來會採用的文件結構：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051751496.png"></p>
-<ul>
-<li><p><code>init.lua</code>：作為設定文件的入口，負責引用其他的設定文件。</p>
-</li>
-<li><p><code>lua/</code>：當我們在 Lua 中引用其他文件時，Lua 會優先引用<code>./lua/?.lua</code>中的文件，如果不存在，才會去使用<code>./?.lua</code>中的文件。</p>
-<blockquote>
-<p>例如：當我們在<code>init.lua</code>中引用 <code>test.lua</code>時，Lua 會優先使用 <code>./lua/test.lua</code>，如果不存在，才會去使用<code>./test.lua</code>。</p>
-</blockquote>
-<blockquote>
-<p>我的建議是，為了避免將來管理混亂，還是乖乖地把所有設定檔放在<code>lua/</code>裡頭會比較好。</p>
-</blockquote>
-</li>
-<li><p><code>imp/</code>：這層資料夾將作為命名空間，用意是避免當 Lua 在引用其他套件的設定時，出現意外的文件名稱衝突，你可以將這個資料夾以任何你喜歡的方式命名，例如：<code>user/</code>、<code>launch/</code>、或是和我一樣以 id 的前三碼命名。</p>
-</li>
-<li><p><code>options.lua</code>：這將會是我們的第一個設定文件，用來對 Neovim 的基礎功能進行設定，詳細內容將在後續介紹。</p>
-</li>
-</ul>
-<h3 id="引用設定文件"><a href="#引用設定文件" class="headerlink" title="引用設定文件"></a>引用設定文件</h3><p>最後，讓我們來引用我們的第一個設定文件吧，編輯<code>init.lua</code>：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp/options&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>require(&quot;&#123;filename&#125;&quot;)</code>：此函式將會引用<code>./lua/&#123;filename&#125;.lua</code>。</li>
-</ul>
-<p>接著做為測試，讓我們編輯<code>options.lua</code>：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hi, I&#x27;m options&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>重啓 Neovim，此時我們就可以看到<code>option.lua</code>的內容被成功引用了：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051829196.png"></p>
-<hr>
-<h2 id="基礎設定說明"><a href="#基礎設定說明" class="headerlink" title="基礎設定說明"></a>基礎設定說明</h2><h3 id="Lua-API"><a href="#Lua-API" class="headerlink" title="Lua API"></a>Lua API</h3><p>Neovim 提供了一套完整的 Lua library，其所提供的 API 讓我們的設定文件可以輕鬆使用 Lua 語言來與 Neovim 進行交互。這些 API 大多都以<code>vim.</code>做爲前綴，例如：</p>
-<table>
-<thead>
-<tr>
-<th align="left">API</th>
-<th align="left">用途</th>
-<th align="left">例子</th>
-<th align="left">對應的 VimScript</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><code>vim.opt</code></td>
-<td align="left">用於設置和訪問全局選項</td>
-<td align="left"><code>vim.opt.number = true</code></td>
-<td align="left"><code>set number</code></td>
-</tr>
-<tr>
-<td align="left"><code>vim.g</code></td>
-<td align="left">用於設置和訪問全局變量</td>
-<td align="left"><code>vim.g.my_var = &#39;hello&#39;</code></td>
-<td align="left"><code>let g:my_var = &#39;hello&#39;</code></td>
-</tr>
-<tr>
-<td align="left"><code>vim.cmd</code></td>
-<td align="left">用於執行 Vim 命令（Ex 命令）</td>
-<td align="left"><code>vim.cmd(&quot;new&quot;)</code></td>
-<td align="left"><code>:new</code></td>
-</tr>
-</tbody></table>
-<p>所以，我們可以如此編輯 <code>options.lua</code>：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.opt.number = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>儲存後重新起動 Neovim，你就會發現左側的行號被開啓了。Neovim就是透過這樣的方式，在每次啟動時引用設定文件，並根據其中的設定來變更編輯器的行為。</p>
-<h3 id="設定選項的魔法-——-options"><a href="#設定選項的魔法-——-options" class="headerlink" title="設定選項的魔法 —— :options"></a>設定選項的魔法 —— <code>:options</code></h3><p>如果每次測試設定選項都必須要一項一項的查找，並反覆開關 Neovim 來測試效果的話，那也太麻煩了，所幸，Neovim 提供了即時改變選項的魔法<code>:options</code>：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403060122072.png"></p>
-<p>這裡提供了所有設定的分類目錄，以及各選項的簡述與選項內容，我們同樣可以使用<code>/</code>進行關鍵字搜尋，或將遊標移動到有興趣的目錄上，並按下<code>&lt;Enter&gt;</code>來查看目錄內容。</p>
-<p>接著，我們可以將遊標移動到設定的選項上，然後按下<code>&lt;Enter&gt;</code>，或甚至直接修改字串內容，就可以發現選項被套用了。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403060130243.png"></p>
-<p>這個設定不會被記錄，所以你可以隨意嘗試各種不同的設定，再將你喜歡的一條條記錄到設定檔中，我相當推薦各位有空的時候可以來這裡摸索一下，有時或許會發現一些神奇又實用的功能。</p>
-<h3 id="options-lua-完整說明"><a href="#options-lua-完整說明" class="headerlink" title="options.lua 完整說明"></a><code>options.lua</code> 完整說明</h3><p>以下我將對我的設定項目進行分類介紹，完整的設定檔可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/options.lua">這裡（我的 github）</a>查看，你可以直接複製再根據需求進行微調；而由於項目有點多，且有部分我已經標上註解了，所以我這裡只會對一些我認為比較重要的，以及比較容易有疑慮的選項進行說明。</p>
-<h4 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- basic --</span></span><br><span class="line">vim.opt.fileencoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">vim.opt.termguicolors = <span class="literal">true</span></span><br><span class="line">vim.opt.clipboard = <span class="string">&quot;unnamedplus&quot;</span> <span class="comment">-- allows nvim to access the OS clipboard</span></span><br><span class="line">vim.opt.mouse = <span class="string">&quot;a&quot;</span> <span class="comment">-- enabled mouse, &quot;a&quot; for all modes, and &quot;niv&quot; for normal, insert, visual mode</span></span><br><span class="line">vim.opt.timeoutlen = <span class="number">500</span> <span class="comment">-- Time in milliseconds to wait for a mapped sequence to complete</span></span><br><span class="line">vim.opt.virtualedit = <span class="string">&quot;block&quot;</span></span><br><span class="line">vim.opt.iskeyword:append(<span class="string">&quot;-&quot;</span>) <span class="comment">-- consider string-string as whole word</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>clipboard</code>：<br>剪貼簿應該是每個剛入坑 Neovim 的人都會遇到的問題之一，你會發現你在 Neovim 外複製的東西無法直接使用指令<code>p</code>來貼上，同樣地，我們在 Neovim 中使用<code>y</code>複製的東西，也無法貼到 Neovim 外的其他地方，這是因爲 Neovim 預設的剪貼簿和系統是不同的，所以我們需要對其進行設定。<br>另外，我們還需要在系統中額外安裝剪貼簿工具，才能讓它正常作用，我這裡使用的是 Xclip：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install xclip</span><br></pre></td></tr></table></figure>
-安裝完成後，複製貼上的功能應該就可以正常使用了。</li>
-<li><code>virtualedit</code>：<br>在預設情況，當我們使用 V-Block 模式時，我們是無法將遊標移動到行尾之後的部分的，即便圈選的其他行在這之後仍有內容：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403052341736.png"><br>而當我們將其設為<code>block</code>之後，Neovim 就可以將這樣的行尾視為空白一起圈選起來了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403052341135.png"><br>另外，它還提供了其他模式，不過我沒有使用過，所以這裡就不做贅述了。</li>
-<li><code>iskeyword:append(&quot;-&quot;)</code>：<br>當我們使用<code>w</code>等指令進行單字間的跳躍時，Neovim 會把一些被特殊符號（例如：’-‘）所隔開的字視為兩個獨立的單字，我們可以透過這條設定，來將被這些符號分割的文字視為一個完整的單字。</li>
-</ul>
-<h4 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- backup --</span></span><br><span class="line">vim.opt.swapfile = <span class="literal">false</span></span><br><span class="line">vim.opt.undofile = <span class="literal">true</span> <span class="comment">-- enable persistent undo</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>swapfile</code>：<br>當不正常關閉 Neovim 時，它會爲當下正在開啓的檔案建立備份，並在下一次開啓時詢問要不要復原備份，由於我有動不動就存檔的習慣，以及它有時不知道爲什麼會到處出現，讓我覺得很煩，所以我習慣將它關閉。</li>
-<li><code>undofile</code>：<br>如果你希望可以在關閉文件後，在下一次開啓時還可以保留上次的操作記錄，來讓你使用指令<code>u</code>和<code>C-r</code>來還原上&#x2F;下一步，那麼你可以選擇將這個選項開啓。</li>
-</ul>
-<h4 id="line-number-and-line-column"><a href="#line-number-and-line-column" class="headerlink" title="line number and line column"></a>line number and line column</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- line number and line column --</span></span><br><span class="line">vim.opt.number = <span class="literal">true</span></span><br><span class="line">vim.opt.relativenumber = <span class="literal">true</span></span><br><span class="line">vim.opt.numberwidth = <span class="number">2</span></span><br><span class="line">vim.opt.signcolumn = <span class="string">&quot;yes&quot;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>relativenumber</code>：<br>相對行號在進行跳轉和多行操作時很有用，我相當推薦將它開啓。而下圖則是官方提供的<code>number(nu)</code>和<code>relativenumber(rnu)</code>開關時的顯示對照圖：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061821655.png"></li>
-</ul>
-<h4 id="tab-and-indentation"><a href="#tab-and-indentation" class="headerlink" title="tab and indentation"></a>tab and indentation</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- tab and indentation --</span></span><br><span class="line">vim.opt.tabstop = <span class="number">4</span></span><br><span class="line">vim.opt.softtabstop = <span class="number">4</span></span><br><span class="line">vim.opt.shiftwidth = <span class="number">4</span></span><br><span class="line">vim.opt.smarttab = <span class="literal">false</span></span><br><span class="line">vim.opt.expandtab = <span class="literal">true</span> <span class="comment">-- expand tab to spaces</span></span><br><span class="line">vim.opt.autoindent = <span class="literal">true</span> <span class="comment">-- copy indent from current line when starting a new line</span></span><br><span class="line">vim.opt.smartindent = <span class="literal">true</span> <span class="comment">-- make above smarter</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>tabstop</code>：指的是當文件中有 tab 字符時，會將其顯示成幾個空格的寬度，以及當在 insert mode 按下<code>&lt;Tab&gt;</code>時，會將連續多少的空格轉換成 tab 字符。</li>
-<li><code>softtabstop</code>：當在 insert mode 按下<code>&lt;Tab&gt;</code>時，會插入多少個空格。</li>
-<li><code>shiftwidth</code>：當使用<code>&gt;&gt;</code>或<code>&lt;&lt;</code>進行縮排，以及新增一行時自動縮排所移動的空格數。<blockquote>
-<p>註：這可能有點複雜，舉個例子，當設定為<code>tabstop=8</code>，<code>softtabstop=4</code>，<code>shiftwidth=2</code>時，在 insert mode 中按第一次<code>&lt;Tab&gt;</code>會插入4個空格，再按一次則會將8個空格轉為1個 tab 字符，按第三次則會變成1個 tab 字符加上4個空格，以此類推。<br>而當我使用<code>&gt;&gt;</code>或<code>&lt;&lt;</code>，或是新增一行符合自動縮排的條件時，則整行會移動2個空格。</p>
-</blockquote>
-</li>
-<li><code>smarttab</code>：當開啓時，當在行首進入 insert mode 插入<code>&lt;Tab&gt;</code>時，會根據<code>shiftwidth</code>的設定來插入空格，否則會插入根據<code>softtabstop</code>來插入，我覺得這相當混淆人，所以我選擇把它關閉。</li>
-<li><code>expandtab</code>：將所有 tab 字符都擴展成空格，如果設為<code>true</code>，則上述的轉換規則就不適用了，所有的 tab 都會變成相應數量的空格。</li>
-</ul>
-<h4 id="wrap-and-scrolloff"><a href="#wrap-and-scrolloff" class="headerlink" title="wrap and scrolloff"></a>wrap and scrolloff</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- wrap and scrolloff --</span></span><br><span class="line">vim.opt.<span class="built_in">wrap</span> = <span class="literal">false</span> <span class="comment">-- line wrapping</span></span><br><span class="line">vim.opt.scrolloff = <span class="number">5</span> <span class="comment">-- minimal number of screen lines to keep above and below the cursor</span></span><br><span class="line">vim.opt.sidescrolloff = <span class="number">10</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>wrap</code>：當你的文字長度超出視窗邊框時，是否換行顯示。</li>
-<li><code>scrolloff</code>：當視窗 上&#x2F;下 捲動時，顯示在遊標 上&#x2F;下 的行數，如果你希望畫面捲動時，遊標始終在正中央的位置，可以選擇把它設成 999 之類的極大數字。</li>
-<li><code>sidescrolloff</code>：和 scrolloff 相同，不過是左右方向的。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061709486.png"></li>
-</ul>
-<h4 id="search"><a href="#search" class="headerlink" title="search"></a>search</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- search --</span></span><br><span class="line">vim.opt.hlsearch = <span class="literal">false</span></span><br><span class="line">vim.opt.incsearch = <span class="literal">true</span> <span class="comment">-- search while typing a search command</span></span><br><span class="line">vim.opt.smartcase = <span class="literal">true</span> <span class="comment">-- if you type a capital letter, it will be case sensitive</span></span><br><span class="line"><span class="comment">-- vim.opt.ignorecase = true</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>smartcase</code>：當搜尋的 pattern 中有大寫時，搜尋會變成 case sensitive，否則 ignore case，另外如果將它設為 true，它會覆蓋掉 ignorecase 選項的設定。</li>
-</ul>
-<h4 id="splitting-windows"><a href="#splitting-windows" class="headerlink" title="splitting windows"></a>splitting windows</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- splitting windows --</span></span><br><span class="line">vim.opt.splitright = <span class="literal">true</span> <span class="comment">-- split vertical widow to the right</span></span><br><span class="line">vim.opt.splitbelow = <span class="literal">true</span> <span class="comment">-- split horizontal widow to the below</span></span><br><span class="line">vim.opt.equalalways = <span class="literal">false</span> <span class="comment">-- don&#x27;t resize windows when splitting</span></span><br></pre></td></tr></table></figure>
-
-<p>當分割視窗時，Neovim 預設分割新視窗是開在左上的，這太反人類了，所以你可以透過第一二條設定來把它改成開在右下。</p>
-<p>而 <code>equalalways</code> 的作用則是當分割出新視窗時，要不要自動調整平分所有視窗的長寬，如果設為 false，則它只會將最右或最下側的視窗平分而已</p>
-<ul>
-<li><p><code>equalalways = true</code><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061737397.gif"></p>
-</li>
-<li><p><code>equalalways = false</code><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061739861.gif"></p>
-</li>
-</ul>
-<h4 id="appearance"><a href="#appearance" class="headerlink" title="appearance"></a>appearance</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- appearance --</span></span><br><span class="line">vim.opt.showtabline = <span class="number">2</span> <span class="comment">-- always show tabline</span></span><br><span class="line">vim.opt.cursorline = <span class="literal">true</span></span><br><span class="line">vim.opt.cmdheight = <span class="number">1</span></span><br><span class="line">vim.opt.pumheight = <span class="number">10</span> <span class="comment">-- pop up menu height</span></span><br><span class="line">vim.opt.showmode = <span class="literal">false</span> <span class="comment">-- with lualine, we don&#x27;t need to show things like -- insert -- anymore</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>showtabline</code>：設為 0 時永不顯示，1 時只有當存在兩個 tab 以上時才會顯示，2 則永遠顯示。</li>
-<li><code>cursorline</code>：開啓會將遊標所在行的行數加上醒目提示，如果想將所在列也標亮，可以調整<code>cursorcolumn</code>選項。</li>
-<li><code>pumheight</code>：顯示彈出式菜單的最大行數。（之後使用 cmp 功能時才會有比較明顯的體現。）</li>
-</ul>
-<h4 id="auto-commenting"><a href="#auto-commenting" class="headerlink" title="auto-commenting"></a>auto-commenting</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.cmd(<span class="string">&quot;autocmd bufenter * set formatoptions-=cro&quot;</span>) <span class="comment">-- disable auto-commenting new lines</span></span><br></pre></td></tr></table></figure>
-
-<p>如果你希望在註解行上用例如<code>o</code>或<code>O</code>等指令新增空白行時，會自動加上註解標籤的話，可以把這行刪掉，而我不喜歡它，所以我這裡把它關掉了。</p>
-<hr>
-<h2 id="依賴環境安裝與設定"><a href="#依賴環境安裝與設定" class="headerlink" title="依賴環境安裝與設定"></a>依賴環境安裝與設定</h2><p>還記得我們之前提過的<code>:checkhealth</code>嗎，如果你現在打開它，應該會發現在 provider 一區裡，經過我們剛才對剪貼簿的處理，Clipboard 已經顯示為 OK 了：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061834582.png"></p>
-<p>接下來，由於我經常使用到 Python3 的開發環境，加上之後安裝的許多套件也可能依賴於 Python3 provider，所以我這裡會將它安裝和設定起來。</p>
-<h3 id="安裝-python3"><a href="#安裝-python3" class="headerlink" title="安裝 python3"></a>安裝 python3</h3><p>Ubuntu 22.04 中應該已經自帶 python3.10，如果沒有的話，可以透過以下的指令下載。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install software-properties-common -y</span><br><span class="line">sudo add-apt-repository ppa:deadsnakes/ppa</span><br><span class="line">sudo apt-get install python3.10 -y</span><br></pre></td></tr></table></figure>
-
-<h3 id="安裝-pip"><a href="#安裝-pip" class="headerlink" title="安裝 pip"></a>安裝 pip</h3><p>pip 是 Python 的軟體包管理工具，是使用 Python 必須安裝的工具之一。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python3-pip -y</span><br></pre></td></tr></table></figure>
-
-<h3 id="安裝-pynvim"><a href="#安裝-pynvim" class="headerlink" title="安裝 pynvim"></a>安裝 pynvim</h3><p>pynvim 就是 Neovim 之所以依賴於 Python3 的原因了，他是 Neovim 在 python 中的套件。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m pip install --user --upgrade pynvim</span><br></pre></td></tr></table></figure>
-
-<p>通常到這裏就結束了，不過如果你的系統中存在多個版本的 Python 的話，建議到 <code>options.lua</code> 中加入類似下面這條設定，來指定 Neovim 取用的 Python 路徑：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.g.python3_host_prog = <span class="string">&quot;/bin/pythin3&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>至此，再看<code>:checkhealth provider</code>的話，應該就可以看到 Python3 一區也都變 OK 了，而至於其他 provider，由於目前還沒用到，加上我其實也對它們不是很了解，所以我沒有多做處理了。</p>
-<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，Neovim 終於至少看起來像個人，但離稱手還是有相當大的差距，而在下一章裡，我將會介紹如何設定快捷鍵（Keymaps）。</p>
-<p>與這章的後半段類似，我會分享並說明我的 keymaps 設定，裡頭有許多我覺得實用甚至堪稱魔法的神奇設定，將在下一章誠心推薦給各位。</p>
-<p><big>上一篇： <a href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a></big></p>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://youtu.be/87AXw9Quy9U?si=smiJPQVs8mFlnQJK">Understanding Neovim #1 - Installation</a></li>
-<li><a href="https://youtu.be/Cp0iap9u29c?si=vPM9KSbds-b93zwS">Understanding Neovim #6 - Taming the vim.opt Madness</a></li>
-<li><a href="https://youtu.be/hY5-Q6NxQgY?si=5e_ffJc2o4d4h5t3">Neovim - Setting options with Lua</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Neovim</category>
-      </categories>
-      <tags>
-        <tag>Neovim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>救救我啊我救我 —— help 與 checkhealth</title>
     <url>/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim 的坑不少，例如每個工程師都必然會遇到的千古難題：如何退出 Vim？</p>
@@ -985,6 +751,463 @@
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a></li>
 <li><a href="https://youtu.be/87AXw9Quy9U?si=smiJPQVs8mFlnQJK">Understanding Neovim #1 - Installation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>設定文件結構與基礎功能設定</title>
+    <url>/2024/03/06/neovim-setup-20240306-nvim-basic-config/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 同時支援使用 VimScript 和 Lua 語言來撰寫設定文件，前者源自於它的老祖 Vim，而後者則是一種極爲輕量的 Scripting language，同時亦是 Neovim 有別於 Vim 最大的特點之一：它更加易學、具有更好的工具支持與易擴展性、以及更高的執行效能，這都是你應該選擇使用 Lua 而非 VimScript 原因，唯一導致你必須使用 VimScript 的理由大概只有，當你想與 Vim 共用你的這份設定文件的時候。</p>
+<p>有鑑於我已經不太使用 Vim 了，且我也更加喜歡 Lua 的設定模式，故本系列文都將使用 Lua 來撰寫設定文件，如果你是從 Vim 轉過來的 VimScript 使用者，放心，Lua 比 VimScript 簡單多了，順着設定文件讀下去，想必就能學會個七、八成了吧。</p>
+<p>在本章裡，我將介紹 Neovim 的設定文件結構，分享與說明我的基礎功能設定，以及安裝部分依賴程式以啟用特定功能，如果想直接看我的設定和設定項說明，也可以直接跳到 <big><strong>基礎設定說明</strong></big> 一段閱讀。</p>
+<p>而如果想直接複製我的設定文件，可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/options.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
+<hr>
+<h2 id="建立設定文件與引用"><a href="#建立設定文件與引用" class="headerlink" title="建立設定文件與引用"></a>建立設定文件與引用</h2><h3 id="設定文件在哪裡？"><a href="#設定文件在哪裡？" class="headerlink" title="設定文件在哪裡？"></a>設定文件在哪裡？</h3><p>遇事不決，先問 help page，讓我們輸入<code>:h config</code>，來看看有沒有什麼有用的資訊：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051613256.png"></p>
+<p>有了，在 Unix 環境下，Config file 的位置應該在 <code>~/.config/nvim/init.lua</code>，而這也就是 Neovim 每次在起動時，讀取設定文件的入口處。</p>
+<blockquote>
+<p>註：如果你在電腦中找不到文件，甚至相關的資料夾，請直接創建一個就可以了。</p>
+</blockquote>
+<p>接著，讓我們來試寫第一段 Lua 程式，看看 Neovim 會不會正常運行它吧，編輯 <code>init.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hello!&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;World!&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重新啓動 Neovim，你應該就可以看到文字訊息被打印出來了。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051652215.png"></p>
+<p>另外，如果你因爲輸入了什麼而錯過任何系統訊息，想重看完整內容的話，可以在開啟 Neovim 後，輸入<code>:message</code>來查看所有的歷史訊息，或是輸入<code>:&#123;count&#125; mes</code> 來查看最近的 {count} 筆訊息，例如<code>:1 mes</code>。</p>
+<h3 id="建立文件結構"><a href="#建立文件結構" class="headerlink" title="建立文件結構"></a>建立文件結構</h3><p>以下將是我們接下來會採用的文件結構：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051751496.png"></p>
+<ul>
+<li><p><code>init.lua</code>：作為設定文件的入口，負責引用其他的設定文件。</p>
+</li>
+<li><p><code>lua/</code>：當我們在 Lua 中引用其他文件時，Lua 會優先引用<code>./lua/?.lua</code>中的文件，如果不存在，才會去使用<code>./?.lua</code>中的文件。</p>
+<blockquote>
+<p>例如：當我們在<code>init.lua</code>中引用 <code>test.lua</code>時，Lua 會優先使用 <code>./lua/test.lua</code>，如果不存在，才會去使用<code>./test.lua</code>。</p>
+</blockquote>
+<blockquote>
+<p>我的建議是，為了避免將來管理混亂，還是乖乖地把所有設定檔放在<code>lua/</code>裡頭會比較好。</p>
+</blockquote>
+</li>
+<li><p><code>imp/</code>：這層資料夾將作為命名空間，用意是避免當 Lua 在引用其他套件的設定時，出現意外的文件名稱衝突，你可以將這個資料夾以任何你喜歡的方式命名，例如：<code>user/</code>、<code>launch/</code>、或是和我一樣以 id 的前三碼命名。</p>
+</li>
+<li><p><code>options.lua</code>：這將會是我們的第一個設定文件，用來對 Neovim 的基礎功能進行設定，詳細內容將在後續介紹。</p>
+</li>
+</ul>
+<h3 id="引用設定文件"><a href="#引用設定文件" class="headerlink" title="引用設定文件"></a>引用設定文件</h3><p>最後，讓我們來引用我們的第一個設定文件吧，編輯<code>init.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp/options&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>require(&quot;&#123;filename&#125;&quot;)</code>：此函式將會引用<code>./lua/&#123;filename&#125;.lua</code>。</li>
+</ul>
+<p>接著做為測試，讓我們編輯<code>options.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Hi, I&#x27;m options&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重啓 Neovim，此時我們就可以看到<code>option.lua</code>的內容被成功引用了：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403051829196.png"></p>
+<hr>
+<h2 id="基礎設定說明"><a href="#基礎設定說明" class="headerlink" title="基礎設定說明"></a>基礎設定說明</h2><h3 id="Lua-API"><a href="#Lua-API" class="headerlink" title="Lua API"></a>Lua API</h3><p>Neovim 提供了一套完整的 Lua library，其所提供的 API 讓我們的設定文件可以輕鬆使用 Lua 語言來與 Neovim 進行交互。這些 API 大多都以<code>vim.</code>做爲前綴，例如：</p>
+<table>
+<thead>
+<tr>
+<th align="left">API</th>
+<th align="left">用途</th>
+<th align="left">例子</th>
+<th align="left">對應的 VimScript</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>vim.opt</code></td>
+<td align="left">用於設置和訪問全局選項</td>
+<td align="left"><code>vim.opt.number = true</code></td>
+<td align="left"><code>set number</code></td>
+</tr>
+<tr>
+<td align="left"><code>vim.g</code></td>
+<td align="left">用於設置和訪問全局變量</td>
+<td align="left"><code>vim.g.my_var = &#39;hello&#39;</code></td>
+<td align="left"><code>let g:my_var = &#39;hello&#39;</code></td>
+</tr>
+<tr>
+<td align="left"><code>vim.cmd</code></td>
+<td align="left">用於執行 Vim 命令（Ex 命令）</td>
+<td align="left"><code>vim.cmd(&quot;new&quot;)</code></td>
+<td align="left"><code>:new</code></td>
+</tr>
+</tbody></table>
+<p>所以，我們可以如此編輯 <code>options.lua</code>：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.opt.number = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>儲存後重新起動 Neovim，你就會發現左側的行號被開啓了。Neovim就是透過這樣的方式，在每次啟動時引用設定文件，並根據其中的設定來變更編輯器的行為。</p>
+<h3 id="設定選項的魔法-——-options"><a href="#設定選項的魔法-——-options" class="headerlink" title="設定選項的魔法 —— :options"></a>設定選項的魔法 —— <code>:options</code></h3><p>如果每次測試設定選項都必須要一項一項的查找，並反覆開關 Neovim 來測試效果的話，那也太麻煩了，所幸，Neovim 提供了即時改變選項的魔法<code>:options</code>：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403060122072.png"></p>
+<p>這裡提供了所有設定的分類目錄，以及各選項的簡述與選項內容，我們同樣可以使用<code>/</code>進行關鍵字搜尋，或將遊標移動到有興趣的目錄上，並按下<code>&lt;Enter&gt;</code>來查看目錄內容。</p>
+<p>接著，我們可以將遊標移動到設定的選項上，然後按下<code>&lt;Enter&gt;</code>，或甚至直接修改字串內容，就可以發現選項被套用了。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403060130243.png"></p>
+<p>這個設定不會被記錄，所以你可以隨意嘗試各種不同的設定，再將你喜歡的一條條記錄到設定檔中，我相當推薦各位有空的時候可以來這裡摸索一下，有時或許會發現一些神奇又實用的功能。</p>
+<h3 id="options-lua-完整說明"><a href="#options-lua-完整說明" class="headerlink" title="options.lua 完整說明"></a><code>options.lua</code> 完整說明</h3><p>以下我將對我的設定項目進行分類介紹，完整的設定檔可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/options.lua">這裡（我的 github）</a>查看，你可以直接複製再根據需求進行微調；而由於項目有點多，且有部分我已經標上註解了，所以我這裡只會對一些我認為比較重要的，以及比較容易有疑慮的選項進行說明。</p>
+<h4 id="basic"><a href="#basic" class="headerlink" title="basic"></a>basic</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- basic --</span></span><br><span class="line">vim.opt.fileencoding = <span class="string">&quot;utf-8&quot;</span></span><br><span class="line">vim.opt.termguicolors = <span class="literal">true</span></span><br><span class="line">vim.opt.clipboard = <span class="string">&quot;unnamedplus&quot;</span> <span class="comment">-- allows nvim to access the OS clipboard</span></span><br><span class="line">vim.opt.mouse = <span class="string">&quot;a&quot;</span> <span class="comment">-- enabled mouse, &quot;a&quot; for all modes, and &quot;niv&quot; for normal, insert, visual mode</span></span><br><span class="line">vim.opt.timeoutlen = <span class="number">500</span> <span class="comment">-- Time in milliseconds to wait for a mapped sequence to complete</span></span><br><span class="line">vim.opt.virtualedit = <span class="string">&quot;block&quot;</span></span><br><span class="line">vim.opt.iskeyword:append(<span class="string">&quot;-&quot;</span>) <span class="comment">-- consider string-string as whole word</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>clipboard</code>：<br>剪貼簿應該是每個剛入坑 Neovim 的人都會遇到的問題之一，你會發現你在 Neovim 外複製的東西無法直接使用指令<code>p</code>來貼上，同樣地，我們在 Neovim 中使用<code>y</code>複製的東西，也無法貼到 Neovim 外的其他地方，這是因爲 Neovim 預設的剪貼簿和系統是不同的，所以我們需要對其進行設定。<br>另外，我們還需要在系統中額外安裝剪貼簿工具，才能讓它正常作用，我這裡使用的是 Xclip：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install xclip</span><br></pre></td></tr></table></figure>
+安裝完成後，複製貼上的功能應該就可以正常使用了。</li>
+<li><code>virtualedit</code>：<br>在預設情況，當我們使用 V-Block 模式時，我們是無法將遊標移動到行尾之後的部分的，即便圈選的其他行在這之後仍有內容：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403052341736.png"><br>而當我們將其設為<code>block</code>之後，Neovim 就可以將這樣的行尾視為空白一起圈選起來了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403052341135.png"><br>另外，它還提供了其他模式，不過我沒有使用過，所以這裡就不做贅述了。</li>
+<li><code>iskeyword:append(&quot;-&quot;)</code>：<br>當我們使用<code>w</code>等指令進行單字間的跳躍時，Neovim 會把一些被特殊符號（例如：’-‘）所隔開的字視為兩個獨立的單字，我們可以透過這條設定，來將被這些符號分割的文字視為一個完整的單字。</li>
+</ul>
+<h4 id="backup"><a href="#backup" class="headerlink" title="backup"></a>backup</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- backup --</span></span><br><span class="line">vim.opt.swapfile = <span class="literal">false</span></span><br><span class="line">vim.opt.undofile = <span class="literal">true</span> <span class="comment">-- enable persistent undo</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>swapfile</code>：<br>當不正常關閉 Neovim 時，它會爲當下正在開啓的檔案建立備份，並在下一次開啓時詢問要不要復原備份，由於我有動不動就存檔的習慣，以及它有時不知道爲什麼會到處出現，讓我覺得很煩，所以我習慣將它關閉。</li>
+<li><code>undofile</code>：<br>如果你希望可以在關閉文件後，在下一次開啓時還可以保留上次的操作記錄，來讓你使用指令<code>u</code>和<code>C-r</code>來還原上&#x2F;下一步，那麼你可以選擇將這個選項開啓。</li>
+</ul>
+<h4 id="line-number-and-line-column"><a href="#line-number-and-line-column" class="headerlink" title="line number and line column"></a>line number and line column</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- line number and line column --</span></span><br><span class="line">vim.opt.number = <span class="literal">true</span></span><br><span class="line">vim.opt.relativenumber = <span class="literal">true</span></span><br><span class="line">vim.opt.numberwidth = <span class="number">2</span></span><br><span class="line">vim.opt.signcolumn = <span class="string">&quot;yes&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>relativenumber</code>：<br>相對行號在進行跳轉和多行操作時很有用，我相當推薦將它開啓。而下圖則是官方提供的<code>number(nu)</code>和<code>relativenumber(rnu)</code>開關時的顯示對照圖：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061821655.png"></li>
+</ul>
+<h4 id="tab-and-indentation"><a href="#tab-and-indentation" class="headerlink" title="tab and indentation"></a>tab and indentation</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- tab and indentation --</span></span><br><span class="line">vim.opt.tabstop = <span class="number">4</span></span><br><span class="line">vim.opt.softtabstop = <span class="number">4</span></span><br><span class="line">vim.opt.shiftwidth = <span class="number">4</span></span><br><span class="line">vim.opt.smarttab = <span class="literal">false</span></span><br><span class="line">vim.opt.expandtab = <span class="literal">true</span> <span class="comment">-- expand tab to spaces</span></span><br><span class="line">vim.opt.autoindent = <span class="literal">true</span> <span class="comment">-- copy indent from current line when starting a new line</span></span><br><span class="line">vim.opt.smartindent = <span class="literal">true</span> <span class="comment">-- make above smarter</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>tabstop</code>：指的是當文件中有 tab 字符時，會將其顯示成幾個空格的寬度，以及當在 insert mode 按下<code>&lt;Tab&gt;</code>時，會將連續多少的空格轉換成 tab 字符。</li>
+<li><code>softtabstop</code>：當在 insert mode 按下<code>&lt;Tab&gt;</code>時，會插入多少個空格。</li>
+<li><code>shiftwidth</code>：當使用<code>&gt;&gt;</code>或<code>&lt;&lt;</code>進行縮排，以及新增一行時自動縮排所移動的空格數。<blockquote>
+<p>註：這可能有點複雜，舉個例子，當設定為<code>tabstop=8</code>，<code>softtabstop=4</code>，<code>shiftwidth=2</code>時，在 insert mode 中按第一次<code>&lt;Tab&gt;</code>會插入4個空格，再按一次則會將8個空格轉為1個 tab 字符，按第三次則會變成1個 tab 字符加上4個空格，以此類推。<br>而當我使用<code>&gt;&gt;</code>或<code>&lt;&lt;</code>，或是新增一行符合自動縮排的條件時，則整行會移動2個空格。</p>
+</blockquote>
+</li>
+<li><code>smarttab</code>：當開啓時，當在行首進入 insert mode 插入<code>&lt;Tab&gt;</code>時，會根據<code>shiftwidth</code>的設定來插入空格，否則會插入根據<code>softtabstop</code>來插入，我覺得這相當混淆人，所以我選擇把它關閉。</li>
+<li><code>expandtab</code>：將所有 tab 字符都擴展成空格，如果設為<code>true</code>，則上述的轉換規則就不適用了，所有的 tab 都會變成相應數量的空格。</li>
+</ul>
+<h4 id="wrap-and-scrolloff"><a href="#wrap-and-scrolloff" class="headerlink" title="wrap and scrolloff"></a>wrap and scrolloff</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- wrap and scrolloff --</span></span><br><span class="line">vim.opt.<span class="built_in">wrap</span> = <span class="literal">false</span> <span class="comment">-- line wrapping</span></span><br><span class="line">vim.opt.scrolloff = <span class="number">7</span> <span class="comment">-- minimal number of screen lines to keep above and below the cursor</span></span><br><span class="line">vim.opt.sidescrolloff = <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>wrap</code>：當你的文字長度超出視窗邊框時，是否換行顯示。</li>
+<li><code>scrolloff</code>：當視窗 上&#x2F;下 捲動時，顯示在遊標 上&#x2F;下 的行數，如果你希望畫面捲動時，遊標始終在正中央的位置，可以選擇把它設成 999 之類的極大數字。</li>
+<li><code>sidescrolloff</code>：和 scrolloff 相同，不過是左右方向的。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061709486.png"></li>
+</ul>
+<h4 id="search"><a href="#search" class="headerlink" title="search"></a>search</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- search --</span></span><br><span class="line">vim.opt.hlsearch = <span class="literal">false</span></span><br><span class="line">vim.opt.incsearch = <span class="literal">true</span> <span class="comment">-- search while typing a search command</span></span><br><span class="line">vim.opt.smartcase = <span class="literal">true</span> <span class="comment">-- if you type a capital letter, it will be case sensitive</span></span><br><span class="line"><span class="comment">-- vim.opt.ignorecase = true</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>smartcase</code>：當搜尋的 pattern 中有大寫時，搜尋會變成 case sensitive，否則 ignore case，另外如果將它設為 true，它會覆蓋掉 ignorecase 選項的設定。</li>
+</ul>
+<h4 id="splitting-windows"><a href="#splitting-windows" class="headerlink" title="splitting windows"></a>splitting windows</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- splitting windows --</span></span><br><span class="line">vim.opt.splitright = <span class="literal">true</span> <span class="comment">-- split vertical widow to the right</span></span><br><span class="line">vim.opt.splitbelow = <span class="literal">true</span> <span class="comment">-- split horizontal widow to the below</span></span><br><span class="line">vim.opt.equalalways = <span class="literal">false</span> <span class="comment">-- don&#x27;t resize windows when splitting</span></span><br></pre></td></tr></table></figure>
+
+<p>當分割視窗時，Neovim 預設分割新視窗是開在左上的，這太反人類了，所以你可以透過第一二條設定來把它改成開在右下。</p>
+<p>而 <code>equalalways</code> 的作用則是當分割出新視窗時，要不要自動調整平分所有視窗的長寬，如果設為 false，則它只會將最右或最下側的視窗平分而已</p>
+<ul>
+<li><p><code>equalalways = true</code><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061737397.gif"></p>
+</li>
+<li><p><code>equalalways = false</code><br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061739861.gif"></p>
+</li>
+</ul>
+<h4 id="appearance"><a href="#appearance" class="headerlink" title="appearance"></a>appearance</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- appearance --</span></span><br><span class="line">vim.opt.showtabline = <span class="number">2</span> <span class="comment">-- always show tabline</span></span><br><span class="line">vim.opt.cursorline = <span class="literal">true</span></span><br><span class="line">vim.opt.cmdheight = <span class="number">1</span></span><br><span class="line">vim.opt.pumheight = <span class="number">10</span> <span class="comment">-- pop up menu height</span></span><br><span class="line">vim.opt.showmode = <span class="literal">false</span> <span class="comment">-- with lualine, we don&#x27;t need to show things like -- insert -- anymore</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>showtabline</code>：設為 0 時永不顯示，1 時只有當存在兩個 tab 以上時才會顯示，2 則永遠顯示。</li>
+<li><code>cursorline</code>：開啓會將遊標所在行的行數加上醒目提示，如果想將所在列也標亮，可以調整<code>cursorcolumn</code>選項。</li>
+<li><code>pumheight</code>：顯示彈出式菜單的最大行數。（之後使用 cmp 功能時才會有比較明顯的體現。）</li>
+</ul>
+<h4 id="auto-commenting"><a href="#auto-commenting" class="headerlink" title="auto-commenting"></a>auto-commenting</h4><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.cmd(<span class="string">&quot;autocmd bufenter * set formatoptions-=cro&quot;</span>) <span class="comment">-- disable auto-commenting new lines</span></span><br></pre></td></tr></table></figure>
+
+<p>如果你希望在註解行上用例如<code>o</code>或<code>O</code>等指令新增空白行時，會自動加上註解標籤的話，可以把這行刪掉，而我不喜歡它，所以我這裡把它關掉了。</p>
+<hr>
+<h2 id="依賴環境安裝與設定"><a href="#依賴環境安裝與設定" class="headerlink" title="依賴環境安裝與設定"></a>依賴環境安裝與設定</h2><p>還記得我們之前提過的<code>:checkhealth</code>嗎，如果你現在打開它，應該會發現在 provider 一區裡，經過我們剛才對剪貼簿的處理，Clipboard 已經顯示為 OK 了：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061834582.png"></p>
+<p>接下來，由於我經常使用到 Python3 的開發環境，加上之後安裝的許多套件也可能依賴於 Python3 provider，所以我這裡會將它安裝和設定起來。</p>
+<h3 id="安裝-python3"><a href="#安裝-python3" class="headerlink" title="安裝 python3"></a>安裝 python3</h3><p>Ubuntu 22.04 中應該已經自帶 python3.10，如果沒有的話，可以透過以下的指令下載。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install software-properties-common -y</span><br><span class="line">sudo add-apt-repository ppa:deadsnakes/ppa</span><br><span class="line">sudo apt-get install python3.10 -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝-pip"><a href="#安裝-pip" class="headerlink" title="安裝 pip"></a>安裝 pip</h3><p>pip 是 Python 的軟體包管理工具，是使用 Python 必須安裝的工具之一。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install python3-pip -y</span><br></pre></td></tr></table></figure>
+
+<h3 id="安裝-pynvim"><a href="#安裝-pynvim" class="headerlink" title="安裝 pynvim"></a>安裝 pynvim</h3><p>pynvim 就是 Neovim 之所以依賴於 Python3 的原因了，他是 Neovim 在 python 中的套件。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m pip install --user --upgrade pynvim</span><br></pre></td></tr></table></figure>
+
+<p>通常到這裏就結束了，不過如果你的系統中存在多個版本的 Python 的話，建議到 <code>options.lua</code> 中加入類似下面這條設定，來指定 Neovim 取用的 Python 路徑：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.g.python3_host_prog = <span class="string">&quot;/bin/pythin3&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，再看<code>:checkhealth provider</code>的話，應該就可以看到 Python3 一區也都變 OK 了，而至於其他 provider，由於目前還沒用到，加上我其實也對它們不是很了解，所以我沒有多做處理了。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，Neovim 終於至少看起來像個人，但離稱手還是有相當大的差距，而在下一章裡，我將會介紹如何設定快捷鍵（Keymaps）。</p>
+<p>與這章的後半段類似，我會分享並說明我的 keymaps 設定，裡頭有許多我覺得實用甚至堪稱魔法的神奇設定，將在下一章誠心推薦給各位。</p>
+<p><big>上一篇： <a href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a></big><br><big>下一篇： <a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a></big></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://youtu.be/87AXw9Quy9U?si=smiJPQVs8mFlnQJK">Understanding Neovim #1 - Installation</a></li>
+<li><a href="https://youtu.be/Cp0iap9u29c?si=vPM9KSbds-b93zwS">Understanding Neovim #6 - Taming the vim.opt Madness</a></li>
+<li><a href="https://youtu.be/hY5-Q6NxQgY?si=5e_ffJc2o4d4h5t3">Neovim - Setting options with Lua</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Data Mining Projects</title>
+    <url>/2024/03/14/projects-20240314-Data-Mining-Projects/</url>
+    <content><![CDATA[<h2 align="center"><i class="fa-solid fa-magnifying-glass-chart"></i> Mini Project</h2>
+
+<h3 id="主題：Pima-Indians-Diabetes-Database-Classification"><a href="#主題：Pima-Indians-Diabetes-Database-Classification" class="headerlink" title="主題：Pima Indians Diabetes Database Classification"></a>主題：Pima Indians Diabetes Database Classification</h3><p>專題連結：<a href="https://github.com/Imp1ication/Data-Mining-mini-project">Data Mining mini project</a></p>
+<h4 id="內容說明："><a href="#內容說明：" class="headerlink" title="內容說明："></a>內容說明：</h4><p>完成 <a href="https://www.kaggle.com/competitions/diabetes-classification/overview">Kaggle Competition: Diabetes Classification</a> 並撰寫一份詳細報告，對資料集特徵進行說明與分析，以及解釋實做方式與結果。</p>
+<h4 id="實做摘要："><a href="#實做摘要：" class="headerlink" title="實做摘要："></a>實做摘要：</h4><p>首先，我在報告中對資料集 Pima Indians Diabetes 進行了完整的特徵說明與分類，並做了初步的缺失值檢查。</p>
+<p>接著，我對特徵進行了異常值分析處理、計算了各特徵的 Person Correlation Coefficient 以進行關聯性分析、並使用了 StandardScaler 來將特徵的數值標準化。</p>
+<p>最後，我使用 Scikit-learn 中的 Logistic Regression 進行分類實做，並觀察 Confusion Matrix 與計算 Precision、Recall、F1 Score、以及各特徵的回歸係數，以進行結果分析。</p>
+<p>另外，報告中使用了數張 Matplotlib 圖表進行了資料的視覺化分析。</p>
+<h4 id="技術："><a href="#技術：" class="headerlink" title="技術："></a>技術：</h4><ul>
+<li>Python3：主要使用語言。</li>
+<li>Scikit-learn：資料分析與機器學習套件。</li>
+<li>Matplotlib：圖表繪製。</li>
+<li>Classification：使用了 Logistic Regression 作為分類方法。</li>
+</ul>
+<hr>
+<h2 align="center"><i class="fa-solid fa-magnifying-glass-chart"></i> Final Project</h2>
+
+<h3 id="主題：K-Means-Clustering-and-hit-song-science"><a href="#主題：K-Means-Clustering-and-hit-song-science" class="headerlink" title="主題：K-Means Clustering and hit song science"></a>主題：K-Means Clustering and hit song science</h3><p>專題連結：<a href="https://github.com/Imp1ication/data_mining_final_project">Data Mining Final Project</a></p>
+<h4 id="內容說明：-1"><a href="#內容說明：-1" class="headerlink" title="內容說明："></a>內容說明：</h4><ol>
+<li><p>實做 K-Means Clustering 類別，包含不同的算法策略，並對其進行效能分析。接著，</p>
+</li>
+<li><p>對資料集 <a href="https://www.kaggle.com/datasets/multispiros/34740-hit-and-nonhit-songs-spotify-features/data">Hit song science</a> 進行分群分析，並撰寫一份完整的分析報告。</p>
+</li>
+</ol>
+<h4 id="實做摘要：-1"><a href="#實做摘要：-1" class="headerlink" title="實做摘要："></a>實做摘要：</h4><p>我參照 Scikit-learn 的 K-Means 類別界面實做了一個完整的 K-Means 類別，以及一個用以回傳結果的資料類別，其包含了數種可調參數、兩種初始化中心算法 <code>random</code> 與 <code>kmeans++</code>、兩種迭代算法 <code>lloyd</code> 與 <code>elkan</code>、以及，我還額外實做了平行處理的方法。</p>
+<p>然後，我對 K-Means 進行了不同算法組合的性能分析，並使用此類別對資料集 Hit song science 進行了完整的分群分析。</p>
+<h4 id="技術：-1"><a href="#技術：-1" class="headerlink" title="技術："></a>技術：</h4><ul>
+<li>Python3：主要使用語言。</li>
+<li>Scikit-learn：資料分析與機器學習套件。</li>
+<li>Matplotlib：圖表繪製。</li>
+<li>Clustering：K-Means 分群分析。</li>
+<li>multiprocessing：在算法中額外進行了平行處理。</li>
+</ul>
+<hr>
+]]></content>
+      <categories>
+        <category>Projects</category>
+      </categories>
+      <tags>
+        <tag>NTNU</tag>
+        <tag>Project</tag>
+        <tag>Python3</tag>
+        <tag>Data Mining</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Neovim 快捷鍵設定</title>
+    <url>/2024/06/18/neovim-setup-20240618-nvim-keymaps/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim motion 的核心之一就在於直觀且可高度客製化的快捷鍵設定，要想如臂使指般地使用 Neovim，一套精心調教過的快捷鍵絕對是不可或缺的，尤其無論是在 Vim 還是 Neovim 中，都遺留了一些老舊且稍微有些反人類的操作設定，以及缺少了現代人習以為常的方便功能。</p>
+<p>所幸， Neovim 的快捷鍵設定相當直觀、便利且強大，你可以透過它來簡化一些繁瑣的操作、使用額外套件的功能、你甚至可以直接實現一些組合功能，而不需要另外下載功能套件，我將會在後續的介紹中進行示範。</p>
+<p>在本篇裡，我將介紹如何設定 Neovim 的快捷鍵，並分享我的設定。如果想直接複製我的設定文件，可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/keymaps.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
+<p>另外切記，在 Neovim 中，千萬不要去強記任何的快捷鍵，而是將你的習慣告訴 Neovim，讓它成為你的形狀。</p>
+<hr>
+<h2 id="建立設定文件與引用"><a href="#建立設定文件與引用" class="headerlink" title="建立設定文件與引用"></a>建立設定文件與引用</h2><p>還記得我們在上一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a> 中提過的文件結構嗎，首先，到 <code>imp/</code> 中建立這次要使用的設定文件 <code>keymaps.lua</code>。</p>
+<p>接著，編輯 <code>init.lua</code>，加入以下的程式碼來引用它：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp/keymaps&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Leader-Key"><a href="#Leader-Key" class="headerlink" title="Leader Key"></a>Leader Key</h2><p>在 Neovim 中，Leader key是一個通用的快捷鍵前綴，用來做為大部分快捷鍵的起頭，預設為 <code>\</code> ，有些人喜歡使用 <code>;</code> 或 <code>,</code> ，而我則比較喜歡使用空白鍵。</p>
+<p>編輯 <code>keymaps.lua</code>，加入以下內容：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.g.mapleader = <span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣，我們就設定完成了。</p>
+<hr>
+<h2 id="如何設定快捷鍵？"><a href="#如何設定快捷鍵？" class="headerlink" title="如何設定快捷鍵？"></a>如何設定快捷鍵？</h2><p>在 Neovim 中，我們主要依靠以下兩個 api 來設定快捷鍵：</p>
+<ul>
+<li>vim.keymap.del()：刪除快捷鍵。</li>
+<li>vim.keymap.set()：設定快捷鍵。</li>
+</ul>
+<p>不過，有鑑於 <code>vim.keymap.set</code> 本身就會覆寫原有的快捷鍵，所以其實我沒怎麽用過 <code>vim.keymap.del</code>，以下將著重說明 <code>vim.keymap.set</code> 的使用，如果想看更詳細的說明，也可以使用指令 <code>:h vim.keymap</code> 來查看官方的說明文件。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181812734.png" alt="vim.keymap.set"></p>
+<p><code>vim.keymap.set</code> 包含了四個參數：</p>
+<ol>
+<li><code>&#123;mode&#125;</code>：快捷鍵作用的模式，包含 n、i、v、t、c 五個基本模式，可以傳入單個字元如 <code>“n&quot;</code>，或一個 list 如 <code>&#123;&quot;n&quot;, &quot;i&quot;&#125;</code> 來讓快捷鍵作用在複數模式中。</li>
+<li><code>&#123;lhs&#125;</code>：你想設定的快捷鍵。</li>
+<li><code>&#123;rhs&#125;</code>：快捷鍵觸發的操作，可以是一系列的按鍵組合、一條指令或是一個 expression。</li>
+<li><code>&#123;opts&#125;</code>：快捷鍵的選項表，主要包含：<ul>
+<li>noremap：設定為 <code>true</code> 時，表示這個快捷鍵的映射是非遞迴的。例如，當你同時有快捷鍵 <code>A-&gt;B</code>和 <code>B-&gt;C</code> 時，如果你將這項設為 <code>false</code> ，則 <code>A</code> 就會被映射為 <code>C</code>，反之則為 <code>B</code>。</li>
+<li>silent：設定為 <code>true</code> 時，執行快捷鍵時不會在命令行中顯示訊息。</li>
+<li>expr：設定為 <code>true</code> 時，表示 <code>&#123;rhs&#125;</code> 的內容將做為 expression 求值。</li>
+<li>nowait：設定為 <code>true</code> 時，表示立刻執行映射，不等待更多输入。</li>
+<li>desc：為快捷鍵添加描述，用於讓額外套件（如 which-key）取用來顯示提示訊息。</li>
+<li>buffer：設定為 <code>true</code> 時，表示這個快捷鍵只會對當前 buffer 作用。</li>
+</ul>
+</li>
+</ol>
+<p>以上是我有使用過的一些 <code>&#123;opts&#125;</code>，其他更多內容可以參考 <code>:h maparg</code>。</p>
+<p>來舉個例子吧：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Add empty line without get into Insert mode</span></span><br><span class="line">vim.keymap.set(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;CR&gt;&quot;</span>, <span class="string">&quot;o&lt;Esc&gt;k&quot;</span>, &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span>, desc = <span class="string">&quot;Add empty line&quot;</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Press jj to exit insert mode</span></span><br><span class="line">vim.keymap.set(<span class="string">&quot;i&quot;</span>, <span class="string">&quot;jj&quot;</span>, <span class="string">&quot;&lt;Esc&gt;&quot;</span>, &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span>, desc = <span class="string">&quot;Exit insert mode&quot;</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在第一個例子中，我將 Normal mode 中的 <code>&lt;CR&gt;</code> 鍵映射成了一段連續的操作 <code>o&lt;Esc&gt;k</code>，如果你很熟悉 Vim 指令的話，應該馬上就能反應過來它的意思：<code>o</code> 新增一行、<code>&lt;Esc&gt;</code> 返回 Normal mode、然後 <code>k</code> 將遊標移回原本的所在行。</p>
+<p>也就是說，它會維持遊標的位置，並在下方插入一個空白行。</p>
+<p>而在第二個例子中，我將 Insert mode 中的 <code>jj</code> 輸入映射成 <code>&lt;Esc&gt;</code> 鍵，也就是只要我在 Insert mode 時輸入 <code>jj</code> ，就可以退出 Insert mode。另外僅供參考，也有些人會將其設為 <code>jk</code>。</p>
+<p>另外，你可能會注意到，<code>&lt;CR&gt;</code> 鍵是什麼？以及，如果我想加入 Ctrl 或 Shift 鍵時，我應該怎麽表示？放心，我也很常忘記，所以在這裡我列出了一些常見的功能鍵的表示方法，以供查詢：</p>
+<table>
+<thead>
+<tr>
+<th>鍵</th>
+<th>符號</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Leader</td>
+<td><code>&lt;leader&gt;</code></td>
+<td align="left">用於部分快捷鍵的前綴，預設是 <code>\</code>，可自行更改。</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td><code>&lt;CR&gt;</code></td>
+<td align="left">Enter 鍵。</td>
+</tr>
+<tr>
+<td>Control</td>
+<td><code>&lt;C-</code></td>
+<td align="left">Ctrl鍵，例如 <code>&lt;C-n&gt;</code> 表示 Ctrl + n。</td>
+</tr>
+<tr>
+<td>Shift</td>
+<td><code>&lt;S-</code></td>
+<td align="left">Shift 鍵，例如 <code>&lt;S-h&gt;</code> 表示 Shift + h。</td>
+</tr>
+<tr>
+<td>Alt</td>
+<td><code>&lt;A-</code></td>
+<td align="left">Alt 鍵，例如 <code>&lt;A-x&gt;</code> 表示 Alt + x。</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td><code>&lt;M-</code></td>
+<td align="left">Meta 鍵，一般就是指 Alt 鍵。</td>
+</tr>
+<tr>
+<td>Escape</td>
+<td><code>&lt;Esc&gt;</code></td>
+<td align="left">Esc 鍵。</td>
+</tr>
+<tr>
+<td>Backspace</td>
+<td><code>&lt;BS&gt;</code></td>
+<td align="left">退格鍵。</td>
+</tr>
+<tr>
+<td>Space</td>
+<td><code>&lt;Space&gt;</code></td>
+<td align="left">空白鍵。</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td><code>&lt;Tab&gt;</code></td>
+<td align="left">Tab 鍵。</td>
+</tr>
+<tr>
+<td>Arrow Up</td>
+<td><code>&lt;Up&gt;</code></td>
+<td align="left">向上箭頭，可以用類似 <code>&lt;C-UP&gt;</code> 的方式與功能鍵組合。</td>
+</tr>
+<tr>
+<td>Arrow Down</td>
+<td><code>&lt;Down&gt;</code></td>
+<td align="left">向下箭頭。</td>
+</tr>
+<tr>
+<td>Arrow Left</td>
+<td><code>&lt;Left&gt;</code></td>
+<td align="left">向左箭頭。</td>
+</tr>
+<tr>
+<td>Arrow Right</td>
+<td><code>&lt;Right&gt;</code></td>
+<td align="left">向右箭頭。</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>&lt;Del&gt;</code></td>
+<td align="left">Delete 鍵。</td>
+</tr>
+<tr>
+<td>Function Key</td>
+<td><code>&lt;F1&gt;</code> to <code>&lt;F12&gt;</code></td>
+<td align="left">功能鍵 F1 到 F12。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="keymaps-lua-完整說明"><a href="#keymaps-lua-完整說明" class="headerlink" title="keymaps.lua 完整說明"></a>keymaps.lua 完整說明</h2><p>至此，想必你已經可以開始調整屬於你的快捷鍵了，而接下來我將對我的設定內容進行分類介紹，同樣地，完整的設定檔可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/keymaps.lua">這裡（我的 github）</a>查看，你可以直接複製再根據需求進行調整，但就像我說的，這是我習慣的快捷鍵組合，它不一定適合你，不要去強記任何人的快捷鍵，而是要讓 Neovim 來配合你的習慣。</p>
+<p>最好的驗證方法就是，當你設定完快捷鍵之後，你是不是能馬上想起大部分的內容，而不需要一再重新去查看。我個人的習慣是，盡量使用與動作單字相關的字母，例如 Delete 就用 d，Replace 就用 r 之類的。</p>
+<h3 id="preliminary-setup"><a href="#preliminary-setup" class="headerlink" title="preliminary setup"></a>preliminary setup</h3><p>首先是一些基本設定：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Set Leader key to Space --</span></span><br><span class="line">vim.g.mapleader = <span class="string">&quot; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Shorten function name --</span></span><br><span class="line"><span class="keyword">local</span> keymap = vim.keymap.set</span><br><span class="line"><span class="keyword">local</span> opts = &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>這裡我首先將 Leader key 設為了空白鍵；接著，因為接下來我們會設定很多的快捷鍵，為了讓文件簡潔一些，我將一些會重複使用的內容保存為本地變數，包含將 <code>vim.keymap.set</code> 存為 <code>keymap</code>，以及將我常用的 <code>&#123;opts&#125;</code> 選項保存為 <code>opts</code>。</p>
+<p>這樣，我們就可以透過 <code>keymap(&quot;n&quot;, &quot;快捷鍵&quot;, &quot;映射&quot;, opts)</code> 的方式來設定大多數的快捷鍵了。</p>
+<h3 id="cursor-jumping"><a href="#cursor-jumping" class="headerlink" title="cursor jumping"></a>cursor jumping</h3><p>在 Neovim 的預設中，<code>&lt;C-u&gt;</code> 和 <code>&lt;C-d&gt;</code> 分別會將遊標向上或下移動半頁，再將遊標當前行捲到頁面頂部（會保留 scrolloff 的行數）。而這個「半頁」的行數是根據你當前視窗的可視行數來動態決定的，例如當你的視窗可以顯示 50 行，那半頁就是 25 行。</p>
+<p>像這樣不固定的行數對我來說很煩，所以我決定將它固定在 15 行。以及，我喜歡在每次遊標進行例如翻頁、或搜尋關鍵字等大幅跳行的行為時，將遊標固定在特定位置，以避免找不到遊標在哪。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Normal --</span></span><br><span class="line"><span class="comment">-- Page up and down</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-u&gt;&quot;</span>, <span class="string">&quot;15kztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-d&gt;&quot;</span>, <span class="string">&quot;15jztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;G&quot;</span>, <span class="string">&quot;Gzzzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;gg&quot;</span>, <span class="string">&quot;ggzzzv&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Keep cursor at the middle after search jumping</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;nztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;N&quot;</span>, <span class="string">&quot;Nztzv&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li>固定翻頁行數：設定 <code>&lt;C-u&gt;</code> 和 <code>&lt;C-d&gt;</code> 的移動行數為 15 行。</li>
+<li>移動後的遊標位置：<ul>
+<li>zt：將遊標所在行捲到頂部。</li>
+<li>zz：將遊標所在行捲到中間。</li>
+<li>zb：將遊標所在行捲到底部。</li>
+</ul>
+</li>
+<li>zv：展開遊標所在行的程式碼摺疊。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181824855.gif"></p>
+<h3 id="move-in-warpline"><a href="#move-in-warpline" class="headerlink" title="move in warpline"></a>move in warpline</h3><p>在 Neovim 中，當一行文字過長而被換行顯示時，在使用普通模式下的 <code>j</code> 和 <code>k</code> 鍵移動時，會跳到實際的下一行或上一行，而不是視覺上的換行。要在視覺行內移動，則必須使用 <code>gj</code> 和 <code>gk</code> 來移動。為了方便，我決定把它們的功能互換。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Move in warpline</span></span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;j&quot;</span>, <span class="string">&quot;gj&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;k&quot;</span>, <span class="string">&quot;gk&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;gj&quot;</span>, <span class="string">&quot;j&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;gk&quot;</span>, <span class="string">&quot;k&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181826105.gif"></p>
+<h3 id="normal-trick"><a href="#normal-trick" class="headerlink" title="normal trick"></a>normal trick</h3><p>以下是一些我在 Normal mode 中的自定功能：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Add empty line without get into Insert mode</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;CR&gt;&quot;</span>, <span class="string">&quot;o&lt;Esc&gt;k&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Delete into void</span></span><br><span class="line">keymap(&#123;<span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span>&#125;, <span class="string">&quot;&lt;leader&gt;d&quot;</span>, <span class="string">&#x27;&quot;_d&#x27;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Replace all</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;leader&gt;r&quot;</span>, <span class="string">[[:%s/\&lt;&lt;C-r&gt;&lt;C-w&gt;\&gt;/&lt;C-r&gt;&lt;C-w&gt;/gI&lt;Left&gt;&lt;Left&gt;&lt;Left&gt;]]</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li><code>&lt;CR&gt;</code> 會在下方新增空行且不進入插入模式。</li>
+<li><code>&lt;leader&gt;d</code>：Neovim 中使用 d 來刪除文字時會同時將刪除的內容放入剪貼簿中，這有時很煩，所以我多設定了一個快捷鍵，來將不要的內容刪除且不放入剪貼簿中。</li>
+<li><code>&lt;leader&gt;r</code>：選中遊標當前所在的單字，並對文件中所有相同的單字進行替換操作。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181827330.gif"></p>
+<h3 id="window-navigation"><a href="#window-navigation" class="headerlink" title="window navigation"></a>window navigation</h3><p>以下是一些自定的視窗管理快捷鍵，包含切換視窗，以及調整視窗大小：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Window navigation</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-h&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;h&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-j&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;j&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-k&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;k&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-l&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;l&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Resize with arrows</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Up&gt;&quot;</span>, <span class="string">&quot;:resize +2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Down&gt;&quot;</span>, <span class="string">&quot;:resize -2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Left&gt;&quot;</span>, <span class="string">&quot;:vertical resize -2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Right&gt;&quot;</span>, <span class="string">&quot;:vertical resize +2&lt;CR&gt;&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li>視窗導航：<ul>
+<li><code>&lt;C-h&gt;</code>：移動到左側視窗。</li>
+<li><code>&lt;C-j&gt;</code>：移動到下方視窗。</li>
+<li><code>&lt;C-k&gt;</code>：移動到上方視窗。</li>
+<li><code>&lt;C-l&gt;</code>：移動到右側視窗。</li>
+</ul>
+</li>
+<li>調整視窗大小：<ul>
+<li><code>&lt;C-Up&gt;</code>：增加視窗高度。</li>
+<li><code>&lt;C-Down&gt;</code>：減少視窗高度。</li>
+<li><code>&lt;C-Left&gt;</code>：減少視窗寬度。</li>
+<li><code>&lt;C-Right&gt;</code>：增加視窗寬度。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181829552.gif"></p>
+<h3 id="insert-and-visual-trick"><a href="#insert-and-visual-trick" class="headerlink" title="insert and visual trick"></a>insert and visual trick</h3><p>以下是一些我在 Insert 和 Visual mode 中的自定快捷鍵：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Insert --</span></span><br><span class="line"><span class="comment">-- Press jj to exit insert mode</span></span><br><span class="line">keymap(<span class="string">&quot;i&quot;</span>, <span class="string">&quot;jj&quot;</span>, <span class="string">&quot;&lt;Esc&gt;&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Visual --</span></span><br><span class="line"><span class="comment">-- Stay in indent mode</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;&lt;&quot;</span>, <span class="string">&quot;&lt;gv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;&gt;&quot;</span>, <span class="string">&quot;&gt;gv&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Keep paste buffer after paste</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;p&quot;</span>, <span class="string">&#x27;&quot;_dP&#x27;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Move text up and down</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;J&quot;</span>, <span class="string">&quot;:m &#x27;&gt;+1&lt;CR&gt;gv=gv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;K&quot;</span>, <span class="string">&quot;:m &#x27;&lt;-2&lt;CR&gt;gv=gv&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li>插入模式：使用 <code>jj</code> 來退出插入模式。</li>
+<li>縮排改進：在 Visual mode 時，輸入 <code>&gt;</code> 或 <code>&lt;</code> 會增加或減少遊標所在行的縮排，並回到 Normal mode。這不太直覺，所以我將其改為縮排後仍保持原先的選取狀態，這樣就能進行連續縮排了。</li>
+<li>貼上改進：在 Visual mode 時，輸入 <code>p</code> 會將選取的內容與剪貼簿中的內容交換，這太反人類了，所以我將它改成在貼上後仍保持剪貼簿的內容不變。</li>
+<li>行移動：當在 Visual mode 時輸入 <code>J</code> 或 <code>K</code>，可以將選取的行下移或上移，這超好用，個人強推。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181832775.gif"></p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，相信你也見識到了 keymaps 的便捷與強大，只要你想，你甚至可以將 h&#x2F;j&#x2F;k&#x2F;l 的移動方式改成 w&#x2F;a&#x2F;s&#x2F;d ，雖然我不建議這麼做就是了。</p>
+<p>這份 <code>keymaps.lua</code> 可能會是你將來在使用 Neovim 時最常更動的設定文件，無論是不斷的調教，還是在安裝了眾多的額外套件後，替套件的功能設定新的快捷鍵，都可以透過編輯這個檔案，來將各式各樣的功能快捷統一整理在一個文檔當中，相當方便。</p>
+<p>而在下一章裡，我們將開始進入到 Neovim 最深遠的巨坑：套件的安裝與管理。</p>
+<p><big>上一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a></big></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://youtu.be/435-amtVYJ8?si=iYDIY30iHYjTDaOl">Neovim - ~25 Custom Keymaps set with Lua</a></li>
 </ul>
 ]]></content>
       <categories>
