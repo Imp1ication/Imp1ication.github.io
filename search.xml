@@ -761,229 +761,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Neovim 快捷鍵設定</title>
-    <url>/2024/06/18/neovim-setup-20240618-nvim-keymaps/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim motion 的核心之一就在於直觀且可高度客製化的快捷鍵設定，要想如臂使指般地使用 Neovim，一套精心調教過的快捷鍵絕對是不可或缺的，尤其無論是在 Vim 還是 Neovim 中，都遺留了一些老舊且稍微有些反人類的操作設定，以及缺少了現代人習以為常的方便功能。</p>
-<p>所幸， Neovim 的快捷鍵設定相當直觀、便利且強大，你可以透過它來簡化一些繁瑣的操作、使用額外套件的功能、你甚至可以直接實現一些組合功能，而不需要另外下載功能套件，我將會在後續的介紹中進行示範。</p>
-<p>在本篇裡，我將介紹如何設定 Neovim 的快捷鍵，並分享我的設定。如果想直接複製我的設定文件，可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/keymaps.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
-<p>另外切記，在 Neovim 中，千萬不要去強記任何的快捷鍵，而是將你的習慣告訴 Neovim，讓它成為你的形狀。</p>
-<hr>
-<h2 id="建立設定文件與引用"><a href="#建立設定文件與引用" class="headerlink" title="建立設定文件與引用"></a>建立設定文件與引用</h2><p>還記得我們在上一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a> 中提過的文件結構嗎，首先，到 <code>imp/</code> 中建立這次要使用的設定文件 <code>keymaps.lua</code>。</p>
-<p>接著，編輯 <code>init.lua</code>，加入以下的程式碼來引用它：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp/keymaps&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="Leader-Key"><a href="#Leader-Key" class="headerlink" title="Leader Key"></a>Leader Key</h2><p>在 Neovim 中，Leader key是一個通用的快捷鍵前綴，用來做為大部分快捷鍵的起頭，預設為 <code>\</code> ，有些人喜歡使用 <code>;</code> 或 <code>,</code> ，而我則比較喜歡使用空白鍵。</p>
-<p>編輯 <code>keymaps.lua</code>，加入以下內容：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.g.mapleader = <span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>這樣，我們就設定完成了。</p>
-<hr>
-<h2 id="如何設定快捷鍵？"><a href="#如何設定快捷鍵？" class="headerlink" title="如何設定快捷鍵？"></a>如何設定快捷鍵？</h2><p>在 Neovim 中，我們主要依靠以下兩個 api 來設定快捷鍵：</p>
-<ul>
-<li>vim.keymap.del()：刪除快捷鍵。</li>
-<li>vim.keymap.set()：設定快捷鍵。</li>
-</ul>
-<p>不過，有鑑於 <code>vim.keymap.set</code> 本身就會覆寫原有的快捷鍵，所以其實我沒怎麽用過 <code>vim.keymap.del</code>，以下將著重說明 <code>vim.keymap.set</code> 的使用，如果想看更詳細的說明，也可以使用指令 <code>:h vim.keymap</code> 來查看官方的說明文件。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181812734.png" alt="vim.keymap.set"></p>
-<p><code>vim.keymap.set</code> 包含了四個參數：</p>
-<ol>
-<li><code>&#123;mode&#125;</code>：快捷鍵作用的模式，包含 n、i、v、t、c 五個基本模式，可以傳入單個字元如 <code>“n&quot;</code>，或一個 list 如 <code>&#123;&quot;n&quot;, &quot;i&quot;&#125;</code> 來讓快捷鍵作用在複數模式中。</li>
-<li><code>&#123;lhs&#125;</code>：你想設定的快捷鍵。</li>
-<li><code>&#123;rhs&#125;</code>：快捷鍵觸發的操作，可以是一系列的按鍵組合、一條指令或是一個 expression。</li>
-<li><code>&#123;opts&#125;</code>：快捷鍵的選項表，主要包含：<ul>
-<li>noremap：設定為 <code>true</code> 時，表示這個快捷鍵的映射是非遞迴的。例如，當你同時有快捷鍵 <code>A-&gt;B</code>和 <code>B-&gt;C</code> 時，如果你將這項設為 <code>false</code> ，則 <code>A</code> 就會被映射為 <code>C</code>，反之則為 <code>B</code>。</li>
-<li>silent：設定為 <code>true</code> 時，執行快捷鍵時不會在命令行中顯示訊息。</li>
-<li>expr：設定為 <code>true</code> 時，表示 <code>&#123;rhs&#125;</code> 的內容將做為 expression 求值。</li>
-<li>nowait：設定為 <code>true</code> 時，表示立刻執行映射，不等待更多输入。</li>
-<li>desc：為快捷鍵添加描述，用於讓額外套件（如 which-key）取用來顯示提示訊息。</li>
-<li>buffer：設定為 <code>true</code> 時，表示這個快捷鍵只會對當前 buffer 作用。</li>
-</ul>
-</li>
-</ol>
-<p>以上是我有使用過的一些 <code>&#123;opts&#125;</code>，其他更多內容可以參考 <code>:h maparg</code>。</p>
-<p>來舉個例子吧：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Add empty line without get into Insert mode</span></span><br><span class="line">vim.keymap.set(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;CR&gt;&quot;</span>, <span class="string">&quot;o&lt;Esc&gt;k&quot;</span>, &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span>, desc = <span class="string">&quot;Add empty line&quot;</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Press jj to exit insert mode</span></span><br><span class="line">vim.keymap.set(<span class="string">&quot;i&quot;</span>, <span class="string">&quot;jj&quot;</span>, <span class="string">&quot;&lt;Esc&gt;&quot;</span>, &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span>, desc = <span class="string">&quot;Exit insert mode&quot;</span> &#125;)</span><br></pre></td></tr></table></figure>
-
-<p>在第一個例子中，我將 Normal mode 中的 <code>&lt;CR&gt;</code> 鍵映射成了一段連續的操作 <code>o&lt;Esc&gt;k</code>，如果你很熟悉 Vim 指令的話，應該馬上就能反應過來它的意思：<code>o</code> 新增一行、<code>&lt;Esc&gt;</code> 返回 Normal mode、然後 <code>k</code> 將遊標移回原本的所在行。</p>
-<p>也就是說，它會維持遊標的位置，並在下方插入一個空白行。</p>
-<p>而在第二個例子中，我將 Insert mode 中的 <code>jj</code> 輸入映射成 <code>&lt;Esc&gt;</code> 鍵，也就是只要我在 Insert mode 時輸入 <code>jj</code> ，就可以退出 Insert mode。另外僅供參考，也有些人會將其設為 <code>jk</code>。</p>
-<p>另外，你可能會注意到，<code>&lt;CR&gt;</code> 鍵是什麼？以及，如果我想加入 Ctrl 或 Shift 鍵時，我應該怎麽表示？放心，我也很常忘記，所以在這裡我列出了一些常見的功能鍵的表示方法，以供查詢：</p>
-<table>
-<thead>
-<tr>
-<th>鍵</th>
-<th>符號</th>
-<th align="left">說明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Leader</td>
-<td><code>&lt;leader&gt;</code></td>
-<td align="left">用於部分快捷鍵的前綴，預設是 <code>\</code>，可自行更改。</td>
-</tr>
-<tr>
-<td>Enter</td>
-<td><code>&lt;CR&gt;</code></td>
-<td align="left">Enter 鍵。</td>
-</tr>
-<tr>
-<td>Control</td>
-<td><code>&lt;C-</code></td>
-<td align="left">Ctrl鍵，例如 <code>&lt;C-n&gt;</code> 表示 Ctrl + n。</td>
-</tr>
-<tr>
-<td>Shift</td>
-<td><code>&lt;S-</code></td>
-<td align="left">Shift 鍵，例如 <code>&lt;S-h&gt;</code> 表示 Shift + h。</td>
-</tr>
-<tr>
-<td>Alt</td>
-<td><code>&lt;A-</code></td>
-<td align="left">Alt 鍵，例如 <code>&lt;A-x&gt;</code> 表示 Alt + x。</td>
-</tr>
-<tr>
-<td>Meta</td>
-<td><code>&lt;M-</code></td>
-<td align="left">Meta 鍵，一般就是指 Alt 鍵。</td>
-</tr>
-<tr>
-<td>Escape</td>
-<td><code>&lt;Esc&gt;</code></td>
-<td align="left">Esc 鍵。</td>
-</tr>
-<tr>
-<td>Backspace</td>
-<td><code>&lt;BS&gt;</code></td>
-<td align="left">退格鍵。</td>
-</tr>
-<tr>
-<td>Space</td>
-<td><code>&lt;Space&gt;</code></td>
-<td align="left">空白鍵。</td>
-</tr>
-<tr>
-<td>Tab</td>
-<td><code>&lt;Tab&gt;</code></td>
-<td align="left">Tab 鍵。</td>
-</tr>
-<tr>
-<td>Arrow Up</td>
-<td><code>&lt;Up&gt;</code></td>
-<td align="left">向上箭頭，可以用類似 <code>&lt;C-UP&gt;</code> 的方式與功能鍵組合。</td>
-</tr>
-<tr>
-<td>Arrow Down</td>
-<td><code>&lt;Down&gt;</code></td>
-<td align="left">向下箭頭。</td>
-</tr>
-<tr>
-<td>Arrow Left</td>
-<td><code>&lt;Left&gt;</code></td>
-<td align="left">向左箭頭。</td>
-</tr>
-<tr>
-<td>Arrow Right</td>
-<td><code>&lt;Right&gt;</code></td>
-<td align="left">向右箭頭。</td>
-</tr>
-<tr>
-<td>Delete</td>
-<td><code>&lt;Del&gt;</code></td>
-<td align="left">Delete 鍵。</td>
-</tr>
-<tr>
-<td>Function Key</td>
-<td><code>&lt;F1&gt;</code> to <code>&lt;F12&gt;</code></td>
-<td align="left">功能鍵 F1 到 F12。</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="keymaps-lua-完整說明"><a href="#keymaps-lua-完整說明" class="headerlink" title="keymaps.lua 完整說明"></a>keymaps.lua 完整說明</h2><p>至此，想必你已經可以開始調整屬於你的快捷鍵了，而接下來我將對我的設定內容進行分類介紹，同樣地，完整的設定檔可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/keymaps.lua">這裡（我的 github）</a>查看，你可以直接複製再根據需求進行調整，但就像我說的，這是我習慣的快捷鍵組合，它不一定適合你，不要去強記任何人的快捷鍵，而是要讓 Neovim 來配合你的習慣。</p>
-<p>最好的驗證方法就是，當你設定完快捷鍵之後，你是不是能馬上想起大部分的內容，而不需要一再重新去查看。我個人的習慣是，盡量使用與動作單字相關的字母，例如 Delete 就用 d，Replace 就用 r 之類的。</p>
-<h3 id="preliminary-setup"><a href="#preliminary-setup" class="headerlink" title="preliminary setup"></a>preliminary setup</h3><p>首先是一些基本設定：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Set Leader key to Space --</span></span><br><span class="line">vim.g.mapleader = <span class="string">&quot; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Shorten function name --</span></span><br><span class="line"><span class="keyword">local</span> keymap = vim.keymap.set</span><br><span class="line"><span class="keyword">local</span> opts = &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
-
-<p>這裡我首先將 Leader key 設為了空白鍵；接著，因為接下來我們會設定很多的快捷鍵，為了讓文件簡潔一些，我將一些會重複使用的內容保存為本地變數，包含將 <code>vim.keymap.set</code> 存為 <code>keymap</code>，以及將我常用的 <code>&#123;opts&#125;</code> 選項保存為 <code>opts</code>。</p>
-<p>這樣，我們就可以透過 <code>keymap(&quot;n&quot;, &quot;快捷鍵&quot;, &quot;映射&quot;, opts)</code> 的方式來設定大多數的快捷鍵了。</p>
-<h3 id="cursor-jumping"><a href="#cursor-jumping" class="headerlink" title="cursor jumping"></a>cursor jumping</h3><p>在 Neovim 的預設中，<code>&lt;C-u&gt;</code> 和 <code>&lt;C-d&gt;</code> 分別會將遊標向上或下移動半頁，再將遊標當前行捲到頁面頂部（會保留 scrolloff 的行數）。而這個「半頁」的行數是根據你當前視窗的可視行數來動態決定的，例如當你的視窗可以顯示 50 行，那半頁就是 25 行。</p>
-<p>像這樣不固定的行數對我來說很煩，所以我決定將它固定在 15 行。以及，我喜歡在每次遊標進行例如翻頁、或搜尋關鍵字等大幅跳行的行為時，將遊標固定在特定位置，以避免找不到遊標在哪。</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Normal --</span></span><br><span class="line"><span class="comment">-- Page up and down</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-u&gt;&quot;</span>, <span class="string">&quot;15kztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-d&gt;&quot;</span>, <span class="string">&quot;15jztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;G&quot;</span>, <span class="string">&quot;Gzzzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;gg&quot;</span>, <span class="string">&quot;ggzzzv&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Keep cursor at the middle after search jumping</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;nztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;N&quot;</span>, <span class="string">&quot;Nztzv&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
-
-<p>說明：</p>
-<ul>
-<li>固定翻頁行數：設定 <code>&lt;C-u&gt;</code> 和 <code>&lt;C-d&gt;</code> 的移動行數為 15 行。</li>
-<li>移動後的遊標位置：<ul>
-<li>zt：將遊標所在行捲到頂部。</li>
-<li>zz：將遊標所在行捲到中間。</li>
-<li>zb：將遊標所在行捲到底部。</li>
-</ul>
-</li>
-<li>zv：展開遊標所在行的程式碼摺疊。</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181824855.gif"></p>
-<h3 id="move-in-warpline"><a href="#move-in-warpline" class="headerlink" title="move in warpline"></a>move in warpline</h3><p>在 Neovim 中，當一行文字過長而被換行顯示時，在使用普通模式下的 <code>j</code> 和 <code>k</code> 鍵移動時，會跳到實際的下一行或上一行，而不是視覺上的換行。要在視覺行內移動，則必須使用 <code>gj</code> 和 <code>gk</code> 來移動。為了方便，我決定把它們的功能互換。</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Move in warpline</span></span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;j&quot;</span>, <span class="string">&quot;gj&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;k&quot;</span>, <span class="string">&quot;gk&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;gj&quot;</span>, <span class="string">&quot;j&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;gk&quot;</span>, <span class="string">&quot;k&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181826105.gif"></p>
-<h3 id="normal-trick"><a href="#normal-trick" class="headerlink" title="normal trick"></a>normal trick</h3><p>以下是一些我在 Normal mode 中的自定功能：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Add empty line without get into Insert mode</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;CR&gt;&quot;</span>, <span class="string">&quot;o&lt;Esc&gt;k&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Delete into void</span></span><br><span class="line">keymap(&#123;<span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span>&#125;, <span class="string">&quot;&lt;leader&gt;d&quot;</span>, <span class="string">&#x27;&quot;_d&#x27;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Replace all</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;leader&gt;r&quot;</span>, <span class="string">[[:%s/\&lt;&lt;C-r&gt;&lt;C-w&gt;\&gt;/&lt;C-r&gt;&lt;C-w&gt;/gI&lt;Left&gt;&lt;Left&gt;&lt;Left&gt;]]</span>, opts)</span><br></pre></td></tr></table></figure>
-
-<p>說明：</p>
-<ul>
-<li><code>&lt;CR&gt;</code> 會在下方新增空行且不進入插入模式。</li>
-<li><code>&lt;leader&gt;d</code>：Neovim 中使用 d 來刪除文字時會同時將刪除的內容放入剪貼簿中，這有時很煩，所以我多設定了一個快捷鍵，來將不要的內容刪除且不放入剪貼簿中。</li>
-<li><code>&lt;leader&gt;r</code>：選中遊標當前所在的單字，並對文件中所有相同的單字進行替換操作。</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181827330.gif"></p>
-<h3 id="window-navigation"><a href="#window-navigation" class="headerlink" title="window navigation"></a>window navigation</h3><p>以下是一些自定的視窗管理快捷鍵，包含切換視窗，以及調整視窗大小：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Window navigation</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-h&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;h&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-j&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;j&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-k&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;k&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-l&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;l&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Resize with arrows</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Up&gt;&quot;</span>, <span class="string">&quot;:resize +2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Down&gt;&quot;</span>, <span class="string">&quot;:resize -2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Left&gt;&quot;</span>, <span class="string">&quot;:vertical resize -2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Right&gt;&quot;</span>, <span class="string">&quot;:vertical resize +2&lt;CR&gt;&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
-
-<p>說明：</p>
-<ul>
-<li>視窗導航：<ul>
-<li><code>&lt;C-h&gt;</code>：移動到左側視窗。</li>
-<li><code>&lt;C-j&gt;</code>：移動到下方視窗。</li>
-<li><code>&lt;C-k&gt;</code>：移動到上方視窗。</li>
-<li><code>&lt;C-l&gt;</code>：移動到右側視窗。</li>
-</ul>
-</li>
-<li>調整視窗大小：<ul>
-<li><code>&lt;C-Up&gt;</code>：增加視窗高度。</li>
-<li><code>&lt;C-Down&gt;</code>：減少視窗高度。</li>
-<li><code>&lt;C-Left&gt;</code>：減少視窗寬度。</li>
-<li><code>&lt;C-Right&gt;</code>：增加視窗寬度。</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181829552.gif"></p>
-<h3 id="insert-and-visual-trick"><a href="#insert-and-visual-trick" class="headerlink" title="insert and visual trick"></a>insert and visual trick</h3><p>以下是一些我在 Insert 和 Visual mode 中的自定快捷鍵：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Insert --</span></span><br><span class="line"><span class="comment">-- Press jj to exit insert mode</span></span><br><span class="line">keymap(<span class="string">&quot;i&quot;</span>, <span class="string">&quot;jj&quot;</span>, <span class="string">&quot;&lt;Esc&gt;&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Visual --</span></span><br><span class="line"><span class="comment">-- Stay in indent mode</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;&lt;&quot;</span>, <span class="string">&quot;&lt;gv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;&gt;&quot;</span>, <span class="string">&quot;&gt;gv&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Keep paste buffer after paste</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;p&quot;</span>, <span class="string">&#x27;&quot;_dP&#x27;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Move text up and down</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;J&quot;</span>, <span class="string">&quot;:m &#x27;&gt;+1&lt;CR&gt;gv=gv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;K&quot;</span>, <span class="string">&quot;:m &#x27;&lt;-2&lt;CR&gt;gv=gv&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
-
-<p>說明：</p>
-<ul>
-<li>插入模式：使用 <code>jj</code> 來退出插入模式。</li>
-<li>縮排改進：在 Visual mode 時，輸入 <code>&gt;</code> 或 <code>&lt;</code> 會增加或減少遊標所在行的縮排，並回到 Normal mode。這不太直覺，所以我將其改為縮排後仍保持原先的選取狀態，這樣就能進行連續縮排了。</li>
-<li>貼上改進：在 Visual mode 時，輸入 <code>p</code> 會將選取的內容與剪貼簿中的內容交換，這太反人類了，所以我將它改成在貼上後仍保持剪貼簿的內容不變。</li>
-<li>行移動：當在 Visual mode 時輸入 <code>J</code> 或 <code>K</code>，可以將選取的行下移或上移，這超好用，個人強推。</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181832775.gif"></p>
-<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，相信你也見識到了 keymaps 的便捷與強大，只要你想，你甚至可以將 h&#x2F;j&#x2F;k&#x2F;l 的移動方式改成 w&#x2F;a&#x2F;s&#x2F;d ，雖然我不建議這麼做就是了。</p>
-<p>這份 <code>keymaps.lua</code> 可能會是你將來在使用 Neovim 時最常更動的設定文件，無論是不斷的調教，還是在安裝了眾多的額外套件後，替套件的功能設定新的快捷鍵，都可以透過編輯這個檔案，來將各式各樣的功能快捷統一整理在一個文檔當中，相當方便。</p>
-<p>而在下一章裡，我們將開始進入到 Neovim 最深遠的巨坑：套件的安裝與管理。</p>
-<p><big>上一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a></big></p>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://youtu.be/435-amtVYJ8?si=iYDIY30iHYjTDaOl">Neovim - ~25 Custom Keymaps set with Lua</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Neovim</category>
-      </categories>
-      <tags>
-        <tag>Neovim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>設定文件結構與基礎功能設定</title>
     <url>/2024/03/06/neovim-setup-20240306-nvim-basic-config/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 同時支援使用 VimScript 和 Lua 語言來撰寫設定文件，前者源自於它的老祖 Vim，而後者則是一種極爲輕量的 Scripting language，同時亦是 Neovim 有別於 Vim 最大的特點之一：它更加易學、具有更好的工具支持與易擴展性、以及更高的執行效能，這都是你應該選擇使用 Lua 而非 VimScript 原因，唯一導致你必須使用 VimScript 的理由大概只有，當你想與 Vim 共用你的這份設定文件的時候。</p>
@@ -1265,6 +1042,229 @@
         <tag>Project</tag>
         <tag>Python3</tag>
         <tag>Web Crawler</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Neovim 快捷鍵設定</title>
+    <url>/2024/06/18/neovim-setup-20240618-nvim-keymaps/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim motion 的核心之一就在於直觀且可高度客製化的快捷鍵設定，要想如臂使指般地使用 Neovim，一套精心調教過的快捷鍵絕對是不可或缺的，尤其無論是在 Vim 還是 Neovim 中，都遺留了一些老舊且稍微有些反人類的操作設定，以及缺少了現代人習以為常的方便功能。</p>
+<p>所幸， Neovim 的快捷鍵設定相當直觀、便利且強大，你可以透過它來簡化一些繁瑣的操作、使用額外套件的功能、你甚至可以直接實現一些組合功能，而不需要另外下載功能套件，我將會在後續的介紹中進行示範。</p>
+<p>在本篇裡，我將介紹如何設定 Neovim 的快捷鍵，並分享我的設定。如果想直接複製我的設定文件，可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/keymaps.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
+<p>另外切記，在 Neovim 中，千萬不要去強記任何的快捷鍵，而是將你的習慣告訴 Neovim，讓它成為你的形狀。</p>
+<hr>
+<h2 id="建立設定文件與引用"><a href="#建立設定文件與引用" class="headerlink" title="建立設定文件與引用"></a>建立設定文件與引用</h2><p>還記得我們在上一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a> 中提過的文件結構嗎，首先，到 <code>imp/</code> 中建立這次要使用的設定文件 <code>keymaps.lua</code>。</p>
+<p>接著，編輯 <code>init.lua</code>，加入以下的程式碼來引用它：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp/keymaps&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="Leader-Key"><a href="#Leader-Key" class="headerlink" title="Leader Key"></a>Leader Key</h2><p>在 Neovim 中，Leader key是一個通用的快捷鍵前綴，用來做為大部分快捷鍵的起頭，預設為 <code>\</code> ，有些人喜歡使用 <code>;</code> 或 <code>,</code> ，而我則比較喜歡使用空白鍵。</p>
+<p>編輯 <code>keymaps.lua</code>，加入以下內容：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.g.mapleader = <span class="string">&quot; &quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>這樣，我們就設定完成了。</p>
+<hr>
+<h2 id="如何設定快捷鍵？"><a href="#如何設定快捷鍵？" class="headerlink" title="如何設定快捷鍵？"></a>如何設定快捷鍵？</h2><p>在 Neovim 中，我們主要依靠以下兩個 api 來設定快捷鍵：</p>
+<ul>
+<li>vim.keymap.del()：刪除快捷鍵。</li>
+<li>vim.keymap.set()：設定快捷鍵。</li>
+</ul>
+<p>不過，有鑑於 <code>vim.keymap.set</code> 本身就會覆寫原有的快捷鍵，所以其實我沒怎麽用過 <code>vim.keymap.del</code>，以下將著重說明 <code>vim.keymap.set</code> 的使用，如果想看更詳細的說明，也可以使用指令 <code>:h vim.keymap</code> 來查看官方的說明文件。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181812734.png" alt="vim.keymap.set"></p>
+<p><code>vim.keymap.set</code> 包含了四個參數：</p>
+<ol>
+<li><code>&#123;mode&#125;</code>：快捷鍵作用的模式，包含 n、i、v、t、c 五個基本模式，可以傳入單個字元如 <code>“n&quot;</code>，或一個 list 如 <code>&#123;&quot;n&quot;, &quot;i&quot;&#125;</code> 來讓快捷鍵作用在複數模式中。</li>
+<li><code>&#123;lhs&#125;</code>：你想設定的快捷鍵。</li>
+<li><code>&#123;rhs&#125;</code>：快捷鍵觸發的操作，可以是一系列的按鍵組合、一條指令或是一個 expression。</li>
+<li><code>&#123;opts&#125;</code>：快捷鍵的選項表，主要包含：<ul>
+<li>noremap：設定為 <code>true</code> 時，表示這個快捷鍵的映射是非遞迴的。例如，當你同時有快捷鍵 <code>A-&gt;B</code>和 <code>B-&gt;C</code> 時，如果你將這項設為 <code>false</code> ，則 <code>A</code> 就會被映射為 <code>C</code>，反之則為 <code>B</code>。</li>
+<li>silent：設定為 <code>true</code> 時，執行快捷鍵時不會在命令行中顯示訊息。</li>
+<li>expr：設定為 <code>true</code> 時，表示 <code>&#123;rhs&#125;</code> 的內容將做為 expression 求值。</li>
+<li>nowait：設定為 <code>true</code> 時，表示立刻執行映射，不等待更多输入。</li>
+<li>desc：為快捷鍵添加描述，用於讓額外套件（如 which-key）取用來顯示提示訊息。</li>
+<li>buffer：設定為 <code>true</code> 時，表示這個快捷鍵只會對當前 buffer 作用。</li>
+</ul>
+</li>
+</ol>
+<p>以上是我有使用過的一些 <code>&#123;opts&#125;</code>，其他更多內容可以參考 <code>:h maparg</code>。</p>
+<p>來舉個例子吧：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Add empty line without get into Insert mode</span></span><br><span class="line">vim.keymap.set(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;CR&gt;&quot;</span>, <span class="string">&quot;o&lt;Esc&gt;k&quot;</span>, &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span>, desc = <span class="string">&quot;Add empty line&quot;</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Press jj to exit insert mode</span></span><br><span class="line">vim.keymap.set(<span class="string">&quot;i&quot;</span>, <span class="string">&quot;jj&quot;</span>, <span class="string">&quot;&lt;Esc&gt;&quot;</span>, &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span>, desc = <span class="string">&quot;Exit insert mode&quot;</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在第一個例子中，我將 Normal mode 中的 <code>&lt;CR&gt;</code> 鍵映射成了一段連續的操作 <code>o&lt;Esc&gt;k</code>，如果你很熟悉 Vim 指令的話，應該馬上就能反應過來它的意思：<code>o</code> 新增一行、<code>&lt;Esc&gt;</code> 返回 Normal mode、然後 <code>k</code> 將遊標移回原本的所在行。</p>
+<p>也就是說，它會維持遊標的位置，並在下方插入一個空白行。</p>
+<p>而在第二個例子中，我將 Insert mode 中的 <code>jj</code> 輸入映射成 <code>&lt;Esc&gt;</code> 鍵，也就是只要我在 Insert mode 時輸入 <code>jj</code> ，就可以退出 Insert mode。另外僅供參考，也有些人會將其設為 <code>jk</code>。</p>
+<p>另外，你可能會注意到，<code>&lt;CR&gt;</code> 鍵是什麼？以及，如果我想加入 Ctrl 或 Shift 鍵時，我應該怎麽表示？放心，我也很常忘記，所以在這裡我列出了一些常見的功能鍵的表示方法，以供查詢：</p>
+<table>
+<thead>
+<tr>
+<th>鍵</th>
+<th>符號</th>
+<th align="left">說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Leader</td>
+<td><code>&lt;leader&gt;</code></td>
+<td align="left">用於部分快捷鍵的前綴，預設是 <code>\</code>，可自行更改。</td>
+</tr>
+<tr>
+<td>Enter</td>
+<td><code>&lt;CR&gt;</code></td>
+<td align="left">Enter 鍵。</td>
+</tr>
+<tr>
+<td>Control</td>
+<td><code>&lt;C-</code></td>
+<td align="left">Ctrl鍵，例如 <code>&lt;C-n&gt;</code> 表示 Ctrl + n。</td>
+</tr>
+<tr>
+<td>Shift</td>
+<td><code>&lt;S-</code></td>
+<td align="left">Shift 鍵，例如 <code>&lt;S-h&gt;</code> 表示 Shift + h。</td>
+</tr>
+<tr>
+<td>Alt</td>
+<td><code>&lt;A-</code></td>
+<td align="left">Alt 鍵，例如 <code>&lt;A-x&gt;</code> 表示 Alt + x。</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td><code>&lt;M-</code></td>
+<td align="left">Meta 鍵，一般就是指 Alt 鍵。</td>
+</tr>
+<tr>
+<td>Escape</td>
+<td><code>&lt;Esc&gt;</code></td>
+<td align="left">Esc 鍵。</td>
+</tr>
+<tr>
+<td>Backspace</td>
+<td><code>&lt;BS&gt;</code></td>
+<td align="left">退格鍵。</td>
+</tr>
+<tr>
+<td>Space</td>
+<td><code>&lt;Space&gt;</code></td>
+<td align="left">空白鍵。</td>
+</tr>
+<tr>
+<td>Tab</td>
+<td><code>&lt;Tab&gt;</code></td>
+<td align="left">Tab 鍵。</td>
+</tr>
+<tr>
+<td>Arrow Up</td>
+<td><code>&lt;Up&gt;</code></td>
+<td align="left">向上箭頭，可以用類似 <code>&lt;C-UP&gt;</code> 的方式與功能鍵組合。</td>
+</tr>
+<tr>
+<td>Arrow Down</td>
+<td><code>&lt;Down&gt;</code></td>
+<td align="left">向下箭頭。</td>
+</tr>
+<tr>
+<td>Arrow Left</td>
+<td><code>&lt;Left&gt;</code></td>
+<td align="left">向左箭頭。</td>
+</tr>
+<tr>
+<td>Arrow Right</td>
+<td><code>&lt;Right&gt;</code></td>
+<td align="left">向右箭頭。</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td><code>&lt;Del&gt;</code></td>
+<td align="left">Delete 鍵。</td>
+</tr>
+<tr>
+<td>Function Key</td>
+<td><code>&lt;F1&gt;</code> to <code>&lt;F12&gt;</code></td>
+<td align="left">功能鍵 F1 到 F12。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="keymaps-lua-完整說明"><a href="#keymaps-lua-完整說明" class="headerlink" title="keymaps.lua 完整說明"></a>keymaps.lua 完整說明</h2><p>至此，想必你已經可以開始調整屬於你的快捷鍵了，而接下來我將對我的設定內容進行分類介紹，同樣地，完整的設定檔可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/keymaps.lua">這裡（我的 github）</a>查看，你可以直接複製再根據需求進行調整，但就像我說的，這是我習慣的快捷鍵組合，它不一定適合你，不要去強記任何人的快捷鍵，而是要讓 Neovim 來配合你的習慣。</p>
+<p>最好的驗證方法就是，當你設定完快捷鍵之後，你是不是能馬上想起大部分的內容，而不需要一再重新去查看。我個人的習慣是，盡量使用與動作單字相關的字母，例如 Delete 就用 d，Replace 就用 r 之類的。</p>
+<h3 id="preliminary-setup"><a href="#preliminary-setup" class="headerlink" title="preliminary setup"></a>preliminary setup</h3><p>首先是一些基本設定：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Set Leader key to Space --</span></span><br><span class="line">vim.g.mapleader = <span class="string">&quot; &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- Shorten function name --</span></span><br><span class="line"><span class="keyword">local</span> keymap = vim.keymap.set</span><br><span class="line"><span class="keyword">local</span> opts = &#123; noremap = <span class="literal">true</span>, silent = <span class="literal">true</span> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>這裡我首先將 Leader key 設為了空白鍵；接著，因為接下來我們會設定很多的快捷鍵，為了讓文件簡潔一些，我將一些會重複使用的內容保存為本地變數，包含將 <code>vim.keymap.set</code> 存為 <code>keymap</code>，以及將我常用的 <code>&#123;opts&#125;</code> 選項保存為 <code>opts</code>。</p>
+<p>這樣，我們就可以透過 <code>keymap(&quot;n&quot;, &quot;快捷鍵&quot;, &quot;映射&quot;, opts)</code> 的方式來設定大多數的快捷鍵了。</p>
+<h3 id="cursor-jumping"><a href="#cursor-jumping" class="headerlink" title="cursor jumping"></a>cursor jumping</h3><p>在 Neovim 的預設中，<code>&lt;C-u&gt;</code> 和 <code>&lt;C-d&gt;</code> 分別會將遊標向上或下移動半頁，再將遊標當前行捲到頁面頂部（會保留 scrolloff 的行數）。而這個「半頁」的行數是根據你當前視窗的可視行數來動態決定的，例如當你的視窗可以顯示 50 行，那半頁就是 25 行。</p>
+<p>像這樣不固定的行數對我來說很煩，所以我決定將它固定在 15 行。以及，我喜歡在每次遊標進行例如翻頁、或搜尋關鍵字等大幅跳行的行為時，將遊標固定在特定位置，以避免找不到遊標在哪。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Normal --</span></span><br><span class="line"><span class="comment">-- Page up and down</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-u&gt;&quot;</span>, <span class="string">&quot;15kztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-d&gt;&quot;</span>, <span class="string">&quot;15jztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;G&quot;</span>, <span class="string">&quot;Gzzzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;gg&quot;</span>, <span class="string">&quot;ggzzzv&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Keep cursor at the middle after search jumping</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;n&quot;</span>, <span class="string">&quot;nztzv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;N&quot;</span>, <span class="string">&quot;Nztzv&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li>固定翻頁行數：設定 <code>&lt;C-u&gt;</code> 和 <code>&lt;C-d&gt;</code> 的移動行數為 15 行。</li>
+<li>移動後的遊標位置：<ul>
+<li>zt：將遊標所在行捲到頂部。</li>
+<li>zz：將遊標所在行捲到中間。</li>
+<li>zb：將遊標所在行捲到底部。</li>
+</ul>
+</li>
+<li>zv：展開遊標所在行的程式碼摺疊。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181824855.gif"></p>
+<h3 id="move-in-warpline"><a href="#move-in-warpline" class="headerlink" title="move in warpline"></a>move in warpline</h3><p>在 Neovim 中，當一行文字過長而被換行顯示時，在使用普通模式下的 <code>j</code> 和 <code>k</code> 鍵移動時，會跳到實際的下一行或上一行，而不是視覺上的換行。要在視覺行內移動，則必須使用 <code>gj</code> 和 <code>gk</code> 來移動。為了方便，我決定把它們的功能互換。</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Move in warpline</span></span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;j&quot;</span>, <span class="string">&quot;gj&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;k&quot;</span>, <span class="string">&quot;gk&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;gj&quot;</span>, <span class="string">&quot;j&quot;</span>, opts)</span><br><span class="line">keymap(&#123; <span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span> &#125;, <span class="string">&quot;gk&quot;</span>, <span class="string">&quot;k&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181826105.gif"></p>
+<h3 id="normal-trick"><a href="#normal-trick" class="headerlink" title="normal trick"></a>normal trick</h3><p>以下是一些我在 Normal mode 中的自定功能：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Add empty line without get into Insert mode</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;CR&gt;&quot;</span>, <span class="string">&quot;o&lt;Esc&gt;k&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Delete into void</span></span><br><span class="line">keymap(&#123;<span class="string">&quot;n&quot;</span>, <span class="string">&quot;v&quot;</span>&#125;, <span class="string">&quot;&lt;leader&gt;d&quot;</span>, <span class="string">&#x27;&quot;_d&#x27;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Replace all</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;leader&gt;r&quot;</span>, <span class="string">[[:%s/\&lt;&lt;C-r&gt;&lt;C-w&gt;\&gt;/&lt;C-r&gt;&lt;C-w&gt;/gI&lt;Left&gt;&lt;Left&gt;&lt;Left&gt;]]</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li><code>&lt;CR&gt;</code> 會在下方新增空行且不進入插入模式。</li>
+<li><code>&lt;leader&gt;d</code>：Neovim 中使用 d 來刪除文字時會同時將刪除的內容放入剪貼簿中，這有時很煩，所以我多設定了一個快捷鍵，來將不要的內容刪除且不放入剪貼簿中。</li>
+<li><code>&lt;leader&gt;r</code>：選中遊標當前所在的單字，並對文件中所有相同的單字進行替換操作。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181827330.gif"></p>
+<h3 id="window-navigation"><a href="#window-navigation" class="headerlink" title="window navigation"></a>window navigation</h3><p>以下是一些自定的視窗管理快捷鍵，包含切換視窗，以及調整視窗大小：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Window navigation</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-h&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;h&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-j&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;j&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-k&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;k&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-l&gt;&quot;</span>, <span class="string">&quot;&lt;C-w&gt;l&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Resize with arrows</span></span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Up&gt;&quot;</span>, <span class="string">&quot;:resize +2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Down&gt;&quot;</span>, <span class="string">&quot;:resize -2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Left&gt;&quot;</span>, <span class="string">&quot;:vertical resize -2&lt;CR&gt;&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;n&quot;</span>, <span class="string">&quot;&lt;C-Right&gt;&quot;</span>, <span class="string">&quot;:vertical resize +2&lt;CR&gt;&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li>視窗導航：<ul>
+<li><code>&lt;C-h&gt;</code>：移動到左側視窗。</li>
+<li><code>&lt;C-j&gt;</code>：移動到下方視窗。</li>
+<li><code>&lt;C-k&gt;</code>：移動到上方視窗。</li>
+<li><code>&lt;C-l&gt;</code>：移動到右側視窗。</li>
+</ul>
+</li>
+<li>調整視窗大小：<ul>
+<li><code>&lt;C-Up&gt;</code>：增加視窗高度。</li>
+<li><code>&lt;C-Down&gt;</code>：減少視窗高度。</li>
+<li><code>&lt;C-Left&gt;</code>：減少視窗寬度。</li>
+<li><code>&lt;C-Right&gt;</code>：增加視窗寬度。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181829552.gif"></p>
+<h3 id="insert-and-visual-trick"><a href="#insert-and-visual-trick" class="headerlink" title="insert and visual trick"></a>insert and visual trick</h3><p>以下是一些我在 Insert 和 Visual mode 中的自定快捷鍵：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- Insert --</span></span><br><span class="line"><span class="comment">-- Press jj to exit insert mode</span></span><br><span class="line">keymap(<span class="string">&quot;i&quot;</span>, <span class="string">&quot;jj&quot;</span>, <span class="string">&quot;&lt;Esc&gt;&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Visual --</span></span><br><span class="line"><span class="comment">-- Stay in indent mode</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;&lt;&quot;</span>, <span class="string">&quot;&lt;gv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;&gt;&quot;</span>, <span class="string">&quot;&gt;gv&quot;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Keep paste buffer after paste</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;p&quot;</span>, <span class="string">&#x27;&quot;_dP&#x27;</span>, opts)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- Move text up and down</span></span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;J&quot;</span>, <span class="string">&quot;:m &#x27;&gt;+1&lt;CR&gt;gv=gv&quot;</span>, opts)</span><br><span class="line">keymap(<span class="string">&quot;v&quot;</span>, <span class="string">&quot;K&quot;</span>, <span class="string">&quot;:m &#x27;&lt;-2&lt;CR&gt;gv=gv&quot;</span>, opts)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ul>
+<li>插入模式：使用 <code>jj</code> 來退出插入模式。</li>
+<li>縮排改進：在 Visual mode 時，輸入 <code>&gt;</code> 或 <code>&lt;</code> 會增加或減少遊標所在行的縮排，並回到 Normal mode。這不太直覺，所以我將其改為縮排後仍保持原先的選取狀態，這樣就能進行連續縮排了。</li>
+<li>貼上改進：在 Visual mode 時，輸入 <code>p</code> 會將選取的內容與剪貼簿中的內容交換，這太反人類了，所以我將它改成在貼上後仍保持剪貼簿的內容不變。</li>
+<li>行移動：當在 Visual mode 時輸入 <code>J</code> 或 <code>K</code>，可以將選取的行下移或上移，這超好用，個人強推。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181832775.gif"></p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，相信你也見識到了 keymaps 的便捷與強大，只要你想，你甚至可以將 h&#x2F;j&#x2F;k&#x2F;l 的移動方式改成 w&#x2F;a&#x2F;s&#x2F;d ，雖然我不建議這麼做就是了。</p>
+<p>這份 <code>keymaps.lua</code> 可能會是你將來在使用 Neovim 時最常更動的設定文件，無論是不斷的調教，還是在安裝了眾多的額外套件後，替套件的功能設定新的快捷鍵，都可以透過編輯這個檔案，來將各式各樣的功能快捷統一整理在一個文檔當中，相當方便。</p>
+<p>而在下一章裡，我們將開始進入到 Neovim 最深遠的巨坑：套件的安裝與管理。</p>
+<p><big>上一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="設定文件結構與基礎功能設定">設定文件結構與基礎功能設定</a></big></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://youtu.be/435-amtVYJ8?si=iYDIY30iHYjTDaOl">Neovim - ~25 Custom Keymaps set with Lua</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
       </tags>
   </entry>
 </search>
