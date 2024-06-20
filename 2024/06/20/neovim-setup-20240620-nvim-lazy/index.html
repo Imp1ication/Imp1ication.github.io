@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Neovim 外掛管理工具 —— lazy.nvim | Imp1ication.com</title><meta name="author" content="Imp1ication"><meta name="copyright" content="Imp1ication"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="介紹如何安裝與使用 Neovim 的外掛管理工具 lazy.nvim。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neovim 外掛管理工具 —— lazy.nvim">
+<meta property="og:url" content="https://imp1ication.github.io/2024/06/20/neovim-setup-20240620-nvim-lazy/">
+<meta property="og:site_name" content="Imp1ication.com">
+<meta property="og:description" content="介紹如何安裝與使用 Neovim 的外掛管理工具 lazy.nvim。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201926851.jpg">
+<meta property="article:published_time" content="2024-06-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-19T16:00:00.000Z">
+<meta property="article:author" content="Imp1ication">
+<meta property="article:tag" content="Neovim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201926851.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://imp1ication.github.io/2024/06/20/neovim-setup-20240620-nvim-lazy/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":5,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":700,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Neovim 外掛管理工具 —— lazy.nvim',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-20 00:00:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="icon" href="/img/favicon.png"><meta name="generator" content="Hexo 7.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-book-skull"></i><span> Projects</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/projects/school"><i class="fa-fw fa-solid fa-school"></i><span> School Projects</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Imp1ication.com"><span class="site-name">Imp1ication.com</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-book-skull"></i><span> Projects</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/projects/school"><i class="fa-fw fa-solid fa-school"></i><span> School Projects</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Neovim 外掛管理工具 —— lazy.nvim</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-06-19T16:00:00.000Z" title="Created 2024-06-20 00:00:00">2024-06-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-06-19T16:00:00.000Z" title="Updated 2024-06-20 00:00:00">2024-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Neovim/">Neovim</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 的强大之一就在於小巧且種類繁多的功能外掛，基本上在 Neovim 的世界裡，只有你想不到的需求，沒有找不到的外掛，如果有，那就自己寫一個吧！</p>
+<p>而隨著我們積年累月的使用與調教，外掛必定會越來越多，相依關係也勢必變得越來越複雜，這時有個方便的外掛管理工具就顯得非常重要了。</p>
+<p>目前主流的工具有三個，分別是從 Vim8 延續下來，基於 Vim Script 所撰寫的 vim-plugs、使用 Lua 語言所撰寫的 packer.nvim（以下簡稱 packer），以及站在了 packer 的肩上，在推出後即廣受好評，同時也是我們這次的主角：lazy.nvim （以下簡稱 lazy）。</p>
+<p>相較於 packer ，lazy 有著更強大的性能、以及更合理的外掛管理方式，且 packer 隨著的更新，它變得越來越混亂與臃腫，以致於在 lazy 出現後，packer 也原地爆炸，選擇停止維護。現在它轉生成了 pckr.nvim，但 packer 的官方也表明它沒有 lazy 來得穩定，而這也是我選擇從 packer 跳槽到 lazy 的主要原因。</p>
+<p>所以，本章將介紹如何安裝與使用 lazy。</p>
+<h2 id="下載-lazy"><a href="#下載-lazy" class="headerlink" title="下載 lazy"></a>下載 lazy</h2><p>首先，讓我們到 <code>imp/</code> 中新增一個設定文件 <code>lazy.lua</code>，以及一個之後用來放各個外掛的設定文件的資料夾 <code>plugins/</code>。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901880.jpg"></p>
+<p>接著，編輯 <code>lazy.lua</code>，加入以下內容：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- bootstrap lazy.nvim</span></span><br><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">&quot;data&quot;</span>) .. <span class="string">&quot;/lazy/lazy.nvim&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> (vim.uv <span class="keyword">or</span> vim.loop).fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;clone&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--filter=blob:none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://github.com/folke/lazy.nvim.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--branch=stable&quot;</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">vim.opt.rtp:prepend(lazypath)</span><br></pre></td></tr></table></figure>
+
+<p>然後，不要忘了到 <code>init.lua</code> 中去引用它：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp.lazy&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>這段程式的作用是，它會在 Neovim 每次啟動時檢查你是否已經下載了 lazy，如果沒有，它就會自動下載。</p>
+<p>重新啟動 Neovim，這時你應該會注意到它停頓了一下，不要緊張，這表示它正在下載 lazy，下載完成後，我們就可以開始使用 lazy 了。</p>
+<p>接下來我會對這段程式進行較詳細的說明，算是我在看了<a target="_blank" rel="noopener" href="https://youtu.be/N-RFCfs6rxI?si=uncBeCSDMHFWKs65&t=948">Understanding Neovim #2 - Plugins, Colorschemes</a>之後的學習筆記，如果沒興趣的話，可以直接跳到下一段。</p>
+<ol>
+<li><p>定義 lazy 的安裝路徑：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">&quot;data&quot;</span>) .. <span class="string">&quot;/lazy/lazy.nvim&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡使用了 <code>vim.fn.stdpath()</code> 來取得 Neovim 的 data 目錄路徑。我們可以直接在 Neovim 的 command line 中輸入以下指令來看看這個目錄究竟在哪：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">:lua <span class="built_in">print</span>(vim.fn.stdpath(<span class="string">&quot;data&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>一般來說，它應該會在 <code>~/.local/share/nvim</code>。然後，這行程式碼會將 lazy 的存放目錄設定為這個目錄下的 <code>lazy/lazy.nvim</code>。</p>
+<p>另外，data 這個目錄主要被 Neovim 用於存放各個外掛的資料和原始碼，也就是說，如果你想要親自去修改外掛底層的程式的話，你可以來這裡找它。</p>
+<p>而在過去沒有外掛管理器，或有外掛不支援管理器時，我們就是透過將外掛下載到這個目錄，然後再引用它們來使用的。</p>
+</li>
+<li><p>檢查並下載：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> (vim.uv <span class="keyword">or</span> vim.loop).fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;clone&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--filter=blob:none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://github.com/folke/lazy.nvim.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--branch=stable&quot;</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>這段程式會檢查你的 data 目錄中是否已經下載了 lazy，如果沒有，它就會自動下載。</p>
+</li>
+<li><p>將 lazy 加入到 run time path：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.opt.rtp:prepend(lazypath)</span><br></pre></td></tr></table></figure>
+
+<p>run time path 是一個目錄清單，當 Neovim 在運行並加載功能和外掛時，它會去訪問這個清單中的目錄，並從中尋找它需要的功能，而這也就是 Neovim 運行外掛的原理了。</p>
+<p>另外，這裡使用 <code>prepend</code> 的目的是要將 lazy 加入這個清單的開頭，以確保 Neovim 在加載外掛時，會先透過 lazy，而非其他的目錄，以保證 lazy的正常運作並避免一些可能的衝突。</p>
+</li>
+</ol>
+<h2 id="使用-lazy"><a href="#使用-lazy" class="headerlink" title="使用 lazy"></a>使用 lazy</h2><p>要使用 lazy，我們得去調用 lazy 的 <code>setup</code> 函式：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(plugins, opts)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>plugins</code>：一個外掛的規格清單，我會在後續做更詳細的說明。</li>
+<li><code>opts</code>：lazy 的設定選項（皆為可選項）。</li>
+</ul>
+<p>在 <code>plugins</code> 中，我們可以直接提供一組外掛的清單和額外規格，來讓 lazy 去下載與使用它們，但顯然，這樣會讓這份設定文件變得非常巨大。</p>
+<p>所幸，我們可以直接輸入一個目錄，讓 lazy 去載入目錄中的所有設定文件，這也是為什麼我們先前特地開了一個資料夾，用來存放之後要下載的外掛的設定文件。</p>
+<p>而關於 <code>opts</code>，通常我不太會去動它，lazy 的預設設定基本上沒有任何問題，所以我只基於無聊去調整了一些無關緊要的設定，如果你有興趣，可以到<a target="_blank" rel="noopener" href="https://github.com/folke/lazy.nvim#%EF%B8%8F-configuration">官方</a>去看看 lazy 有什麼設定項可以玩。</p>
+<p>現在，讓我們編輯 <code>lazy.lua</code>，到先前的程式碼下方加入以下的內容來啟用 lazy：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(</span><br><span class="line">    &#123; &#123;import = <span class="string">&quot;imp.plugins&quot;</span>&#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        checker = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        ui = &#123;</span><br><span class="line">            border = <span class="string">&quot;rounded&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ol>
+<li>設定外掛來源：<br>首先，使用 <code>import</code> 來告訴 lazy 我們要用來存放外掛設定文件的目錄。</li>
+<li>設定選項：<ul>
+<li><code>checker</code>：它的作用是會自動檢查外掛是否有更新，但若每當有更新時就發出通知，那會很煩，所以我選擇啟用檢查，但關閉通知。</li>
+<li><code>ui</code>：我把 lazy 的 UI 邊框樣式改成圓角。</li>
+</ul>
+</li>
+</ol>
+<p>重新啟動 Neovim，這時你應該會發現它報錯了：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error detected while processing /home/imp1ication/.config/nvim/init.lua:</span><br><span class="line">No specs found for module imp.plugins</span><br><span class="line">Press ENTER or type command to continue</span><br></pre></td></tr></table></figure>
+
+<p>不要緊張，這只是因為我們的 <code>plugins/</code> 中還沒有任何的設定文件所導致的，讓我們先按下 Enter 鍵來跳過它的警告，然後輸入以下指令來開啟 lazy 的界面看看，確認 lazy 有在確實運作：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">:Lazy</span><br></pre></td></tr></table></figure>
+
+<p>此時你應該就會看到類似如下的介面：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901947.jpg"></p>
+<p>可以看到 Lazy 已經可以正確運行了，而且裡面已經有一個外掛，也就是 lazy 自己。</p>
+<p>你可以將遊標移動到外掛名稱上面，然後輸入介面上方提供的，對應的大寫字母來對外掛進行管理操作，例如輸入 <code>L</code> 可以查看外掛的 Log，輸入 <code>U</code> 可以更新外掛等等。而這也就是 lazy 的基本使用方式了。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，lazy 已經能正確運作，而在下一章裡，我們終於要來開始下載與使用外掛。</p>
+<p>而除了外掛本身的設定項外，lazy 在導入外掛時，還提供了許多的外掛規格（plugin spec）可以設定，包含它們的啟用條件、指定 commit 版本、以及其他的依賴外掛等等。</p>
+<p>完整的說明同樣可以到<a target="_blank" rel="noopener" href="https://github.com/folke/lazy.nvim#-plugin-spec">官方</a>去查看，而在之後的文章中，我只會對我有用到的部分進行說明。</p>
+<p><big>上一篇： <a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a></big></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/folke/lazy.nvim">lazy.nvim</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wbthomason/packer.nvim">packer.nvim</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/lewis6991/pckr.nvim">pckr.nvim</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/N-RFCfs6rxI?si=aYkRso0Kfmv1wQZI">Understanding Neovim #2 - Plugins, Colorschemes</a></li>
+</ul>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Neovim/">Neovim</a></div><div class="post_share"></div></div><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-17</div><div class="title">安裝 Neovim 與 Nerd Fonts</div></div></a></div><div><a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202403061933610.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">Neovim 設定文件結構與基礎功能設定</div></div></a></div><div><a href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181514879.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-18</div><div class="title">救救我啊我救我 —— help 與 checkhealth</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Imp1ication</div><div class="author-info__description">弦外之音</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Imp1ication" target="_blank" title="Github"><i class="fab fa-github" style="color: #65bcff;"></i></a><a class="social-icon" href="mailto:1mplicationxwzi@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">獅子神，我的超人。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89-lazy"><span class="toc-number">2.</span> <span class="toc-text">下載 lazy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-lazy"><span class="toc-number">3.</span> <span class="toc-text">使用 lazy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%8C%E8%A8%98"><span class="toc-number">4.</span> <span class="toc-text">後記</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%83%E8%80%83%E8%B3%87%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">參考資料</span></a></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-cubes"></i><span>Neovim 設定全紀錄</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a><time datetime="2024-02-16T16:00:00.000Z" title="Created 2024-02-17 00:00:00">2024-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a><time datetime="2024-02-17T16:00:00.000Z" title="Created 2024-02-18 00:00:00">2024-02-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定">Neovim 設定文件結構與基礎功能設定</a><time datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a><time datetime="2024-06-17T16:00:00.000Z" title="Created 2024-06-18 00:00:00">2024-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a><time datetime="2024-06-19T16:00:00.000Z" title="Created 2024-06-20 00:00:00">2024-06-20</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a><time datetime="2024-06-19T16:00:00.000Z" title="Created 2024-06-20 00:00:00">2024-06-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a><time datetime="2024-06-17T16:00:00.000Z" title="Created 2024-06-18 00:00:00">2024-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/projects-20240314-LATIA112-1-Final/" title="《大學排名與熱門領域討論站》">《大學排名與熱門領域討論站》</a><time datetime="2024-03-14T16:00:00.000Z" title="Created 2024-03-15 00:00:00">2024-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/14/projects-20240314-Data-Mining-Projects/" title="Data Mining Projects">Data Mining Projects</a><time datetime="2024-03-13T16:00:00.000Z" title="Created 2024-03-14 00:00:00">2024-03-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定">Neovim 設定文件結構與基礎功能設定</a><time datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time></div></div></div></div></div></div></main><footer id="footer" style="background: #1e2030"><div id="footer-wrap"><div class="copyright">&copy;2024 By Imp1ication</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>
