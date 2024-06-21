@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第一個外掛 —— 顔色主題 Colorscheme | Imp1ication.com</title><meta name="author" content="Imp1ication"><meta name="copyright" content="Imp1ication"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="介紹如何使用 lazy.nvim 安裝與設定 Neovim 的第一個外掛 —— 顔色主題 Colorscheme。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一個外掛 —— 顔色主題 Colorscheme">
+<meta property="og:url" content="https://imp1ication.github.io/2024/06/21/neovim-setup-20240621-nvim-colorshceme/">
+<meta property="og:site_name" content="Imp1ication.com">
+<meta property="og:description" content="介紹如何使用 lazy.nvim 安裝與設定 Neovim 的第一個外掛 —— 顔色主題 Colorscheme。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406212326963.jpg">
+<meta property="article:published_time" content="2024-06-20T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-20T16:00:00.000Z">
+<meta property="article:author" content="Imp1ication">
+<meta property="article:tag" content="Neovim">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406212326963.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://imp1ication.github.io/2024/06/21/neovim-setup-20240621-nvim-colorshceme/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=4.12.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":5,"unescape":false,"languages":{"hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":700,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第一個外掛 —— 顔色主題 Colorscheme',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-06-21 00:00:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/custom.css"><link rel="icon" href="/img/favicon.png"><meta name="generator" content="Hexo 7.1.1"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-book-skull"></i><span> Projects</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/projects/school"><i class="fa-fw fa-solid fa-school"></i><span> School Projects</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url('https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Imp1ication.com"><span class="site-name">Imp1ication.com</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-newspaper"></i><span> Articles</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa-solid fa-bars-progress"></i><span> Archives</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-cubes"></i><span> Series</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/series/neovim_toc"><i class="fa-fw fa-brands fa-square-vimeo"></i><span> Neovim 設定全紀錄</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa-solid fa-book-skull"></i><span> Projects</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/projects/school"><i class="fa-fw fa-solid fa-school"></i><span> School Projects</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-ghost"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">第一個外掛 —— 顔色主題 Colorscheme</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-06-20T16:00:00.000Z" title="Created 2024-06-21 00:00:00">2024-06-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-06-20T16:00:00.000Z" title="Updated 2024-06-21 00:00:00">2024-06-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Neovim/">Neovim</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>俗話說得好：「顏值即是戰鬥力」，好看的配色是工程師寫扣的熱情來源之一，也因此 Neovim 社群至今產出了大量的顏色主題、以及許多用來製作個人顏色主題的外掛工具。</p>
+<p>你可以先到我們上一章提到過的 <a target="_blank" rel="noopener" href="https://github.com/rockerBOO/awesome-neovim?tab=readme-ov-file#colorscheme">Awesome Neovim</a> 中，去找一套自己喜歡的顏色主題。或者，我更推薦 <a target="_blank" rel="noopener" href="https://dotfyle.com/neovim/colorscheme/trending">Trending Neovim Colorschemes</a> 這個網站，除了羅列了許多常見的顏色主題外，還附帶預覽圖，甚是方便。</p>
+<p>而本章則只紀錄幾個我常用的顏色主題，包含：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/folke/tokyonight.nvim">tokyonight</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/oxfist/night-owl.nvim">night-owl</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/sainnhe/sonokai">sonokai</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ellisonleao/gruvbox.nvim">gruvbox</a></li>
+</ul>
+<p>本章主要會使用範例的方式來說明如何下載與啟用顏色主題，如果想直接複製我的設定文件，可以到<a target="_blank" rel="noopener" href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/plugins/colorshceme.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
+<p>另外，我們將使用 lazy.nvim 來做為外掛管理器下載它們，如果你還不知到什麼是 lazy.nvim 的話，建議先回去看<a href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">上一章</a>。</p>
+<hr>
+<h2 id="下載外掛"><a href="#下載外掛" class="headerlink" title="下載外掛"></a>下載外掛</h2><p>首先，我們要先到 <code>imp/plugins/</code> 中新增一個設定文件 <code>colorscheme.lua</code>。</p>
+<p>接著，如果你只要下載一個主題，你可以寫入以下內容：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="string">&quot;folke/tokyonight.nvim&quot;</span>,</span><br><span class="line">    lazy = <span class="literal">false</span>,</span><br><span class="line">    priority = <span class="number">1000</span>,</span><br><span class="line">    <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">        <span class="built_in">require</span>(<span class="string">&quot;tokyonight&quot;</span>).setup(&#123;</span><br><span class="line">            style = <span class="string">&quot;night&quot;</span>, <span class="comment">-- &quot;storm&quot;, &quot;moon&quot;, &quot;night&quot;, &quot;day&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        vim.cmd.colorscheme(<span class="string">&quot;tokyonight&quot;</span>)</span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者，如果你和我一樣想下載多個主題來隨時切換，你可以採用這樣的寫法：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> colorscheme = <span class="string">&quot;kanagawa&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;folke/tokyonight.nvim&quot;</span>,</span><br><span class="line">        lazy = <span class="literal">false</span>,</span><br><span class="line">        priority = <span class="number">1000</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">&quot;tokyonight&quot;</span>).setup(&#123;</span><br><span class="line">                style = <span class="string">&quot;night&quot;</span>, <span class="comment">-- &quot;storm&quot;, &quot;moon&quot;, &quot;night&quot;, &quot;day&quot;</span></span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            vim.cmd.colorscheme(colorscheme)</span><br><span class="line">        <span class="keyword">end</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;rebelot/kanagawa.nvim&quot;</span>,</span><br><span class="line">        lazy = <span class="literal">false</span>,</span><br><span class="line">        priority = <span class="number">1000</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">&quot;kanagawa&quot;</span>).setup(&#123;</span><br><span class="line">                background = &#123;</span><br><span class="line">                    dark = <span class="string">&quot;wave&quot;</span>, <span class="comment">-- &quot;wave&quot;, &quot;dragon&quot;, &quot;lotus&quot;</span></span><br><span class="line">                    light = <span class="string">&quot;lotus&quot;</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">end</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>儲存並重新開啟 Neovim 後，你應該會看到 lazy 的介面自動彈出，顯示它偵測到有新的外掛，並正在下載中，且在下載完成後，就會自動套用我們設定的顏色主題了。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406212254782.jpg"></p>
+<hr>
+<h2 id="plugin-spec-參數說明"><a href="#plugin-spec-參數說明" class="headerlink" title="plugin spec 參數說明"></a>plugin spec 參數說明</h2><p>先前我曾提到過，根據我們的設定，lazy 會訪問 <code>plugins/</code> 中所有的設定文件，並要求它們回傳一至多個 plugin spec，而這也就是這兩個例子的主要差別。</p>
+<p>在第一個例子中，我們直接回傳了一個 spec，而在第二個例子中，我們則是回傳了一個由兩個 spec 所組成的列表。</p>
+<p>plugin spec 是 lazy 用來描述外掛如何安裝和設定的表格，以第一個例子為例，它包含了以下幾個部分：</p>
+<ol>
+<li>第一個參數：外掛的下載位址。<br>spec 的第一個參數必須是外掛的下載位址，預設情況下，它指的是外掛在 Github 上的短網址，例如我們這裡的 <code>folke/tokyonight.nvim</code>，就是 <a target="_blank" rel="noopener" href="https://github.com/folke/tokyonight.nvim">tokyonight</a> 主題的 Github 網址的末兩段。</li>
+<li><code>lazy</code>：懶加載設定。<br>一個 boolean 值，當設為 <code>true</code> 時，lazy 會只有在 Neovim 運行過程中使用到外掛的功能時，才會將外掛載入運行；反之，則會在 Neovim 啟動時立即加載這個外掛。<br>有鑑於我們希望 Neovim 在開啟時就載入我們的顏色主題，所以這裡我們將其設定為 <code>false</code>。</li>
+<li><code>priority</code>：加載優先級。<br>一個整數，當我們的外掛越來越多，加載時自然也就有個先後順序，lazy 預設的 <code>priority</code> 是 50，數字越大就越先加載。<br>有鑑於我們希望顏色主題可以優先於所有外掛啟動，因為有些外掛可以透過引用它們，來更改自己的 UI 設定，所以這裡官方的建議是將它設為 1000。</li>
+</ol>
+<hr>
+<h2 id="外掛設定、config、與-opts"><a href="#外掛設定、config、與-opts" class="headerlink" title="外掛設定、config、與 opts"></a>外掛設定、config、與 opts</h2><p>在 Neovim 中，慣例而言我們會使用 <code>require(&quot;外掛名稱&quot;).setup(&#123;設定內容&#125;)</code> 這個函式來在 Neovim 開啟時啟動外掛，以及將傳入的設定內容與官方預設的設定項進行合併，來作為執行外掛時的設定項。</p>
+<p>對此，lazy 在 spec 中提供了兩個參數：<code>config</code> 和 <code>opts</code>，來將這件事再更簡化一些。</p>
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;folke/tokyonight.nvim&quot;</span>,</span><br><span class="line">    lazy = <span class="literal">false</span>,</span><br><span class="line">    priority = <span class="number">1000</span>,</span><br><span class="line">    <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">        <span class="built_in">require</span>(<span class="string">&quot;tokyonight&quot;</span>).setup(&#123;</span><br><span class="line">            style = <span class="string">&quot;night&quot;</span>, <span class="comment">-- &quot;storm&quot;, &quot;moon&quot;, &quot;night&quot;, &quot;day&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        vim.cmd.colorscheme(<span class="string">&quot;tokyonight&quot;</span>)</span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>讓我們先來看第一個例子，在 lazy 中，<code>config</code> 可以是一個函數，它會在外掛加載後執行。</p>
+<p>而在這個例子中，我們透過在函數中呼叫 <code>require(&quot;tokyonight&quot;).setup(&#123;設定內容&#125;)</code> 來啟用外掛，並同時對它進行設定。</p>
+<p>注意，這個啟用和設定方式只是慣例，大多數常用外掛都是這麼做的，但還是有些不是，例如我所使用的顏色主題之一 <a target="_blank" rel="noopener" href="https://github.com/sainnhe/sonokai">sonokai</a> 就不是這樣，所以具體該怎麼用，還是得看官方 Github 上的說明文件，唯一的共通點是，不論方式，你都可以把它寫在 <code>config</code> 之中。</p>
+<p>至於設定內容有哪些可以調整，由於各個顏色主題的設定項都大同小異，且都不是特別重要，所以這裡就請各位自己去查看官方文件吧，或是在 Neovim 中輸入指令 <code>:help 主題名稱</code> ，通常都可以找到類似 Configuration 的設定教學文件。</p>
+<p>而實際上，我也沒有調整太多東西，其實各主題的預設內容就已經很好用了。</p>
+<p>而在 <code>config</code> 的最後，我調用了 <code>vim.cmd.colorscheme(colorscheme)</code> 這個 Lua 函式來將 Neovim 的主題更換成已經啟用的 tokyonight，或者，你也可以使用指令 <code>:colorscheme 主題名稱</code> 來手動套用顏色主題。</p>
+<h3 id="opts"><a href="#opts" class="headerlink" title="opts"></a>opts</h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;rebelot/kanagawa.nvim&quot;</span>,</span><br><span class="line">    lazy = <span class="literal">false</span>,</span><br><span class="line">    priority = <span class="number">1000</span>,</span><br><span class="line">    opts = &#123;</span><br><span class="line">        background = &#123;</span><br><span class="line">            dark = <span class="string">&quot;wave&quot;</span>, <span class="comment">-- &quot;wave&quot;, &quot;dragon&quot;, &quot;lotus&quot;</span></span><br><span class="line">            light = <span class="string">&quot;lotus&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接著我們來看第二個例子，<code>config</code> 除了設為函數外，其實還可以設為 <code>true</code>，而這也是 lazy 預設的選項。</p>
+<p>當 <code>config</code> 為 <code>true</code> 時，lazy 會自動呼叫 <code>require(&quot;外掛名稱&quot;).setup(opts)</code> 來啟用和設定外掛。</p>
+<p>所以就有了如上的第二種設定寫法，當外掛是使用上述方法來啟用和設定時，我們就可以不使用 <code>config</code> 參數（因為預設就是 <code>true</code> 了），而是直接把要調整的設定項寫在 <code>opts</code> 中即可，來使得設定文件更加簡潔一些。</p>
+<p>不過這個寫法有一個壞處，就是你無法執行除了 setup 以外的其他事情，因為只要你將 <code>config</code> 改為了函數，<code>opts</code> 就會失效，等於你還是得用第一種的方式，來重寫你的設定項。</p>
+<p>例如在這個例子中，我們還需要想辦法執行 <code>vim.cmd.colorscheme(&quot;顏色主題&quot;)</code> 來在每次 Neovim 開啟時自動套用顏色主題，所以，為了設定文件的一致性，我建議還是一律使用 <code>config</code> 來進行設定比較好。</p>
+<hr>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此就是本章的所有內容了，Neovim 終於染上了自己喜歡的顏色，我們也終於對 lazy 的 plugin spec 有了基本的了解。</p>
+<p>而在接下來的系列文中，我將會分成兩大部分：</p>
+<ol>
+<li><p>程式編輯核心外掛：這部分我將會介紹與程式編輯相關的核心外掛，包含自動補齊、語法引擎、語法凸顯、Linter、Formatter 以及 Debugger 等等。</p>
+</li>
+<li><p>常用功能外掛：這部分我將介紹一些我覺得很好用的功能外掛，包含文件瀏覽器、全域糢糊搜尋、索引標籤與狀態列、以及 Git 集成工具等等。</p>
+</li>
+</ol>
+<p>至於下回預告，我也還不知道，還請各位敬請期待吧。</p>
+<p><big>上一篇： <a href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a></big></p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Neovim/">Neovim</a></div><div class="post_share"></div></div><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgonvim_cover.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-02-17</div><div class="title">安裝 Neovim 與 Nerd Fonts</div></div></a></div><div><a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406181803439.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-06-18</div><div class="title">Neovim 快捷鍵設定</div></div></a></div><div><a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定"><img class="cover" src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406202004871.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">Neovim 設定文件結構與基礎功能設定</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Imp1ication</div><div class="author-info__description">弦外之音</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Imp1ication" target="_blank" title="Github"><i class="fab fa-github" style="color: #65bcff;"></i></a><a class="social-icon" href="mailto:1mplicationxwzi@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">獅子神，我的超人。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BC%89%E5%A4%96%E6%8E%9B"><span class="toc-number">2.</span> <span class="toc-text">下載外掛</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#plugin-spec-%E5%8F%83%E6%95%B8%E8%AA%AA%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">plugin spec 參數說明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E6%8E%9B%E8%A8%AD%E5%AE%9A%E3%80%81config%E3%80%81%E8%88%87-opts"><span class="toc-number">4.</span> <span class="toc-text">外掛設定、config、與 opts</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#config"><span class="toc-number">4.1.</span> <span class="toc-text">config</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#opts"><span class="toc-number">4.2.</span> <span class="toc-text">opts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%8C%E8%A8%98"><span class="toc-number">5.</span> <span class="toc-text">後記</span></a></li></ol></div></div><div class="card-widget card-post-series"><div class="item-headline"><i class="fa-solid fa-cubes"></i><span>Neovim 設定全紀錄</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a><time datetime="2024-02-16T16:00:00.000Z" title="Created 2024-02-17 00:00:00">2024-02-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/" title="救救我啊我救我 —— help 與 checkhealth">救救我啊我救我 —— help 與 checkhealth</a><time datetime="2024-02-17T16:00:00.000Z" title="Created 2024-02-18 00:00:00">2024-02-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定">Neovim 設定文件結構與基礎功能設定</a><time datetime="2024-03-05T16:00:00.000Z" title="Created 2024-03-06 00:00:00">2024-03-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a><time datetime="2024-06-17T16:00:00.000Z" title="Created 2024-06-18 00:00:00">2024-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a><time datetime="2024-06-19T16:00:00.000Z" title="Created 2024-06-20 00:00:00">2024-06-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/neovim-setup-20240621-nvim-colorshceme/" title="第一個外掛 —— 顔色主題 Colorscheme">第一個外掛 —— 顔色主題 Colorscheme</a><time datetime="2024-06-20T16:00:00.000Z" title="Created 2024-06-21 00:00:00">2024-06-21</time></div></div></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/21/neovim-setup-20240621-nvim-colorshceme/" title="第一個外掛 —— 顔色主題 Colorscheme">第一個外掛 —— 顔色主題 Colorscheme</a><time datetime="2024-06-20T16:00:00.000Z" title="Created 2024-06-21 00:00:00">2024-06-21</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a><time datetime="2024-06-19T16:00:00.000Z" title="Created 2024-06-20 00:00:00">2024-06-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a><time datetime="2024-06-17T16:00:00.000Z" title="Created 2024-06-18 00:00:00">2024-06-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/15/projects-20240314-LATIA112-1-Final/" title="《大學排名與熱門領域討論站》">《大學排名與熱門領域討論站》</a><time datetime="2024-03-14T16:00:00.000Z" title="Created 2024-03-15 00:00:00">2024-03-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/14/projects-20240314-Data-Mining-Projects/" title="Data Mining Projects">Data Mining Projects</a><time datetime="2024-03-13T16:00:00.000Z" title="Created 2024-03-14 00:00:00">2024-03-14</time></div></div></div></div></div></div></main><footer id="footer" style="background: #1e2030"><div id="footer-wrap"><div class="copyright">&copy;2024 By Imp1ication</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.12.0"></script><script src="/js/main.js?v=4.12.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.32/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">Search</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  Loading the Database</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.12.0"></script></div></div></body></html>

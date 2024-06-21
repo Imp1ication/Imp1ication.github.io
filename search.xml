@@ -613,154 +613,6 @@
       </tags>
   </entry>
   <entry>
-    <title>救救我啊我救我 —— help 與 checkhealth</title>
-    <url>/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim 的坑不少，例如每個工程師都必然會遇到的千古難題：如何退出 Vim？</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181547237.jpg"></p>
-<p>然而實際上，不論是 Neovim 還是 Vim，在你第一次打開它的時候，它就曾試圖告訴你不少有用的資訊了（包含如何退出），只是你可能沒有注意到。</p>
-<p>為了讓將來在使用 Neovim 時能有基本的自救能力，當遇到問題時也不用急著上 Google，而是能直接透過 Neovim 內部的文件來快速診斷和處理問題，本章將介紹如何使用 Neovim 的內建指令 <code>help</code> 與 <code>checkhealth</code>。另外，這些內容將不僅限於 Neovim 本體，同時也適用於插件的 help page。</p>
-<hr>
-<h2 id="help-txt"><a href="#help-txt" class="headerlink" title="help.txt"></a>help.txt</h2><h3 id="第一次求救"><a href="#第一次求救" class="headerlink" title="第一次求救"></a>第一次求救</h3><p>第一次使用<code>nvim</code>指令開啓 Neovim 時，你會看到類似於這樣的畫面：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181514879.png"></p>
-<p>你會發現，其實它已經告訴你可以如何向它尋求幫助 —— 輸入<code>:help</code>或<code>:h</code>，然後按下<code>&lt;Enter&gt;</code>，就可以打開 Neovim 的 main help page，而這裡便記錄了你可以怎麽使用這些幫助文件。</p>
-<p>另外，這裡也說明了你可以如何退出 help page 和 Neovim —— 輸入<code>:q&lt;Enter&gt;</code>關閉 help page，以及輸入<code>:qa!&lt;Enter&gt;</code>來 <big><strong>不</strong></big> 儲存直接退出 Neovim。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201758541.png"></p>
-<h3 id="Links-and-Tags"><a href="#Links-and-Tags" class="headerlink" title="Links and Tags"></a>Links and Tags</h3><p>在 help page 中，你會看見一些粗體標亮的關鍵字，或是往下翻找，你可以看見 Neovim 幫助文件的完整目錄，這代表這些關鍵字有它們相對應的說明文件，同時，它們也是文件的連結入口，你可以將你的遊標移動到這些單字上，然後使用以下快捷鍵來進行文件的跳轉：</p>
-<table>
-<thead>
-<tr>
-<th>Mappings</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ctrl + ]</code></td>
-<td>移動至連結</td>
-</tr>
-<tr>
-<td><code>Ctrl + T</code></td>
-<td>返回上一個文件</td>
-</tr>
-</tbody></table>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211419512.png"></p>
-<p>這就延伸出了 help page 的第一個用法，開啓 help page 後，我們可以使用和在 Normal Mode 下一樣的操作方式，使用<code>/</code>來進行關鍵字搜尋，例如我們可以輸入<code>/quick</code>搜尋目錄<code>quickref</code>，將遊標移動到關鍵字上後，再使用快捷鍵<code>Ctrl + ]</code> 進行跳轉。</p>
-<p>令外，還有兩個我在瀏覽大型文件時很常使用的快捷鍵，也在這裡分享給各位：</p>
-<table>
-<thead>
-<tr>
-<th>Mappings</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ctrl + o</code></td>
-<td>返回至上一個遊標位置</td>
-</tr>
-<tr>
-<td><code>Ctrl + i</code></td>
-<td>返回至下一個遊標位置</td>
-</tr>
-</tbody></table>
-<h3 id="搜尋模式"><a href="#搜尋模式" class="headerlink" title="搜尋模式"></a>搜尋模式</h3><p>如果每次都要先開啓 main help page 再進行搜尋，那還真的是不如直接 Google 比較快，更何況 <code>:help</code> 頁面中只有目錄，而沒有更完整的內容可以進行關鍵字搜尋。</p>
-<p>所幸，我們可以直接在 command line 中輸入指令時就開始進行搜尋了，例如，如果我想搜尋關鍵字<code>word</code>，我只要輸入<code>:h word</code>就可以開始搜尋。同時，我們也可以使用以下的三個快捷鍵，來進行關鍵字的搜尋和補齊：</p>
-<table>
-<thead>
-<tr>
-<th>Mappings</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>Ctrl + d</code></td>
-<td>顯示所有包含關鍵字的主題</td>
-</tr>
-<tr>
-<td><code>&lt;Tab&gt;</code></td>
-<td>選取下一個包含關鍵字的主題</td>
-</tr>
-<tr>
-<td><code>&lt;Shift&gt; + &lt;Tab&gt;</code></td>
-<td>選取上一個包含關鍵字的主題</td>
-</tr>
-</tbody></table>
-<p><code>Ctrl + d</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201925855.png"></p>
-<p><code>&lt;Tab&gt;</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201926090.png"></p>
-<p>另外，Neovim 也給了部分固定主題提供了固定的關鍵字格式，這些格式也有被列在<code>:h</code>中，如果忘記了，也可以隨時查看：</p>
-<table>
-<thead>
-<tr>
-<th>主題</th>
-<th>關鍵字前綴</th>
-<th>範例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Normal mode command</td>
-<td></td>
-<td><code>:help x         </code></td>
-</tr>
-<tr>
-<td>Visual mode command</td>
-<td><code>v\_</code></td>
-<td><code>:help v_u       </code></td>
-</tr>
-<tr>
-<td>Insert mode command</td>
-<td><code>i\_</code></td>
-<td><code>:help i\_&lt;Esc&gt;  </code></td>
-</tr>
-<tr>
-<td>Command-line command</td>
-<td><code>:</code></td>
-<td><code>:help :quit     </code></td>
-</tr>
-<tr>
-<td>Command-line editing</td>
-<td><code>c\_</code></td>
-<td><code>:help c\_&lt;Del&gt;  </code></td>
-</tr>
-<tr>
-<td>Vim command argument</td>
-<td><code>-</code></td>
-<td><code>:help -r        </code></td>
-</tr>
-<tr>
-<td>Option</td>
-<td><code>&#39;</code></td>
-<td><code>:help &#39;wildmenu&#39;</code></td>
-</tr>
-<tr>
-<td>Regular expression</td>
-<td><code>/</code></td>
-<td><code>:help /[]       </code></td>
-</tr>
-</tbody></table>
-<p>例如，如果我想知道退出 Neovim 的指令<code>:q</code>的所有用法，我只要輸入<code>:h :q</code>就可以開始搜尋了、或是，如果我想知道快捷鍵<code>Ctrl-r</code>的功能是什麼，我只要輸入<code>:h CTRL-r</code>就可以開始搜尋，或更進階一點，你可輸入<code>:h ctrl-r</code>然後按下<code>Ctrl-d</code>或是<code>&lt;Tab&gt;</code>，來查找與這個快捷鍵有關的主題選項。</p>
-<p>以上，就是關於 help page 的一些基本用法了，這也是我常用來處理 Neovim 問題的第一步，如果還想了解一些更進階的技巧，可以查閱<code>:h :help</code>，或是參考 <a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a>。</p>
-<hr>
-<h2 id="checkhealth"><a href="#checkhealth" class="headerlink" title="checkhealth"></a>checkhealth</h2><p>Neovim 的外掛包含 Neovim 本身的功能有時會依賴於額外的程式環境、或是其他的某些外掛，例如系統剪貼簿的取用、以及使用 Python3 等其他語言所撰寫的功能等等。如果你安裝了某些外掛，卻發現它不起作用的時候，通常可能就是因爲沒有下載這些額外的東西。</p>
-<p>除了從這些外掛的 help page、git 或官網上查找依賴之外，Neovim 的<code>:checkhealth</code>指令可以讓我們很方便的去查看應該、以及甚至要怎麽處理這些問題。</p>
-<p>開啟 Neovim 後，輸入<code>:checkhealth</code>，你會看到類似於這樣的畫面：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211337068.png"></p>
-<p>另外，checkhealth 也可以接受參數來只對指定內容進行檢查，例如<code>:checkhealth provider</code>，這樣就可以只查看 provider 的健康狀況了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211342476.png"></p>
-<p>加上在上一段裡提到的<code>:h</code>，於是乎，我們的 Neovim 快篩自救程序就這樣完成了：每當 Neovim 和其外掛出現問題時，我們可以先使用<code>:checkhealth</code>做一遍基本檢查，來看系統中是否缺漏了什麼，然後再使用<code>:h</code>來查找可能的解決方案，而這一切幾乎都可以在 Neovim 中不使用網路來完成，且相當快速有效。</p>
-<hr>
-<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，我們已經學會了如何使用 help page 和<code>:checkhealth</code>來進行診斷與解決問題，而在下一章裡，我們將正式進入 Neovim 的基礎設定環節。</p>
-<p>首先，我會介紹 Neovim 的設定文件結構，接著，我會提供我的設定文件，並重點介紹一些常見，且我覺得很是有用的選項，例如設定剪貼簿、行號、以及縮排等功能。</p>
-<p><big>上一篇： <a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a></big><br><big>下一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定">Neovim 設定文件結構與基礎功能設定</a></big></p>
-<hr>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a></li>
-<li><a href="https://youtu.be/87AXw9Quy9U?si=smiJPQVs8mFlnQJK">Understanding Neovim #1 - Installation</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Neovim</category>
-      </categories>
-      <tags>
-        <tag>Neovim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Neovim 快捷鍵設定</title>
     <url>/2024/06/18/neovim-setup-20240618-nvim-keymaps/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim motion 的核心之一就在於直觀且可高度客製化的快捷鍵設定，要想如臂使指般地使用 Neovim，一套精心調教過的快捷鍵絕對是不可或缺的，尤其無論是在 Vim 還是 Neovim 中，都遺留了一些老舊且稍微有些反人類的操作設定，以及缺少了現代人習以為常的方便功能。</p>
@@ -1170,13 +1022,232 @@
       </tags>
   </entry>
   <entry>
+    <title>救救我啊我救我 —— help 與 checkhealth</title>
+    <url>/2024/02/18/neovim-setup-20240218-help-checkhealth-and-provider/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Vim 的坑不少，例如每個工程師都必然會遇到的千古難題：如何退出 Vim？</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181547237.jpg"></p>
+<p>然而實際上，不論是 Neovim 還是 Vim，在你第一次打開它的時候，它就曾試圖告訴你不少有用的資訊了（包含如何退出），只是你可能沒有注意到。</p>
+<p>為了讓將來在使用 Neovim 時能有基本的自救能力，當遇到問題時也不用急著上 Google，而是能直接透過 Neovim 內部的文件來快速診斷和處理問題，本章將介紹如何使用 Neovim 的內建指令 <code>help</code> 與 <code>checkhealth</code>。另外，這些內容將不僅限於 Neovim 本體，同時也適用於插件的 help page。</p>
+<hr>
+<h2 id="help-txt"><a href="#help-txt" class="headerlink" title="help.txt"></a>help.txt</h2><h3 id="第一次求救"><a href="#第一次求救" class="headerlink" title="第一次求救"></a>第一次求救</h3><p>第一次使用<code>nvim</code>指令開啓 Neovim 時，你會看到類似於這樣的畫面：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402181514879.png"></p>
+<p>你會發現，其實它已經告訴你可以如何向它尋求幫助 —— 輸入<code>:help</code>或<code>:h</code>，然後按下<code>&lt;Enter&gt;</code>，就可以打開 Neovim 的 main help page，而這裡便記錄了你可以怎麽使用這些幫助文件。</p>
+<p>另外，這裡也說明了你可以如何退出 help page 和 Neovim —— 輸入<code>:q&lt;Enter&gt;</code>關閉 help page，以及輸入<code>:qa!&lt;Enter&gt;</code>來 <big><strong>不</strong></big> 儲存直接退出 Neovim。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201758541.png"></p>
+<h3 id="Links-and-Tags"><a href="#Links-and-Tags" class="headerlink" title="Links and Tags"></a>Links and Tags</h3><p>在 help page 中，你會看見一些粗體標亮的關鍵字，或是往下翻找，你可以看見 Neovim 幫助文件的完整目錄，這代表這些關鍵字有它們相對應的說明文件，同時，它們也是文件的連結入口，你可以將你的遊標移動到這些單字上，然後使用以下快捷鍵來進行文件的跳轉：</p>
+<table>
+<thead>
+<tr>
+<th>Mappings</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + ]</code></td>
+<td>移動至連結</td>
+</tr>
+<tr>
+<td><code>Ctrl + T</code></td>
+<td>返回上一個文件</td>
+</tr>
+</tbody></table>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211419512.png"></p>
+<p>這就延伸出了 help page 的第一個用法，開啓 help page 後，我們可以使用和在 Normal Mode 下一樣的操作方式，使用<code>/</code>來進行關鍵字搜尋，例如我們可以輸入<code>/quick</code>搜尋目錄<code>quickref</code>，將遊標移動到關鍵字上後，再使用快捷鍵<code>Ctrl + ]</code> 進行跳轉。</p>
+<p>令外，還有兩個我在瀏覽大型文件時很常使用的快捷鍵，也在這裡分享給各位：</p>
+<table>
+<thead>
+<tr>
+<th>Mappings</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + o</code></td>
+<td>返回至上一個遊標位置</td>
+</tr>
+<tr>
+<td><code>Ctrl + i</code></td>
+<td>返回至下一個遊標位置</td>
+</tr>
+</tbody></table>
+<h3 id="搜尋模式"><a href="#搜尋模式" class="headerlink" title="搜尋模式"></a>搜尋模式</h3><p>如果每次都要先開啓 main help page 再進行搜尋，那還真的是不如直接 Google 比較快，更何況 <code>:help</code> 頁面中只有目錄，而沒有更完整的內容可以進行關鍵字搜尋。</p>
+<p>所幸，我們可以直接在 command line 中輸入指令時就開始進行搜尋了，例如，如果我想搜尋關鍵字<code>word</code>，我只要輸入<code>:h word</code>就可以開始搜尋。同時，我們也可以使用以下的三個快捷鍵，來進行關鍵字的搜尋和補齊：</p>
+<table>
+<thead>
+<tr>
+<th>Mappings</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Ctrl + d</code></td>
+<td>顯示所有包含關鍵字的主題</td>
+</tr>
+<tr>
+<td><code>&lt;Tab&gt;</code></td>
+<td>選取下一個包含關鍵字的主題</td>
+</tr>
+<tr>
+<td><code>&lt;Shift&gt; + &lt;Tab&gt;</code></td>
+<td>選取上一個包含關鍵字的主題</td>
+</tr>
+</tbody></table>
+<p><code>Ctrl + d</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201925855.png"></p>
+<p><code>&lt;Tab&gt;</code>範例<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402201926090.png"></p>
+<p>另外，Neovim 也給了部分固定主題提供了固定的關鍵字格式，這些格式也有被列在<code>:h</code>中，如果忘記了，也可以隨時查看：</p>
+<table>
+<thead>
+<tr>
+<th>主題</th>
+<th>關鍵字前綴</th>
+<th>範例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Normal mode command</td>
+<td></td>
+<td><code>:help x         </code></td>
+</tr>
+<tr>
+<td>Visual mode command</td>
+<td><code>v\_</code></td>
+<td><code>:help v_u       </code></td>
+</tr>
+<tr>
+<td>Insert mode command</td>
+<td><code>i\_</code></td>
+<td><code>:help i\_&lt;Esc&gt;  </code></td>
+</tr>
+<tr>
+<td>Command-line command</td>
+<td><code>:</code></td>
+<td><code>:help :quit     </code></td>
+</tr>
+<tr>
+<td>Command-line editing</td>
+<td><code>c\_</code></td>
+<td><code>:help c\_&lt;Del&gt;  </code></td>
+</tr>
+<tr>
+<td>Vim command argument</td>
+<td><code>-</code></td>
+<td><code>:help -r        </code></td>
+</tr>
+<tr>
+<td>Option</td>
+<td><code>&#39;</code></td>
+<td><code>:help &#39;wildmenu&#39;</code></td>
+</tr>
+<tr>
+<td>Regular expression</td>
+<td><code>/</code></td>
+<td><code>:help /[]       </code></td>
+</tr>
+</tbody></table>
+<p>例如，如果我想知道退出 Neovim 的指令<code>:q</code>的所有用法，我只要輸入<code>:h :q</code>就可以開始搜尋了、或是，如果我想知道快捷鍵<code>Ctrl-r</code>的功能是什麼，我只要輸入<code>:h CTRL-r</code>就可以開始搜尋，或更進階一點，你可輸入<code>:h ctrl-r</code>然後按下<code>Ctrl-d</code>或是<code>&lt;Tab&gt;</code>，來查找與這個快捷鍵有關的主題選項。</p>
+<p>以上，就是關於 help page 的一些基本用法了，這也是我常用來處理 Neovim 問題的第一步，如果還想了解一些更進階的技巧，可以查閱<code>:h :help</code>，或是參考 <a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a>。</p>
+<hr>
+<h2 id="checkhealth"><a href="#checkhealth" class="headerlink" title="checkhealth"></a>checkhealth</h2><p>Neovim 的外掛包含 Neovim 本身的功能有時會依賴於額外的程式環境、或是其他的某些外掛，例如系統剪貼簿的取用、以及使用 Python3 等其他語言所撰寫的功能等等。如果你安裝了某些外掛，卻發現它不起作用的時候，通常可能就是因爲沒有下載這些額外的東西。</p>
+<p>除了從這些外掛的 help page、git 或官網上查找依賴之外，Neovim 的<code>:checkhealth</code>指令可以讓我們很方便的去查看應該、以及甚至要怎麽處理這些問題。</p>
+<p>開啟 Neovim 後，輸入<code>:checkhealth</code>，你會看到類似於這樣的畫面：<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211337068.png"></p>
+<p>另外，checkhealth 也可以接受參數來只對指定內容進行檢查，例如<code>:checkhealth provider</code>，這樣就可以只查看 provider 的健康狀況了。<br><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202402211342476.png"></p>
+<p>加上在上一段裡提到的<code>:h</code>，於是乎，我們的 Neovim 快篩自救程序就這樣完成了：每當 Neovim 和其外掛出現問題時，我們可以先使用<code>:checkhealth</code>做一遍基本檢查，來看系統中是否缺漏了什麼，然後再使用<code>:h</code>來查找可能的解決方案，而這一切幾乎都可以在 Neovim 中不使用網路來完成，且相當快速有效。</p>
+<hr>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，我們已經學會了如何使用 help page 和<code>:checkhealth</code>來進行診斷與解決問題，而在下一章裡，我們將正式進入 Neovim 的基礎設定環節。</p>
+<p>首先，我會介紹 Neovim 的設定文件結構，接著，我會提供我的設定文件，並重點介紹一些常見，且我覺得很是有用的選項，例如設定剪貼簿、行號、以及縮排等功能。</p>
+<p><big>上一篇： <a href="/2024/02/17/neovim-setup-20240217-installing-neovim-and-nerdfont/" title="安裝 Neovim 與 Nerd Fonts">安裝 Neovim 與 Nerd Fonts</a></big><br><big>下一篇： <a href="/2024/03/06/neovim-setup-20240306-nvim-basic-config/" title="Neovim 設定文件結構與基礎功能設定">Neovim 設定文件結構與基礎功能設定</a></big></p>
+<hr>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://vim.fandom.com/wiki/Learn_to_use_help">Vim Tips Wiki: Learn to use help</a></li>
+<li><a href="https://youtu.be/87AXw9Quy9U?si=smiJPQVs8mFlnQJK">Understanding Neovim #1 - Installation</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>第一個外掛 —— 顔色主題 Colorscheme</title>
+    <url>/2024/06/21/neovim-setup-20240621-nvim-colorshceme/</url>
+    <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>俗話說得好：「顏值即是戰鬥力」，好看的配色是工程師寫扣的熱情來源之一，也因此 Neovim 社群至今產出了大量的顏色主題、以及許多用來製作個人顏色主題的外掛工具。</p>
+<p>你可以先到我們上一章提到過的 <a href="https://github.com/rockerBOO/awesome-neovim?tab=readme-ov-file#colorscheme">Awesome Neovim</a> 中，去找一套自己喜歡的顏色主題。或者，我更推薦 <a href="https://dotfyle.com/neovim/colorscheme/trending">Trending Neovim Colorschemes</a> 這個網站，除了羅列了許多常見的顏色主題外，還附帶預覽圖，甚是方便。</p>
+<p>而本章則只紀錄幾個我常用的顏色主題，包含：</p>
+<ul>
+<li><a href="https://github.com/folke/tokyonight.nvim">tokyonight</a></li>
+<li><a href="https://github.com/rebelot/kanagawa.nvim">kanagawa</a></li>
+<li><a href="https://github.com/oxfist/night-owl.nvim">night-owl</a></li>
+<li><a href="https://github.com/sainnhe/sonokai">sonokai</a></li>
+<li><a href="https://github.com/ellisonleao/gruvbox.nvim">gruvbox</a></li>
+</ul>
+<p>本章主要會使用範例的方式來說明如何下載與啟用顏色主題，如果想直接複製我的設定文件，可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/plugins/colorshceme.lua">這裡（我的 github）</a>來複製完整版的內容。</p>
+<p>另外，我們將使用 lazy.nvim 來做為外掛管理器下載它們，如果你還不知到什麼是 lazy.nvim 的話，建議先回去看<a href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">上一章</a>。</p>
+<hr>
+<h2 id="下載外掛"><a href="#下載外掛" class="headerlink" title="下載外掛"></a>下載外掛</h2><p>首先，我們要先到 <code>imp/plugins/</code> 中新增一個設定文件 <code>colorscheme.lua</code>。</p>
+<p>接著，如果你只要下載一個主題，你可以寫入以下內容：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="string">&quot;folke/tokyonight.nvim&quot;</span>,</span><br><span class="line">    lazy = <span class="literal">false</span>,</span><br><span class="line">    priority = <span class="number">1000</span>,</span><br><span class="line">    <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">        <span class="built_in">require</span>(<span class="string">&quot;tokyonight&quot;</span>).setup(&#123;</span><br><span class="line">            style = <span class="string">&quot;night&quot;</span>, <span class="comment">-- &quot;storm&quot;, &quot;moon&quot;, &quot;night&quot;, &quot;day&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        vim.cmd.colorscheme(<span class="string">&quot;tokyonight&quot;</span>)</span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者，如果你和我一樣想下載多個主題來隨時切換，你可以採用這樣的寫法：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> colorscheme = <span class="string">&quot;kanagawa&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;folke/tokyonight.nvim&quot;</span>,</span><br><span class="line">        lazy = <span class="literal">false</span>,</span><br><span class="line">        priority = <span class="number">1000</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">&quot;tokyonight&quot;</span>).setup(&#123;</span><br><span class="line">                style = <span class="string">&quot;night&quot;</span>, <span class="comment">-- &quot;storm&quot;, &quot;moon&quot;, &quot;night&quot;, &quot;day&quot;</span></span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            vim.cmd.colorscheme(colorscheme)</span><br><span class="line">        <span class="keyword">end</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">&quot;rebelot/kanagawa.nvim&quot;</span>,</span><br><span class="line">        lazy = <span class="literal">false</span>,</span><br><span class="line">        priority = <span class="number">1000</span>,</span><br><span class="line">        <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">            <span class="built_in">require</span>(<span class="string">&quot;kanagawa&quot;</span>).setup(&#123;</span><br><span class="line">                background = &#123;</span><br><span class="line">                    dark = <span class="string">&quot;wave&quot;</span>, <span class="comment">-- &quot;wave&quot;, &quot;dragon&quot;, &quot;lotus&quot;</span></span><br><span class="line">                    light = <span class="string">&quot;lotus&quot;</span>,</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        <span class="keyword">end</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>儲存並重新開啟 Neovim 後，你應該會看到 lazy 的介面自動彈出，顯示它偵測到有新的外掛，並正在下載中，且在下載完成後，就會自動套用我們設定的顏色主題了。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406212254782.jpg"></p>
+<hr>
+<h2 id="plugin-spec-參數說明"><a href="#plugin-spec-參數說明" class="headerlink" title="plugin spec 參數說明"></a>plugin spec 參數說明</h2><p>先前我曾提到過，根據我們的設定，lazy 會訪問 <code>plugins/</code> 中所有的設定文件，並要求它們回傳一至多個 plugin spec，而這也就是這兩個例子的主要差別。</p>
+<p>在第一個例子中，我們直接回傳了一個 spec，而在第二個例子中，我們則是回傳了一個由兩個 spec 所組成的列表。</p>
+<p>plugin spec 是 lazy 用來描述外掛如何安裝和設定的表格，以第一個例子為例，它包含了以下幾個部分：</p>
+<ol>
+<li>第一個參數：外掛的下載位址。<br>spec 的第一個參數必須是外掛的下載位址，預設情況下，它指的是外掛在 Github 上的短網址，例如我們這裡的 <code>folke/tokyonight.nvim</code>，就是 <a href="https://github.com/folke/tokyonight.nvim">tokyonight</a> 主題的 Github 網址的末兩段。</li>
+<li><code>lazy</code>：懶加載設定。<br>一個 boolean 值，當設為 <code>true</code> 時，lazy 會只有在 Neovim 運行過程中使用到外掛的功能時，才會將外掛載入運行；反之，則會在 Neovim 啟動時立即加載這個外掛。<br>有鑑於我們希望 Neovim 在開啟時就載入我們的顏色主題，所以這裡我們將其設定為 <code>false</code>。</li>
+<li><code>priority</code>：加載優先級。<br>一個整數，當我們的外掛越來越多，加載時自然也就有個先後順序，lazy 預設的 <code>priority</code> 是 50，數字越大就越先加載。<br>有鑑於我們希望顏色主題可以優先於所有外掛啟動，因為有些外掛可以透過引用它們，來更改自己的 UI 設定，所以這裡官方的建議是將它設為 1000。</li>
+</ol>
+<hr>
+<h2 id="外掛設定、config、與-opts"><a href="#外掛設定、config、與-opts" class="headerlink" title="外掛設定、config、與 opts"></a>外掛設定、config、與 opts</h2><p>在 Neovim 中，慣例而言我們會使用 <code>require(&quot;外掛名稱&quot;).setup(&#123;設定內容&#125;)</code> 這個函式來在 Neovim 開啟時啟動外掛，以及將傳入的設定內容與官方預設的設定項進行合併，來作為執行外掛時的設定項。</p>
+<p>對此，lazy 在 spec 中提供了兩個參數：<code>config</code> 和 <code>opts</code>，來將這件事再更簡化一些。</p>
+<h3 id="config"><a href="#config" class="headerlink" title="config"></a>config</h3><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;folke/tokyonight.nvim&quot;</span>,</span><br><span class="line">    lazy = <span class="literal">false</span>,</span><br><span class="line">    priority = <span class="number">1000</span>,</span><br><span class="line">    <span class="built_in">config</span> = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">        <span class="built_in">require</span>(<span class="string">&quot;tokyonight&quot;</span>).setup(&#123;</span><br><span class="line">            style = <span class="string">&quot;night&quot;</span>, <span class="comment">-- &quot;storm&quot;, &quot;moon&quot;, &quot;night&quot;, &quot;day&quot;</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        vim.cmd.colorscheme(<span class="string">&quot;tokyonight&quot;</span>)</span><br><span class="line">    <span class="keyword">end</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>讓我們先來看第一個例子，在 lazy 中，<code>config</code> 可以是一個函數，它會在外掛加載後執行。</p>
+<p>而在這個例子中，我們透過在函數中呼叫 <code>require(&quot;tokyonight&quot;).setup(&#123;設定內容&#125;)</code> 來啟用外掛，並同時對它進行設定。</p>
+<p>注意，這個啟用和設定方式只是慣例，大多數常用外掛都是這麼做的，但還是有些不是，例如我所使用的顏色主題之一 <a href="https://github.com/sainnhe/sonokai">sonokai</a> 就不是這樣，所以具體該怎麼用，還是得看官方 Github 上的說明文件，唯一的共通點是，不論方式，你都可以把它寫在 <code>config</code> 之中。</p>
+<p>至於設定內容有哪些可以調整，由於各個顏色主題的設定項都大同小異，且都不是特別重要，所以這裡就請各位自己去查看官方文件吧，或是在 Neovim 中輸入指令 <code>:help 主題名稱</code> ，通常都可以找到類似 Configuration 的設定教學文件。</p>
+<p>而實際上，我也沒有調整太多東西，其實各主題的預設內容就已經很好用了。</p>
+<p>而在 <code>config</code> 的最後，我調用了 <code>vim.cmd.colorscheme(colorscheme)</code> 這個 Lua 函式來將 Neovim 的主題更換成已經啟用的 tokyonight，或者，你也可以使用指令 <code>:colorscheme 主題名稱</code> 來手動套用顏色主題。</p>
+<h3 id="opts"><a href="#opts" class="headerlink" title="opts"></a>opts</h3><figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;rebelot/kanagawa.nvim&quot;</span>,</span><br><span class="line">    lazy = <span class="literal">false</span>,</span><br><span class="line">    priority = <span class="number">1000</span>,</span><br><span class="line">    opts = &#123;</span><br><span class="line">        background = &#123;</span><br><span class="line">            dark = <span class="string">&quot;wave&quot;</span>, <span class="comment">-- &quot;wave&quot;, &quot;dragon&quot;, &quot;lotus&quot;</span></span><br><span class="line">            light = <span class="string">&quot;lotus&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接著我們來看第二個例子，<code>config</code> 除了設為函數外，其實還可以設為 <code>true</code>，而這也是 lazy 預設的選項。</p>
+<p>當 <code>config</code> 為 <code>true</code> 時，lazy 會自動呼叫 <code>require(&quot;外掛名稱&quot;).setup(opts)</code> 來啟用和設定外掛。</p>
+<p>所以就有了如上的第二種設定寫法，當外掛是使用上述方法來啟用和設定時，我們就可以不使用 <code>config</code> 參數（因為預設就是 <code>true</code> 了），而是直接把要調整的設定項寫在 <code>opts</code> 中即可，來使得設定文件更加簡潔一些。</p>
+<p>不過這個寫法有一個壞處，就是你無法執行除了 setup 以外的其他事情，因為只要你將 <code>config</code> 改為了函數，<code>opts</code> 就會失效，等於你還是得用第一種的方式，來重寫你的設定項。</p>
+<p>例如在這個例子中，我們還需要想辦法執行 <code>vim.cmd.colorscheme(&quot;顏色主題&quot;)</code> 來在每次 Neovim 開啟時自動套用顏色主題，所以，為了設定文件的一致性，我建議還是一律使用 <code>config</code> 來進行設定比較好。</p>
+<hr>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此就是本章的所有內容了，Neovim 終於染上了自己喜歡的顏色，我們也終於對 lazy 的 plugin spec 有了基本的了解。</p>
+<p>而在接下來的系列文中，我將會分成兩大部分：</p>
+<ol>
+<li><p>程式編輯核心外掛：這部分我將會介紹與程式編輯相關的核心外掛，包含自動補齊、語法引擎、語法凸顯、Linter、Formatter 以及 Debugger 等等。</p>
+</li>
+<li><p>常用功能外掛：這部分我將介紹一些我覺得很好用的功能外掛，包含文件瀏覽器、全域糢糊搜尋、索引標籤與狀態列、以及 Git 集成工具等等。</p>
+</li>
+</ol>
+<p>至於下回預告，我也還不知道，還請各位敬請期待吧。</p>
+<p><big>上一篇： <a href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a></big></p>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Neovim 外掛管理工具 —— lazy.nvim</title>
     <url>/2024/06/20/neovim-setup-20240620-nvim-lazy/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 的强大之一就在於小巧且種類繁多的功能外掛，基本上在 Neovim 的世界裡，只有你想不到的需求，沒有找不到的外掛，如果有，那就自己寫一個吧！</p>
 <p>而隨著我們積年累月的使用與調教，外掛必定會越來越多，相依關係也勢必變得越來越複雜，這時有個方便的外掛管理工具就顯得非常重要了。</p>
 <p>目前主流的工具有三個，分別是從 Vim8 延續下來，基於 Vim Script 所撰寫的 vim-plugs、使用 Lua 語言所撰寫的 packer.nvim（以下簡稱 packer），以及站在了 packer 的肩上，在推出後即廣受好評，同時也是我們這次的主角：lazy.nvim （以下簡稱 lazy）。</p>
 <p>相較於 packer ，lazy 有著更強大的性能、以及更合理的外掛管理方式，且 packer 隨著的更新，它變得越來越混亂與臃腫，以致於在 lazy 出現後，packer 也原地爆炸，選擇停止維護。現在它轉生成了 pckr.nvim，但 packer 的官方也表明它沒有 lazy 來得穩定，而這也是我選擇從 packer 跳槽到 lazy 的主要原因。</p>
-<p>所以，本章將介紹如何安裝與使用 lazy。</p>
+<p>所以，本章將介紹如何安裝與使用 lazy，如果你想直接複製完整的設定文件，也可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/lazy.lua">這裡（我的 github）</a>來複製完整的設定內容。</p>
 <h2 id="下載-lazy"><a href="#下載-lazy" class="headerlink" title="下載 lazy"></a>下載 lazy</h2><p>首先，讓我們到 <code>imp/</code> 中新增一個設定文件 <code>lazy.lua</code>，以及一個之後用來放各個外掛的設定文件的資料夾 <code>plugins/</code>。</p>
 <p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901880.jpg"></p>
 <p>接著，編輯 <code>lazy.lua</code>，加入以下內容：</p>
@@ -1222,13 +1293,14 @@
 <p>所幸，我們可以直接輸入一個目錄，讓 lazy 去載入目錄中的所有設定文件，這也是為什麼我們先前特地開了一個資料夾，用來存放之後要下載的外掛的設定文件。</p>
 <p>而關於 <code>opts</code>，通常我不太會去動它，lazy 的預設設定基本上沒有任何問題，所以我只基於無聊去調整了一些無關緊要的設定，如果你有興趣，可以到<a href="https://github.com/folke/lazy.nvim#%EF%B8%8F-configuration">官方</a>去看看 lazy 有什麼設定項可以玩。</p>
 <p>現在，讓我們編輯 <code>lazy.lua</code>，到先前的程式碼下方加入以下的內容來啟用 lazy：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(</span><br><span class="line">    &#123; &#123;import = <span class="string">&quot;imp.plugins&quot;</span>&#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        checker = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        ui = &#123;</span><br><span class="line">            border = <span class="string">&quot;rounded&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(</span><br><span class="line">    &#123; &#123;import = <span class="string">&quot;imp.plugins&quot;</span>&#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        checker = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        change_detection = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        ui = &#123;</span><br><span class="line">            border = <span class="string">&quot;rounded&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 
 <p>說明：</p>
 <ol>
 <li>設定外掛來源：<br>首先，使用 <code>import</code> 來告訴 lazy 我們要用來存放外掛設定文件的目錄。</li>
 <li>設定選項：<ul>
 <li><code>checker</code>：它的作用是會自動檢查外掛是否有更新，但若每當有更新時就發出通知，那會很煩，所以我選擇啟用檢查，但關閉通知。</li>
+<li><code>change_detection</code>：和 <code>checker</code> 類似，不過這項檢查的是我們的設定文件是否有更動。</li>
 <li><code>ui</code>：我把 lazy 的 UI 邊框樣式改成圓角。</li>
 </ul>
 </li>
@@ -1246,7 +1318,8 @@
 <h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，lazy 已經能正確運作，而在下一章裡，我們終於要來開始下載與使用外掛。</p>
 <p>而除了外掛本身的設定項外，lazy 在導入外掛時，還提供了許多的外掛規格（plugin spec）可以設定，包含它們的啟用條件、指定 commit 版本、以及其他的依賴外掛等等。</p>
 <p>完整的說明同樣可以到<a href="https://github.com/folke/lazy.nvim#-plugin-spec">官方</a>去查看，而在之後的文章中，我只會對我有用到的部分進行說明。</p>
-<p><big>上一篇： <a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a></big></p>
+<p>另外，你也可以先到 <a href="https://github.com/rockerBOO/awesome-neovim.git">Awesome Neovim</a> 上逛逛，這裡收錄了 Neovim 大部分常用、好用的外掛，按功能分類，查找起來非常方便。</p>
+<p><big>上一篇： <a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a></big><br><big>下一篇： <a href="/2024/06/21/neovim-setup-20240621-nvim-colorshceme/" title="第一個外掛 —— 顔色主題 Colorscheme">第一個外掛 —— 顔色主題 Colorscheme</a></big></p>
 <h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
 <li><a href="https://github.com/folke/lazy.nvim">lazy.nvim</a></li>
 <li><a href="https://github.com/wbthomason/packer.nvim">packer.nvim</a></li>
