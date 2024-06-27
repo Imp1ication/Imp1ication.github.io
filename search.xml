@@ -761,100 +761,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Neovim 外掛管理工具 —— lazy.nvim</title>
-    <url>/2024/06/20/neovim-setup-20240620-nvim-lazy/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 的强大之一就在於小巧且種類繁多的功能外掛，基本上在 Neovim 的世界裡，只有你想不到的需求，沒有找不到的外掛，如果有，那就自己寫一個吧！</p>
-<p>而隨著我們積年累月的使用與調教，外掛必定會越來越多，相依關係也勢必變得越來越複雜，這時有個方便的外掛管理工具就顯得非常重要了。</p>
-<p>目前主流的工具有三個，分別是從 Vim8 延續下來，基於 Vim Script 所撰寫的 vim-plugs、使用 Lua 語言所撰寫的 packer.nvim（以下簡稱 packer），以及站在了 packer 的肩上，在推出後即廣受好評，同時也是我們這次的主角：lazy.nvim （以下簡稱 lazy）。</p>
-<p>相較於 packer ，lazy 有著更強大的性能、以及更合理的外掛管理方式，且 packer 隨著的更新，它變得越來越混亂與臃腫，以致於在 lazy 出現後，packer 也原地爆炸，選擇停止維護。現在它轉生成了 pckr.nvim，但 packer 的官方也表明它沒有 lazy 來得穩定，而這也是我選擇從 packer 跳槽到 lazy 的主要原因。</p>
-<p>所以，本章將介紹如何安裝與使用 lazy，如果你想直接複製完整的設定文件，也可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/lazy.lua">這裡（我的 github）</a>來複製完整的設定內容。</p>
-<h2 id="下載-lazy"><a href="#下載-lazy" class="headerlink" title="下載 lazy"></a>下載 lazy</h2><p>首先，讓我們到 <code>imp/</code> 中新增一個設定文件 <code>lazy.lua</code>，以及一個之後用來放各個外掛的設定文件的資料夾 <code>plugins/</code>。</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901880.jpg"></p>
-<p>接著，編輯 <code>lazy.lua</code>，加入以下內容：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- bootstrap lazy.nvim</span></span><br><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">&quot;data&quot;</span>) .. <span class="string">&quot;/lazy/lazy.nvim&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> (vim.uv <span class="keyword">or</span> vim.loop).fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;clone&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--filter=blob:none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://github.com/folke/lazy.nvim.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--branch=stable&quot;</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">vim.opt.rtp:prepend(lazypath)</span><br></pre></td></tr></table></figure>
-
-<p>然後，不要忘了到 <code>init.lua</code> 中去引用它：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp.lazy&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>這段程式的作用是，它會在 Neovim 每次啟動時檢查你是否已經下載了 lazy，如果沒有，它就會自動下載。</p>
-<p>重新啟動 Neovim，這時你應該會注意到它停頓了一下，不要緊張，這表示它正在下載 lazy，下載完成後，我們就可以開始使用 lazy 了。</p>
-<p>接下來我會對這段程式進行較詳細的說明，算是我在看了<a href="https://youtu.be/N-RFCfs6rxI?si=uncBeCSDMHFWKs65&t=948">Understanding Neovim #2 - Plugins, Colorschemes</a>之後的學習筆記，如果沒興趣的話，可以直接跳到下一段。</p>
-<ol>
-<li><p>定義 lazy 的安裝路徑：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">&quot;data&quot;</span>) .. <span class="string">&quot;/lazy/lazy.nvim&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>這裡使用了 <code>vim.fn.stdpath()</code> 來取得 Neovim 的 data 目錄路徑。我們可以直接在 Neovim 的 command line 中輸入以下指令來看看這個目錄究竟在哪：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">:lua <span class="built_in">print</span>(vim.fn.stdpath(<span class="string">&quot;data&quot;</span>))</span><br></pre></td></tr></table></figure>
-
-<p>一般來說，它應該會在 <code>~/.local/share/nvim</code>。然後，這行程式碼會將 lazy 的存放目錄設定為這個目錄下的 <code>lazy/lazy.nvim</code>。</p>
-<p>另外，data 這個目錄主要被 Neovim 用於存放各個外掛的資料和原始碼，也就是說，如果你想要親自去修改外掛底層的程式的話，你可以來這裡找它。</p>
-<p>而在過去沒有外掛管理器，或有外掛不支援管理器時，我們就是透過將外掛下載到這個目錄，然後再引用它們來使用的。</p>
-</li>
-<li><p>檢查並下載：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> (vim.uv <span class="keyword">or</span> vim.loop).fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;clone&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--filter=blob:none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://github.com/folke/lazy.nvim.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--branch=stable&quot;</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<p>這段程式會檢查你的 data 目錄中是否已經下載了 lazy，如果沒有，它就會自動下載。</p>
-</li>
-<li><p>將 lazy 加入到 run time path：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.opt.rtp:prepend(lazypath)</span><br></pre></td></tr></table></figure>
-
-<p>run time path 是一個目錄清單，當 Neovim 在運行並加載功能和外掛時，它會去訪問這個清單中的目錄，並從中尋找它需要的功能，而這也就是 Neovim 運行外掛的原理了。</p>
-<p>另外，這裡使用 <code>prepend</code> 的目的是要將 lazy 加入這個清單的開頭，以確保 Neovim 在加載外掛時，會先透過 lazy，而非其他的目錄，以保證 lazy的正常運作並避免一些可能的衝突。</p>
-</li>
-</ol>
-<h2 id="使用-lazy"><a href="#使用-lazy" class="headerlink" title="使用 lazy"></a>使用 lazy</h2><p>要使用 lazy，我們得去調用 lazy 的 <code>setup</code> 函式：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(plugins, opts)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>plugins</code>：一個外掛的規格清單，我會在後續做更詳細的說明。</li>
-<li><code>opts</code>：lazy 的設定選項（皆為可選項）。</li>
-</ul>
-<p>在 <code>plugins</code> 中，我們可以直接提供一組外掛的清單和額外規格，來讓 lazy 去下載與使用它們，但顯然，這樣會讓這份設定文件變得非常巨大。</p>
-<p>所幸，我們可以直接輸入一個目錄，讓 lazy 去載入目錄中的所有設定文件，這也是為什麼我們先前特地開了一個資料夾，用來存放之後要下載的外掛的設定文件。</p>
-<p>而關於 <code>opts</code>，通常我不太會去動它，lazy 的預設設定基本上沒有任何問題，所以我只基於無聊去調整了一些無關緊要的設定，如果你有興趣，可以到<a href="https://github.com/folke/lazy.nvim#%EF%B8%8F-configuration">官方</a>去看看 lazy 有什麼設定項可以玩。</p>
-<p>現在，讓我們編輯 <code>lazy.lua</code>，到先前的程式碼下方加入以下的內容來啟用 lazy：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(</span><br><span class="line">    &#123; &#123;import = <span class="string">&quot;imp.plugins&quot;</span>&#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        checker = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        change_detection = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        ui = &#123;</span><br><span class="line">            border = <span class="string">&quot;rounded&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<p>說明：</p>
-<ol>
-<li>設定外掛來源：<br>首先，使用 <code>import</code> 來告訴 lazy 我們要用來存放外掛設定文件的目錄。</li>
-<li>設定選項：<ul>
-<li><code>checker</code>：它的作用是會自動檢查外掛是否有更新，但若每當有更新時就發出通知，那會很煩，所以我選擇啟用檢查，但關閉通知。</li>
-<li><code>change_detection</code>：和 <code>checker</code> 類似，不過這項檢查的是我們的設定文件是否有更動。</li>
-<li><code>ui</code>：我把 lazy 的 UI 邊框樣式改成圓角。</li>
-</ul>
-</li>
-</ol>
-<p>重新啟動 Neovim，這時你應該會發現它報錯了：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error detected while processing /home/imp1ication/.config/nvim/init.lua:</span><br><span class="line">No specs found for module imp.plugins</span><br><span class="line">Press ENTER or type command to continue</span><br></pre></td></tr></table></figure>
-
-<p>不要緊張，這只是因為我們的 <code>plugins/</code> 中還沒有任何的設定文件所導致的，讓我們先按下 Enter 鍵來跳過它的警告，然後輸入以下指令來開啟 lazy 的界面看看，確認 lazy 有在確實運作：</p>
-<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">:Lazy</span><br></pre></td></tr></table></figure>
-
-<p>此時你應該就會看到類似如下的介面：</p>
-<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901947.jpg"></p>
-<p>可以看到 Lazy 已經可以正確運行了，而且裡面已經有一個外掛，也就是 lazy 自己。</p>
-<p>你可以將遊標移動到外掛名稱上面，然後輸入介面上方提供的，對應的大寫字母來對外掛進行管理操作，例如輸入 <code>L</code> 可以查看外掛的 Log，輸入 <code>U</code> 可以更新外掛等等。而這也就是 lazy 的基本使用方式了。</p>
-<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，lazy 已經能正確運作，而在下一章裡，我們終於要來開始下載與使用外掛。</p>
-<p>而除了外掛本身的設定項外，lazy 在導入外掛時，還提供了許多的外掛規格（plugin spec）可以設定，包含它們的啟用條件、指定 commit 版本、以及其他的依賴外掛等等。</p>
-<p>完整的說明同樣可以到<a href="https://github.com/folke/lazy.nvim#-plugin-spec">官方</a>去查看，而在之後的文章中，我只會對我有用到的部分進行說明。</p>
-<p>另外，你也可以先到 <a href="https://github.com/rockerBOO/awesome-neovim.git">Awesome Neovim</a> 上逛逛，這裡收錄了 Neovim 大部分常用、好用的外掛，按功能分類，查找起來非常方便。</p>
-<p><big>上一篇： <a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a></big><br><big>下一篇： <a href="/2024/06/21/neovim-setup-20240621-nvim-colorscheme/" title="第一個外掛 —— 顔色主題 Colorscheme">第一個外掛 —— 顔色主題 Colorscheme</a></big></p>
-<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
-<li><a href="https://github.com/folke/lazy.nvim">lazy.nvim</a></li>
-<li><a href="https://github.com/wbthomason/packer.nvim">packer.nvim</a></li>
-<li><a href="https://github.com/lewis6991/pckr.nvim">pckr.nvim</a></li>
-<li><a href="https://youtu.be/N-RFCfs6rxI?si=aYkRso0Kfmv1wQZI">Understanding Neovim #2 - Plugins, Colorschemes</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Neovim</category>
-      </categories>
-      <tags>
-        <tag>Neovim</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Neovim 設定文件結構與基礎功能設定</title>
     <url>/2024/03/06/neovim-setup-20240306-nvim-basic-config/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 同時支援使用 VimScript 和 Lua 語言來撰寫設定文件，前者源自於它的老祖 Vim，而後者則是一種極爲輕量的 Scripting language，同時亦是 Neovim 有別於 Vim 最大的特點之一：它更加易學、具有更好的工具支持與易擴展性、以及更高的執行效能，這都是你應該選擇使用 Lua 而非 VimScript 原因，唯一導致你必須使用 VimScript 的理由大概只有，當你想與 Vim 共用你的這份設定文件的時候。</p>
@@ -1326,6 +1232,100 @@
 </ol>
 <p>至於下回預告，我也還不知道，還請各位敬請期待吧。</p>
 <p><big>上一篇： <a href="/2024/06/20/neovim-setup-20240620-nvim-lazy/" title="Neovim 外掛管理工具 —— lazy.nvim">Neovim 外掛管理工具 —— lazy.nvim</a></big></p>
+]]></content>
+      <categories>
+        <category>Neovim</category>
+      </categories>
+      <tags>
+        <tag>Neovim</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Neovim 外掛管理工具 —— lazy.nvim</title>
+    <url>/2024/06/20/neovim-setup-20240620-nvim-lazy/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Neovim 的强大之一就在於小巧且種類繁多的功能外掛，基本上在 Neovim 的世界裡，只有你想不到的需求，沒有找不到的外掛，如果有，那就自己寫一個吧！</p>
+<p>而隨著我們積年累月的使用與調教，外掛必定會越來越多，相依關係也勢必變得越來越複雜，這時有個方便的外掛管理工具就顯得非常重要了。</p>
+<p>目前主流的工具有三個，分別是從 Vim8 延續下來，基於 Vim Script 所撰寫的 vim-plugs、使用 Lua 語言所撰寫的 packer.nvim（以下簡稱 packer），以及站在了 packer 的肩上，在推出後即廣受好評，同時也是我們這次的主角：lazy.nvim （以下簡稱 lazy）。</p>
+<p>相較於 packer ，lazy 有著更強大的性能、以及更合理的外掛管理方式，且 packer 隨著的更新，它變得越來越混亂與臃腫，以致於在 lazy 出現後，packer 也原地爆炸，選擇停止維護。現在它轉生成了 pckr.nvim，但 packer 的官方也表明它沒有 lazy 來得穩定，而這也是我選擇從 packer 跳槽到 lazy 的主要原因。</p>
+<p>所以，本章將介紹如何安裝與使用 lazy，如果你想直接複製完整的設定文件，也可以到<a href="https://github.com/Imp1ication/impvim/blob/master/lua/imp/lazy.lua">這裡（我的 github）</a>來複製完整的設定內容。</p>
+<h2 id="下載-lazy"><a href="#下載-lazy" class="headerlink" title="下載 lazy"></a>下載 lazy</h2><p>首先，讓我們到 <code>imp/</code> 中新增一個設定文件 <code>lazy.lua</code>，以及一個之後用來放各個外掛的設定文件的資料夾 <code>plugins/</code>。</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901880.jpg"></p>
+<p>接著，編輯 <code>lazy.lua</code>，加入以下內容：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- bootstrap lazy.nvim</span></span><br><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">&quot;data&quot;</span>) .. <span class="string">&quot;/lazy/lazy.nvim&quot;</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> (vim.uv <span class="keyword">or</span> vim.loop).fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;clone&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--filter=blob:none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://github.com/folke/lazy.nvim.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--branch=stable&quot;</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">vim.opt.rtp:prepend(lazypath)</span><br></pre></td></tr></table></figure>
+
+<p>然後，不要忘了到 <code>init.lua</code> 中去引用它：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;imp.lazy&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>這段程式的作用是，它會在 Neovim 每次啟動時檢查你是否已經下載了 lazy，如果沒有，它就會自動下載。</p>
+<p>重新啟動 Neovim，這時你應該會注意到它停頓了一下，不要緊張，這表示它正在下載 lazy，下載完成後，我們就可以開始使用 lazy 了。</p>
+<p>接下來我會對這段程式進行較詳細的說明，算是我在看了<a href="https://youtu.be/N-RFCfs6rxI?si=uncBeCSDMHFWKs65&t=948">Understanding Neovim #2 - Plugins, Colorschemes</a>之後的學習筆記，如果沒興趣的話，可以直接跳到下一段。</p>
+<ol>
+<li><p>定義 lazy 的安裝路徑：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">local</span> lazypath = vim.fn.stdpath(<span class="string">&quot;data&quot;</span>) .. <span class="string">&quot;/lazy/lazy.nvim&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>這裡使用了 <code>vim.fn.stdpath()</code> 來取得 Neovim 的 data 目錄路徑。我們可以直接在 Neovim 的 command line 中輸入以下指令來看看這個目錄究竟在哪：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">:lua <span class="built_in">print</span>(vim.fn.stdpath(<span class="string">&quot;data&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<p>一般來說，它應該會在 <code>~/.local/share/nvim</code>。然後，這行程式碼會將 lazy 的存放目錄設定為這個目錄下的 <code>lazy/lazy.nvim</code>。</p>
+<p>另外，data 這個目錄主要被 Neovim 用於存放各個外掛的資料和原始碼，也就是說，如果你想要親自去修改外掛底層的程式的話，你可以來這裡找它。</p>
+<p>而在過去沒有外掛管理器，或有外掛不支援管理器時，我們就是透過將外掛下載到這個目錄，然後再引用它們來使用的。</p>
+</li>
+<li><p>檢查並下載：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> (vim.uv <span class="keyword">or</span> vim.loop).fs_stat(lazypath) <span class="keyword">then</span></span><br><span class="line">  vim.fn.system(&#123;</span><br><span class="line">    <span class="string">&quot;git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;clone&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--filter=blob:none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;https://github.com/folke/lazy.nvim.git&quot;</span>,</span><br><span class="line">    <span class="string">&quot;--branch=stable&quot;</span>, <span class="comment">-- latest stable release</span></span><br><span class="line">    lazypath,</span><br><span class="line">  &#125;)</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<p>這段程式會檢查你的 data 目錄中是否已經下載了 lazy，如果沒有，它就會自動下載。</p>
+</li>
+<li><p>將 lazy 加入到 run time path：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">vim.opt.rtp:prepend(lazypath)</span><br></pre></td></tr></table></figure>
+
+<p>run time path 是一個目錄清單，當 Neovim 在運行並加載功能和外掛時，它會去訪問這個清單中的目錄，並從中尋找它需要的功能，而這也就是 Neovim 運行外掛的原理了。</p>
+<p>另外，這裡使用 <code>prepend</code> 的目的是要將 lazy 加入這個清單的開頭，以確保 Neovim 在加載外掛時，會先透過 lazy，而非其他的目錄，以保證 lazy的正常運作並避免一些可能的衝突。</p>
+</li>
+</ol>
+<h2 id="使用-lazy"><a href="#使用-lazy" class="headerlink" title="使用 lazy"></a>使用 lazy</h2><p>要使用 lazy，我們得去調用 lazy 的 <code>setup</code> 函式：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(plugins, opts)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>plugins</code>：一個外掛的規格清單，我會在後續做更詳細的說明。</li>
+<li><code>opts</code>：lazy 的設定選項（皆為可選項）。</li>
+</ul>
+<p>在 <code>plugins</code> 中，我們可以直接提供一組外掛的清單和額外規格，來讓 lazy 去下載與使用它們，但顯然，這樣會讓這份設定文件變得非常巨大。</p>
+<p>所幸，我們可以直接輸入一個目錄，讓 lazy 去載入目錄中的所有設定文件，這也是為什麼我們先前特地開了一個資料夾，用來存放之後要下載的外掛的設定文件。</p>
+<p>而關於 <code>opts</code>，通常我不太會去動它，lazy 的預設設定基本上沒有任何問題，所以我只基於無聊去調整了一些無關緊要的設定，如果你有興趣，可以到<a href="https://github.com/folke/lazy.nvim#%EF%B8%8F-configuration">官方</a>去看看 lazy 有什麼設定項可以玩。</p>
+<p>現在，讓我們編輯 <code>lazy.lua</code>，到先前的程式碼下方加入以下的內容來啟用 lazy：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&quot;lazy&quot;</span>).setup(</span><br><span class="line">    &#123; &#123;import = <span class="string">&quot;imp.plugins&quot;</span>&#125; &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        checker = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        change_detection = &#123;</span><br><span class="line">            enabled = <span class="literal">true</span>,</span><br><span class="line">            notify = <span class="literal">false</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        ui = &#123;</span><br><span class="line">            border = <span class="string">&quot;rounded&quot;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>說明：</p>
+<ol>
+<li>設定外掛來源：<br>首先，使用 <code>import</code> 來告訴 lazy 我們要用來存放外掛設定文件的目錄。</li>
+<li>設定選項：<ul>
+<li><code>checker</code>：它的作用是會自動檢查外掛是否有更新，但若每當有更新時就發出通知，那會很煩，所以我選擇啟用檢查，但關閉通知。</li>
+<li><code>change_detection</code>：和 <code>checker</code> 類似，不過這項檢查的是我們的設定文件是否有更動。</li>
+<li><code>ui</code>：我把 lazy 的 UI 邊框樣式改成圓角。</li>
+</ul>
+</li>
+</ol>
+<p>重新啟動 Neovim，這時你應該會發現它報錯了：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error detected while processing /home/imp1ication/.config/nvim/init.lua:</span><br><span class="line">No specs found for module imp.plugins</span><br><span class="line">Press ENTER or type command to continue</span><br></pre></td></tr></table></figure>
+
+<p>不要緊張，這只是因為我們的 <code>plugins/</code> 中還沒有任何的設定文件所導致的，讓我們先按下 Enter 鍵來跳過它的警告，然後輸入以下指令來開啟 lazy 的界面看看，確認 lazy 有在確實運作：</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">:Lazy</span><br></pre></td></tr></table></figure>
+
+<p>此時你應該就會看到類似如下的介面：</p>
+<p><img src="https://raw.githubusercontent.com/Imp1ication/for-picgo/main/picgo202406201901947.jpg"></p>
+<p>可以看到 Lazy 已經可以正確運行了，而且裡面已經有一個外掛，也就是 lazy 自己。</p>
+<p>你可以將遊標移動到外掛名稱上面，然後輸入介面上方提供的，對應的大寫字母來對外掛進行管理操作，例如輸入 <code>L</code> 可以查看外掛的 Log，輸入 <code>U</code> 可以更新外掛等等。而這也就是 lazy 的基本使用方式了。</p>
+<h2 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h2><p>至此，就是本章的所有內容了，lazy 已經能正確運作，而在下一章裡，我們終於要來開始下載與使用外掛。</p>
+<p>而除了外掛本身的設定項外，lazy 在導入外掛時，還提供了許多的外掛規格（plugin spec）可以設定，包含它們的啟用條件、指定 commit 版本、以及其他的依賴外掛等等。</p>
+<p>完整的說明同樣可以到<a href="https://github.com/folke/lazy.nvim#-plugin-spec">官方</a>去查看，而在之後的文章中，我只會對我有用到的部分進行說明。</p>
+<p>另外，你也可以先到 <a href="https://github.com/rockerBOO/awesome-neovim.git">Awesome Neovim</a> 上逛逛，這裡收錄了 Neovim 大部分常用、好用的外掛，按功能分類，查找起來非常方便。</p>
+<p><big>上一篇： <a href="/2024/06/18/neovim-setup-20240618-nvim-keymaps/" title="Neovim 快捷鍵設定">Neovim 快捷鍵設定</a></big><br><big>下一篇： <a href="/2024/06/21/neovim-setup-20240621-nvim-colorscheme/" title="第一個外掛 —— 顔色主題 Colorscheme">第一個外掛 —— 顔色主題 Colorscheme</a></big></p>
+<h2 id="參考資料"><a href="#參考資料" class="headerlink" title="參考資料"></a>參考資料</h2><ul>
+<li><a href="https://github.com/folke/lazy.nvim">lazy.nvim</a></li>
+<li><a href="https://github.com/wbthomason/packer.nvim">packer.nvim</a></li>
+<li><a href="https://github.com/lewis6991/pckr.nvim">pckr.nvim</a></li>
+<li><a href="https://youtu.be/N-RFCfs6rxI?si=aYkRso0Kfmv1wQZI">Understanding Neovim #2 - Plugins, Colorschemes</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>Neovim</category>
